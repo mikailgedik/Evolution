@@ -126,6 +126,7 @@ public class GameClass extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("Ian was here!!!!");
 		addTypes();
 
 		GameClass game = GameClass.createGame(args, 30 * Level.FIELD_SIZE, 20 * Level.FIELD_SIZE);
