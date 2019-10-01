@@ -13,8 +13,7 @@ public class LevelTest extends Level {
 	@Override
 	public void onStart() {
 		new Emmy(this, getLevelWidth() / 3, getLevelHeight() / 2);
-		Animal a = new Animal(null, getLevelWidth()/2, getLevelHeight()/2);
-		this.addGameObject(a);
+		Animal a = new Animal(this, getLevelWidth()/2, getLevelHeight()/2);
 	}
 
 	@Override

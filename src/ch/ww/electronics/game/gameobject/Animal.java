@@ -29,7 +29,7 @@ public class Animal extends GameObject{
 		
 		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
 				0xffffff));
-		dna = new DNA(getGame(), 0,0,0,0);
+		dna = new DNA(this, 0,0,0,0);
 		this.brain = new Brain(this);
 		motion = new MutableVector2D(0, 0);
 	}

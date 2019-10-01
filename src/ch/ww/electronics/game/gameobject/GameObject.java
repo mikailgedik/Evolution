@@ -36,6 +36,7 @@ public abstract class GameObject {
 	 * <code>null</code>.
 	 */
 	public GameObject(Level level, double x, double y) {
+		Objects.requireNonNull(level, "level == null");
 		this.level = level;
 		this.x = x;
 		this.y = y;

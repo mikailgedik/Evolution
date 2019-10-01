@@ -31,11 +31,10 @@ public class Brain {
 		switch(status) {
 		case IDLE:
 			if(animal.getMotion().getLength() == 0 && animal.getLevel().getRandom().nextDouble() < 0.1) {
-				double maxspeed=0.1;
+				double maxspeed = dna.getMaxSize();
 				double speed=animal.getGame().getRandom().nextDouble()*maxspeed;
 				double  angle=animal.getGame().getRandom().nextDouble()*2*Math.PI;
 				animal.setMotion(new Vector2D(speed*Math.sin(angle),speed*Math.cos(angle)));
-			
 			} else if(animal.getLevel().getRandom().nextDouble() < 0.1) {
 				animal.setMotion(new Vector2D(0,0));
 			}

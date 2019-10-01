@@ -1,9 +1,7 @@
 package ch.ww.electronics.game.gameobject;
 
-import ch.ww.electronics.game.Game;
-
 public class DNA {
-	private Game game;
+	private Animal animal;
 
 	private double maxEnergy;
 	private double maxSize;
@@ -13,8 +11,8 @@ public class DNA {
 
 	private final double variation = 0.1;
 
-	public DNA(Game game, double size, double fur, double speed, double viewrange) {
-		this.game = game;
+	public DNA(Animal game, double size, double fur, double speed, double viewrange) {
+		this.animal = game;
 
 		this.maxSize = size;
 		this.fur = fur;
@@ -23,7 +21,7 @@ public class DNA {
 	}
 
 	public DNA(DNA dna) {
-		this.game = dna.game;
+		this.animal = dna.animal;
 
 		this.maxSize = dna.getMaxSize();
 		this.fur = dna.getFur();
@@ -32,17 +30,17 @@ public class DNA {
 	}
 
 	public void randomize() {
-		maxSize = (game.getRandom().nextDouble() * 2 - 1);
-		fur = (game.getRandom().nextDouble() * 2 - 1);
-		maxSpeed = (game.getRandom().nextDouble() * 2 - 1);
-		viewrange = (game.getRandom().nextDouble() * 2 - 1);
+		maxSize = (animal.getRandom().nextDouble() * 2 - 1);
+		fur = (animal.getRandom().nextDouble() * 2 - 1);
+		maxSpeed = (animal.getRandom().nextDouble() * 2 - 1);
+		viewrange = (animal.getRandom().nextDouble() * 2 - 1);
 	}
 
-	public void variate(double strahlung) {
-		maxSize += (game.getRandom().nextDouble() * 2 - 1) * variation * (1 + strahlung);
-		fur += (game.getRandom().nextDouble() * 2 - 1) * variation * (1 + strahlung);
-		maxSpeed += (game.getRandom().nextDouble() * 2 - 1) * variation * (1 + strahlung);
-		viewrange += (game.getRandom().nextDouble() * 2 - 1) * variation * (1 + strahlung);
+	public void variate(double radiation) {
+		maxSize += (animal.getRandom().nextDouble() * 2 - 1) * variation * (1 + radiation);
+		fur += (animal.getRandom().nextDouble() * 2 - 1) * variation * (1 + radiation);
+		maxSpeed += (animal.getRandom().nextDouble() * 2 - 1) * variation * (1 + radiation);
+		viewrange += (animal.getRandom().nextDouble() * 2 - 1) * variation * (1 + radiation);
 	}
 
 	public double getMaxSize() {
