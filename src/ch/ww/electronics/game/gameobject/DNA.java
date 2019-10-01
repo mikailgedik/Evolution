@@ -76,4 +76,12 @@ public class DNA {
 	public void setViewrange(double viewrange) {
 		this.viewrange = viewrange;
 	}
+
+	public double getMaxEnergy() {
+		return maxEnergy;
+	}
+
+	public void setMaxEnergy(double maxEnergy) {
+		this.maxEnergy = maxEnergy;
+	}
 }
