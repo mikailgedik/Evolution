@@ -1,22 +1,18 @@
 package ch.ww.electronics.util;
 
-public class MutableVector2D implements Vector {
-
-	private double x;
-	private double y;
+public class MutableVector2D extends Vector2D {
 
 	public MutableVector2D(double x, double y) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 	}
 
 	@Override
 	public MutableVector2D withVector(Vector v) {
-		return new MutableVector2D(x + v.getX(), y + v.getY());
+		return new MutableVector2D(x + ((Vector2D) v).getX(), y + ((Vector2D) v).getY());
 	}
 
 	@Override
-	public Vector copy() {
+	public MutableVector2D copy() {
 		return new MutableVector2D(x, y);
 	}
 
@@ -44,8 +40,8 @@ public class MutableVector2D implements Vector {
 	}
 
 	public void add(Vector vector) {
-		setX(vector.getX() + x);
-		setY(vector.getY() + y);
+		setX(((Vector2D) vector).getX() + x);
+		setY(((Vector2D) vector).getY() + y);
 	}
 
 	public void round(int digits) {

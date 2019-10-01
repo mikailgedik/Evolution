@@ -1,7 +1,7 @@
 package ch.ww.electronics.util;
 
 public class Vector2D implements Vector {
-	private final double x, y;
+	protected double x, y;
 
 	public Vector2D(double x, double y) {
 		this.x = x;
@@ -15,10 +15,14 @@ public class Vector2D implements Vector {
 	public double getY() {
 		return y;
 	}
-
+	
+	public double getLength() {
+		return (Math.sqrt(x*x + y*y));
+	}
+	
 	@Override
 	public Vector2D withVector(Vector v) {
-		return new Vector2D(v.getX() + x, v.getY() + y);
+		return new Vector2D(((Vector2D) v).getX() + x, ((Vector2D) v).getY() + y);
 	}
 
 	@Override

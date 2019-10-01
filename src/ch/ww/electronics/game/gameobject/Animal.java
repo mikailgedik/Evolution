@@ -7,13 +7,13 @@ import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 import ch.ww.electronics.util.MutableVector2D;
 import ch.ww.electronics.util.Vector;
+import ch.ww.electronics.util.Vector2D;
 
 public class Animal extends GameObject{
 	private DNA dna;
-	private Vector motion;
+	private Vector2D motion;
 	private double energy;
 	private final Brain brain;
-	
 	
 	public static final GameObjectConstructor<Animal> CONSTRUCTOR = new GameObjectConstructor<Animal>() {
 		@Override
@@ -66,6 +66,14 @@ public class Animal extends GameObject{
 	
 	public void addEnergy(double ammount) {
 		setEnergy(getEnergy() + ammount);
+	}
+	
+	public Vector2D getMotion() {
+		return motion;
+	}
+	
+	public void setMotion(Vector2D v) {
+		this.motion = v;
 	}
 	
 	public void setDNA(DNA dna){
