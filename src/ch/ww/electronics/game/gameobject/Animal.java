@@ -8,6 +8,7 @@ import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 
 public class Animal extends GameObject{
 	
+	
 	public static final GameObjectConstructor<Animal> CONSTRUCTOR = new GameObjectConstructor<Animal>() {
 		@Override
 		public Animal createInstance(JSONObject jsonObject) {
@@ -26,9 +27,7 @@ public class Animal extends GameObject{
 	@Override
 	public void tick() {
 		setX(getX()+0.1);
-		
 	}
-	
 	
 	@Override
 	public GameObjectConstructor<? extends GameObject> getGameObjectConstructor() {
