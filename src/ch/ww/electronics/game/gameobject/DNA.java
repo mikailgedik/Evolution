@@ -1,12 +1,20 @@
 package ch.ww.electronics.game.gameobject;
 
+import ch.ww.electronics.game.Game;
+
 public class DNA {
+	private Game game;
+	
 	private double size;
 	private double fur;
 	private double speed;
 	private double viewrange;
 	
-	public DNA(double size,double fur,double speed, double viewrange){
+	private final double variation=0.1;
+	
+	public DNA(Game game, double size,double fur,double speed, double viewrange){
+		this.game=game;
+		
 		this.size=size;
 		this.fur=fur;
 		this.speed=speed;
@@ -14,13 +22,17 @@ public class DNA {
 	}
 	
 	public void randomize(){
-		size=Math.random();
-		fur=Math.random();
-		speed=Math.random();
-		viewrange=Math.random();
+		size=(Math.random()*2-1);
+		fur=(Math.random()*2-1);
+		speed=(Math.random()*2-1);
+		viewrange=(Math.random()*2-1);
 	}
+	
 	public void variate(double strahlung){
-		
+		size+=(Math.random()*2-1)*variation*(1+strahlung);
+		fur+=(Math.random()*2-1)*variation*(1+strahlung);
+		speed+=(Math.random()*2-1)*variation*(1+strahlung);
+		viewrange+=(Math.random()*2-1)*variation*(1+strahlung);
 	}
 
 	public double getSize() {
