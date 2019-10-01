@@ -25,6 +25,7 @@ public class Animal extends GameObject{
 
 	@Override
 	public void tick() {
+		setX(getX()+0.1);
 	}
 	
 	
