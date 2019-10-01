@@ -130,10 +130,7 @@ public abstract class Level {
 		x = (g.getMouseX() - FIELD_SIZE / 2) / FIELD_SIZE;
 		y = (g.getMouseY() - FIELD_SIZE / 2) / FIELD_SIZE;
 
-		screen.forRect(x * FIELD_SIZE + FIELD_SIZE / 2 + 1, y * FIELD_SIZE + FIELD_SIZE / 2 + 1, FIELD_SIZE, FIELD_SIZE,
-				(i) -> {
-					return 0;
-				});
+		
 		double xOnScreen, yOnScreen;
 
 		Screen tScreen;
@@ -154,7 +151,7 @@ public abstract class Level {
 			
 			screen.drawScreen((int) xOnScreen, (int) yOnScreen, o.getTexture());
 		}
-
+		
 		if (renderHUD) {
 			renderHUD(screen);
 		}
