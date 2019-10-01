@@ -34,10 +34,14 @@ public class Brain {
 				animal.setMotion(new Vector2D());
 			
 			} else if(animal.getLevel().getRandom().nextDouble() < 0.1) {
-				
+				double maxspeed=0.1;
+				double speed=animal.getGame().getRandom().nextDouble()*maxspeed;
+				double  angle=animal.getGame().getRandom().nextDouble()*2*Math.PI;
+				animal.setMotion(new Vector2D(speed*Math.sin(angle),speed*Math.cos(angle)));
 			}
 			break;
 		case CHASING:
+			
 			break;
 		case EATING:
 			break;
