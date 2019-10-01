@@ -76,6 +76,7 @@ public abstract class Level {
 		Objects.requireNonNull(gameObject, "gameObject == null");
 		if (!objects.contains(gameObject)) {
 			objects.add(gameObject);
+			gameObject.setLevel(this);
 		}
 	}
 
@@ -124,16 +125,7 @@ public abstract class Level {
 		screen.fill(0);
 		double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
 		double yInPixels = (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
-
-		GameListener g = getGameListener();
-		int x, y;
-		x = (g.getMouseX() - FIELD_SIZE / 2) / FIELD_SIZE;
-		y = (g.getMouseY() - FIELD_SIZE / 2) / FIELD_SIZE;
-
-		screen.forRect(x * FIELD_SIZE + FIELD_SIZE / 2 + 1, y * FIELD_SIZE + FIELD_SIZE / 2 + 1, FIELD_SIZE, FIELD_SIZE,
-				(i) -> {
-					return 0;
-				});
+		
 		double xOnScreen, yOnScreen;
 
 		Screen tScreen;
@@ -154,11 +146,11 @@ public abstract class Level {
 			
 			screen.drawScreen((int) xOnScreen, (int) yOnScreen, o.getTexture());
 		}
-
+		
 		if (renderHUD) {
 			renderHUD(screen);
 		}
-
+		
 		return screen;
 	}
 

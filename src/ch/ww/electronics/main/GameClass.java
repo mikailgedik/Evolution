@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import javax.swing.JFrame;
 
 import ch.ww.electronics.game.Game;
+import ch.ww.electronics.game.gameobject.Animal;
 import ch.ww.electronics.game.gameobject.Emmy;
 import ch.ww.electronics.game.gameobject.GameObject;
 import ch.ww.electronics.game.level.Level;
@@ -123,6 +124,7 @@ public class GameClass extends JFrame {
 		// TODO add things to load here
 		// GameObjects
 		GameObject.addTypeInDirectory(Emmy.NAME, Emmy.CONSTRUCTOR);
+		GameObject.addTypeInDirectory(Animal.NAME, Animal.CONSTRUCTOR);
 	}
 
 	public static void main(String[] args) throws Exception {
