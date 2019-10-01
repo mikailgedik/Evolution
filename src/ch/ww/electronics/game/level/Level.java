@@ -155,7 +155,7 @@ public abstract class Level {
 		if (renderHUD) {
 			renderHUD(screen);
 		}
-
+		
 		return screen;
 	}
 
