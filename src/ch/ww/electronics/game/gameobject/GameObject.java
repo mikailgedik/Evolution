@@ -47,7 +47,6 @@ public abstract class GameObject {
 			System.out.println("Type is not in allTypes! Fix bug!");
 			addTypeInDirectory(getName(), getGameObjectConstructor());
 		}
-
 	}
 
 	public void setCanGetOutOfWorldBounds(boolean canGetOutOfWorldBounds) {

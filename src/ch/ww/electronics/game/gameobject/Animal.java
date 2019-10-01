@@ -5,8 +5,14 @@ import org.json.JSONObject;
 import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
+import ch.ww.electronics.util.MutableVector2D;
+import ch.ww.electronics.util.Vector;
 
 public class Animal extends GameObject{
+	private DNA dna;
+	private Vector motion;
+	private double energy;
+	private final Brain brain;
 	
 	
 	public static final GameObjectConstructor<Animal> CONSTRUCTOR = new GameObjectConstructor<Animal>() {
@@ -23,11 +29,16 @@ public class Animal extends GameObject{
 		
 		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
 				0xffffff));
+		dna = new DNA(getGame(), 0,0,0,0);
+		this.brain = new Brain(this);
+		motion = new MutableVector2D(0, 0);
 	}
 
 	@Override
 	public void tick() {
-		setX(getX()+0.1);
+		brain.think();
+		
+		setLocation(getX() + motion.getX(), getY() + motion.getY());
 	}
 	
 	@Override
@@ -39,7 +50,4 @@ public class Animal extends GameObject{
 	public String getName() {
 		return NAME;
 	}
-	
-	
-	
 }
