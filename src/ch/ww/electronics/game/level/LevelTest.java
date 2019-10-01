@@ -1,6 +1,7 @@
 package ch.ww.electronics.game.level;
 
 import ch.ww.electronics.game.Game;
+import ch.ww.electronics.game.gameobject.Animal;
 import ch.ww.electronics.game.gameobject.Emmy;
 
 public class LevelTest extends Level {
@@ -12,6 +13,8 @@ public class LevelTest extends Level {
 	@Override
 	public void onStart() {
 		new Emmy(this, getLevelWidth() / 3, getLevelHeight() / 2);
+		Animal a = new Animal(null, getLevelWidth()/2, getLevelHeight()/2);
+		this.addGameObject(a);
 	}
 
 	@Override

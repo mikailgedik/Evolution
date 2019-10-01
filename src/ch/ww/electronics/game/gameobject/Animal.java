@@ -3,6 +3,8 @@ package ch.ww.electronics.game.gameobject;
 import org.json.JSONObject;
 
 import ch.ww.electronics.game.level.Level;
+import ch.ww.electronics.graphics.Screen;
+import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 
 public class Animal extends GameObject{
 	
@@ -16,12 +18,13 @@ public class Animal extends GameObject{
 
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
+		
+		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
+				0xffffff));
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	

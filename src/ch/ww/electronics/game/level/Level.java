@@ -76,6 +76,7 @@ public abstract class Level {
 		Objects.requireNonNull(gameObject, "gameObject == null");
 		if (!objects.contains(gameObject)) {
 			objects.add(gameObject);
+			gameObject.setLevel(this);
 		}
 	}
 
@@ -124,12 +125,6 @@ public abstract class Level {
 		screen.fill(0);
 		double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
 		double yInPixels = (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
-
-		GameListener g = getGameListener();
-		int x, y;
-		x = (g.getMouseX() - FIELD_SIZE / 2) / FIELD_SIZE;
-		y = (g.getMouseY() - FIELD_SIZE / 2) / FIELD_SIZE;
-
 		
 		double xOnScreen, yOnScreen;
 
