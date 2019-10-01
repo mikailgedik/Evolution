@@ -15,6 +15,7 @@ public class Animal extends GameObject{
 			return new Animal(null, jsonObject.getDouble("x"), jsonObject.getDouble("y"));
 		}
 	};
+	
 	public static final String NAME = "evolution.gameobject.animal";
 
 	public Animal(Level level, double x, double y) {
@@ -38,5 +39,7 @@ public class Animal extends GameObject{
 	public String getName() {
 		return NAME;
 	}
-
+	
+	
+	
 }
