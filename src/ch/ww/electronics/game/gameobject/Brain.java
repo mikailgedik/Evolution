@@ -8,10 +8,13 @@ public class Brain {
 	
 	public Brain(Animal animal) {
 		this.animal = animal;
+		status = Status.IDLE;
 	}
 
 	public void think() {
-		
+		if(Status.IDLE) {
+			
+		}
 	}
 	
 	public Animal getAnimal() {
