@@ -110,7 +110,8 @@ public abstract class GameObject {
 	public void setX(double x) {
 		checkIsInLevel();
 		x = Math.round(x * 1000) / 1000.0;
-		this.x = x;
+		if(x<level.getLevelWidth()&x>0)
+			this.x = x;
 	}
 
 	public double getY() {
