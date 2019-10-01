@@ -13,7 +13,7 @@ public class Sensors{
 			if(go instanceof Animal){
 				Animal a = (Animal) go;
 				if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) {
-					animals.add(a);	
+					animals.add(a);
 				}
 			}
 		});
