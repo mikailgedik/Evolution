@@ -8,8 +8,16 @@ public class Sensors{
 		this.animal=animal;
 	}
 	public ArrayList<Animal> getEyeInput(){
-		
-		return null;
+		ArrayList<Animal> animals= new ArrayList<>();
+		animal.getGame().getLevel().getObjectsInLevel().forEach((GameObject go) -> {
+			if(go instanceof Animal){
+				Animal a = (Animal) go;
+				if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) {
+					animals.add(a);	
+				}
+			}
+		});
+		return(animals);
 	}
 	
 	
