@@ -12,8 +12,14 @@ public class Brain {
 	}
 
 	public void think() {
-		if(Status.IDLE) {
-			
+		switch(status) {
+		case IDLE:
+		case CHASING:
+		case EATING:
+		case SEARCHING_FOOD:
+			break;
+		default:
+			throw new RuntimeException("LOOOOOOL");
 		}
 	}
 	

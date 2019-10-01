@@ -55,6 +55,19 @@ public class Animal extends GameObject{
 	public String getName() {
 		return NAME;
 	}
+	
+	public double getEnergy() {
+		return energy;
+	}
+	
+	public void setEnergy(double energy) {
+		this.energy = energy;
+	}
+	
+	public void addEnergy(double ammount) {
+		setEnergy(getEnergy() + ammount);
+	}
+	
 	public void setDNA(DNA dna){
 		this.dna=dna;
 	}
