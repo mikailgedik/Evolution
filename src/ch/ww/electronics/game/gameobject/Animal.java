@@ -33,6 +33,11 @@ public class Animal extends GameObject{
 		this.brain = new Brain(this);
 		motion = new MutableVector2D(0, 0);
 	}
+	public Animal copy(){
+		Animal animal=new Animal(this.getLevel(), getX(), getY());
+		animal.setDNA(getDNA());
+		return(animal);
+	}
 
 	@Override
 	public void tick() {
@@ -61,5 +66,12 @@ public class Animal extends GameObject{
 	
 	public void addEnergy(double ammount) {
 		setEnergy(getEnergy() + ammount);
+	}
+	
+	public void setDNA(DNA dna){
+		this.dna=dna;
+	}
+	public DNA getDNA(){
+		return(dna);
 	}
 }
