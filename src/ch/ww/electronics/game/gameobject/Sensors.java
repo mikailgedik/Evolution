@@ -13,6 +13,13 @@ public class Sensors{
 			if(go instanceof Animal){
 				Animal a = (Animal) go;
 				if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) {
+					//(a.getY()-animal.getY())/(a.getX()-animal.getX()) ist die Steigung
+					//atan(steigung) ist der Winkel
+					double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
+					winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
+					if(winkel<(animal.getDNA().getViewrange()+animal.getBrain().getfacingangle())%(2*Math.PI) & winkel>animal.getfacingangle().getDrehung()){
+						
+					}
 					animals.add(a);
 				}
 			}
