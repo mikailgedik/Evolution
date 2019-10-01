@@ -82,4 +82,7 @@ public class Animal extends GameObject{
 	public DNA getDNA(){
 		return(dna);
 	}
+	public Brain getBrain(){
+		return(brain);
+	}
 }

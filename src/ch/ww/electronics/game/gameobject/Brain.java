@@ -12,6 +12,7 @@ public class Brain {
 	private final DNA dna;
 	
 	private final Sensors sensors;
+	private double facingangle;
 	
 	private Status status;
 	
@@ -49,5 +50,8 @@ public class Brain {
 	
 	public Animal getAnimal() {
 		return animal;
+	}
+	public double getFacingAngle(){
+		return (facingangle);
 	}
 }
