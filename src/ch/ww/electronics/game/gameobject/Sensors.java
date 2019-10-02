@@ -20,11 +20,11 @@ public class Sensors{
 						//(a.getY()-animal.getY())/(a.getX()-animal.getX()) ist die Steigung
 						//atan(steigung) ist der Winkel
 						double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
-						winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
+						//winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
 						
-						//System.out.println(winkel);
+						//System.out.println("Winkel: "+winkel+"/facing angle: "+animal.getBrain().getFacingAngle()+"/Viewangle: "+animal.getDNA().getViewangle());
 						
-						if(winkel<(animal.getDNA().getViewangle()+animal.getDNA().getViewangle())%(2*Math.PI) & winkel>animal.getBrain().getFacingAngle()){
+						if(winkel<(animal.getBrain().getFacingAngle()+animal.getDNA().getViewangle()) & winkel>animal.getBrain().getFacingAngle()){
 							animals.add(a);
 							System.out.println("chasing");
 						}
