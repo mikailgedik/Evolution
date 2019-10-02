@@ -12,15 +12,22 @@ public class Sensors{
 		animal.getGame().getLevel().getObjectsInLevel().forEach((GameObject go) -> {
 			if(go instanceof Animal) {
 				Animal a = (Animal) go;
-				if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) {
-					//animals.add(a);
-				
-					//(a.getY()-animal.getY())/(a.getX()-animal.getX()) ist die Steigung
-					//atan(steigung) ist der Winkel
-					double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
-					winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
-					if(winkel<(animal.getDNA().getView+animal.getBrain().getFacingAngle())%(2*Math.PI) & winkel>animal.getBrain().getFacingAngle()){
-						animals.add(a);
+				if(this.animal!=a){
+					if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) {
+						
+						//animals.add(a);
+					
+						//(a.getY()-animal.getY())/(a.getX()-animal.getX()) ist die Steigung
+						//atan(steigung) ist der Winkel
+						double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
+						winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
+						
+						System.out.println(winkel);
+						
+						if(winkel<(animal.getDNA().getViewangle()+animal.getDNA().getViewangle())%(2*Math.PI) & winkel>animal.getBrain().getFacingAngle()){
+							animals.add(a);
+							System.out.println("chasing");
+						}
 					}
 				}
 			}
