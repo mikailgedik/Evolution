@@ -26,6 +26,8 @@ public class Sensors{
 						
 						if(winkel<(animal.getBrain().getFacingAngle()+animal.getDNA().getViewangle()) & winkel>animal.getBrain().getFacingAngle()){
 							animals.add(a);
+						} else {
+							animals.add(a);
 						}
 					}
 				}

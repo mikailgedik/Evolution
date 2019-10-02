@@ -32,11 +32,13 @@ public class Brain {
 
 	public void think() {
 		ArrayList<Animal> nearby = sensors.getEyeInput();
-		if(animal.getEnergy()/dna.getMaxEnergy() < 0.8 && status != Status.CHASING) {
+		if(animal.getEnergy()/dna.getMaxEnergy() < 1 && status != Status.CHASING) {
 			status = Status.SEARCHING_FOOD;
+			System.out.println("Hungyry");
 		}
 		switch(status) {
 		case IDLE:
+			/*
 			if(animal.getMotion().getLength() == 0 && animal.getLevel().getRandom().nextDouble() < 0.1) {
 				double maxspeed = dna.getSize();
 				double speed=animal.getGame().getRandom().nextDouble()*maxspeed;
@@ -45,6 +47,7 @@ public class Brain {
 			} else if(animal.getLevel().getRandom().nextDouble() < 0.1) {
 				animal.setMotion(new Vector2D(0,0));
 			}
+			*/
 			break;
 		case CHASING:
 			if(this.animal.isTouching(target)) {

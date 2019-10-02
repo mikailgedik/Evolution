@@ -31,6 +31,7 @@ public class DNA {
 		viewrange = 10;
 		viewangle = 2*Math.PI;
 		this.maxEnergy = (animal.getRandom().nextDouble()) * 100;
+		this.maxEnergy = 3000;
 	}
 
 	public void variate(double radiation) {
