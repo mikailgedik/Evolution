@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
-import ch.ww.electronics.game.gameobject.Emmy;
 import ch.ww.electronics.game.gameobject.GameObject;
 import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.game.level.LevelTest;
@@ -123,7 +122,6 @@ public class GameClass extends JFrame {
 	private static void addTypes() {
 		// TODO add things to load here
 		// GameObjects
-		GameObject.addTypeInDirectory(Emmy.NAME, Emmy.CONSTRUCTOR);
 		GameObject.addTypeInDirectory(Animal.NAME, Animal.CONSTRUCTOR);
 	}
 
@@ -135,7 +133,7 @@ public class GameClass extends JFrame {
 		game.getGame().setMenu(new TextureLoadMenu(game.getGame(), null, new TextureLoadMenu.LoadEnd() {
 			@Override
 			public void act() {
-				game.getGame().setLevel(new LevelTest(game.getGame(), 50, 50));
+				game.getGame().setLevel(new LevelTest(game.getGame(), 10, 10));
 			}
 		}));
 		game.start();

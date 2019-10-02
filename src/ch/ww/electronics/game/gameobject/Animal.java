@@ -119,4 +119,8 @@ public class Animal extends GameObject{
 	public Status getStatus() {
 		return brain.getStatus();
 	}
+	
+	public void setStatus(Status s) {
+		brain.setStatus(s);
+	}
 }
