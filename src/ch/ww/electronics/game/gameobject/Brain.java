@@ -45,6 +45,7 @@ public class Brain {
 			}
 			break;
 		case CHASING:
+			//TODO
 			break;
 		case SEARCHING_FOOD:
 			target = nearby.get(animal.getRandom().nextInt(nearby.size()));
