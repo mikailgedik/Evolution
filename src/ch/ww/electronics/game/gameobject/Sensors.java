@@ -14,15 +14,6 @@ public class Sensors{
 				Animal a = (Animal) go;
 				if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) {
 					animals.add(a);
-					/*
-					//(a.getY()-animal.getY())/(a.getX()-animal.getX()) ist die Steigung
-					//atan(steigung) ist der Winkel
-					double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
-					winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
-					if(winkel<(animal.getDNA().getViewrange()+animal.getBrain().getFacingAngle())%(2*Math.PI) & winkel>animal.getBrain().getFacingAngle()){
-						animals.add(a);
-					}
-					*/
 				}
 			}
 		});
