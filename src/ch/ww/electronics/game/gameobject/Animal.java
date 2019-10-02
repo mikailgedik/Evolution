@@ -39,8 +39,8 @@ public class Animal extends GameObject{
 
 	@Override
 	public void tick() {
-		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
-				0xffffff).darkScreen(getEnergy()/dna.getMaxEnergy()));
+		adjustTexture();
+		
 		
 		if(!isDead) {
 			brain.think();
@@ -52,6 +52,33 @@ public class Animal extends GameObject{
 	private void adjustEnergy() {
 		addEnergy(-motion.getLength() * dna.getSize());
 		addEnergy(-0.01); //Passive energy burning
+	}
+	
+	private void adjustTexture() {
+		int c = 0x0;
+		switch(this.getBrain().getStatus()) {
+		case CHASING:
+			c = 0x0000ff;
+			break;
+		case IDLE:
+			c = 0xffffff;
+			break;
+		case RUNNING:
+			c = 0xff0000;
+			break;
+		case SEARCHING_FOOD:
+			c = 0x00ff00;
+			break;
+		case STUNNED:
+			c = 0x551A8B;
+			break;
+		default:
+			break;
+		
+		}
+		Screen s = new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
+				c);
+		setTexture(s.darkScreen(getEnergy()/dna.getMaxEnergy()));
 	}
 	
 	@Override

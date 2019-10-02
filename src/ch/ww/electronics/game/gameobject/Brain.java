@@ -62,6 +62,8 @@ public class Brain {
 		default:
 			throw new RuntimeException("Should not reach this step");
 		}
+		
+		
 	}
 	
 	private void setMotionToRandomDirection(double speed) {
@@ -78,12 +80,13 @@ public class Brain {
 			animal.setMotion(new Vector2D(0,0));
 		}
 		
-		if(getAnimal().getEnergy()/getAnimal().getDNA().getMaxEnergy()>0.8){
+		if(getAnimal().getEnergy()/getAnimal().getDNA().getMaxEnergy()> 0.8/* && r.nextDouble() < 0.01 */){
 			System.out.println("NEW BABY");
 			Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
 			baby.getDNA().variate(0);
 			baby.setEnergy(baby.getEnergy()/2);
 			getAnimal().setEnergy(getAnimal().getEnergy()/3);
+			
 			getAnimal().setStatus(Status.STUNNED);
 			baby.setStatus(Status.RUNNING);
 		}
@@ -118,7 +121,7 @@ public class Brain {
 	}
 	
 	private void run(ArrayList<Animal> nearby) {
-		if(this.animal.getMotion().getLength() * 0.9 < this.animal.getDNA().getMaxSpeed() && this.animal.getRandom().nextDouble() < 0.01) {
+		if(this.animal.getMotion().getLength() * 0.9 < this.animal.getDNA().getMaxSpeed()) {
 			setMotionToRandomDirection(dna.getMaxSpeed());
 		}
 		
@@ -131,7 +134,7 @@ public class Brain {
 	private void stunned(ArrayList<Animal> nearby) {
 		this.animal.setMotion(new Vector2D(0, 0));
 
-		if(animal.getRandom().nextDouble() < 0.01) {
+		if(animal.getRandom().nextDouble() < 0.001) {
 			status = Status.IDLE;
 		}
 	}

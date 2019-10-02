@@ -1,30 +1,19 @@
 package ch.ww.electronics.level.backgroundtile;
 
-import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.graphics.TextureManager;
 
 public class BackgroundTileDirt extends BackgroundTile {
 	private Screen screen;
 	public static final String NAME = "backgroundTile.backgroundTileDirt";
-	public static final BackgroundTileDirt INSTANCE = new BackgroundTileDirt();
 	
-	private BackgroundTileDirt() {
+	public BackgroundTileDirt(int x, int y) {
+		super(0, x, y);
 		this.screen = TextureManager.getInstance().getTexture(NAME);
 	}
 	
 	@Override
-	public Screen getScreenToRender(BackgroundTileMetaData b) {
-		return getProcessedScreen(screen, b);
+	public Screen getScreenToRender() {
+		return screen;
 	}
-
-	@Override
-	public void tick(BackgroundTileMetaData bgtmd) {
-	}
-
-	@Override
-	public BackgroundTileMetaData createBackgroundTileMetaData(Level level, int x, int y) {
-		return new BackgroundTileMetaData(INSTANCE, level, x, y);
-	}
-
 }

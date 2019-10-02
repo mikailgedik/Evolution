@@ -8,13 +8,12 @@ import java.util.Random;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
-import ch.ww.electronics.game.gameobject.Brain;
 import ch.ww.electronics.game.gameobject.Fight;
 import ch.ww.electronics.game.gameobject.GameObject;
 import ch.ww.electronics.graphics.FontCreator;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
-import ch.ww.electronics.level.backgroundtile.BackgroundTileMetaData;
+import ch.ww.electronics.level.backgroundtile.BackgroundTileDirt;
 import ch.ww.electronics.listener.GameListener;
 
 public abstract class Level {
@@ -25,7 +24,7 @@ public abstract class Level {
 	private final Screen screen;
 	private final ArrayList<GameObject> objects;
 	private final ArrayList<Fight> fights;
-	private final BackgroundTileMetaData[] backgroundTile;
+	private final BackgroundTile[] backgroundTile;
 	private final LevelCreator levelCreator;
 	private double viewX, viewY;
 
@@ -38,7 +37,7 @@ public abstract class Level {
 
 		objects = new ArrayList<>();
 		fights = new ArrayList<>();
-		this.backgroundTile = new BackgroundTileMetaData[levelWidth * levelHeight];
+		this.backgroundTile = new BackgroundTile[levelWidth * levelHeight];
 
 		this.levelCreator = new DefaultLevelCreator(game.getRandom());
 		this.levelCreator.createLevel(this);
@@ -47,27 +46,19 @@ public abstract class Level {
 		viewY = getLevelHeight() / 2;
 	}
 
-	public BackgroundTileMetaData[] getBackgroundTiles() {
+	public BackgroundTile[] getBackgroundTiles() {
 		return backgroundTile;
 	}
 
-	public BackgroundTileMetaData getBackgroundTile(int x, int y) {
+	public BackgroundTile getBackgroundTile(int x, int y) {
 		if (x > -1 && x < getLevelWidth() && y > -1 && y < getLevelHeight()) {
 			int loc = x + y * getLevelWidth();
 			if (backgroundTile[loc] == null) {
-				backgroundTile[loc] = BackgroundTile.BACKGROUND_DIRT.createBackgroundTileMetaData(this, x, y);
+				backgroundTile[loc] = new BackgroundTileDirt(x, y);
 			}
 			return backgroundTile[loc];
 		} else {
 			return null;
-		}
-	}
-
-	public BackgroundTile getBackgroundTileType(int x, int y) {
-		if (!coordinatesInLevel(x, y)) {
-			return null;
-		} else {
-			return getBackgroundTile(x, y).getType();
 		}
 	}
 
@@ -134,7 +125,7 @@ public abstract class Level {
 		double xOnScreen, yOnScreen;
 
 		Screen tScreen;
-		for (BackgroundTileMetaData t : backgroundTile) {
+		for (BackgroundTile t : backgroundTile) {
 			if (t != null) {
 				xOnScreen = t.getX() * FIELD_SIZE + xInPixels;
 				yOnScreen = t.getY() * FIELD_SIZE + yInPixels;
@@ -225,17 +216,6 @@ public abstract class Level {
 				return false;
 			}
 		});
-		
-		BackgroundTileMetaData t;
-		for (int i = 0; i < backgroundTile.length; i++) {
-			t = backgroundTile[i];
-			if (t.getHealth() <= 0) {
-				backgroundTile[i] = BackgroundTile.BACKGROUND_DIRT.createBackgroundTileMetaData(this, t.getX(),
-						t.getY());
-			}
-			t.tick();
-
-		}
 	}
 
 	public ArrayList<GameObject> getObjectsInLevel() {
@@ -269,10 +249,8 @@ public abstract class Level {
 		return new int[] { x, y };
 	}
 
-	public void setBackgroundTile(BackgroundTileMetaData bgt) {
-		if (bgt.getLevel() != this) {
-			throw new RuntimeException("Error");
-		}
+	public void setBackgroundTile(BackgroundTile bgt) {
+		
 		if (!coordinatesInLevel(bgt.getX(), bgt.getY())) {
 			throw new RuntimeException("Coordinates not in bounds");
 		}
@@ -283,9 +261,11 @@ public abstract class Level {
 		return x > -1 && x < getLevelWidth() && y > -1 && y < getLevelHeight();
 	}
 
-	public void setBackgroundTile(int x, int y, BackgroundTile type) {
-		Objects.requireNonNull(type, "type == null");
-		setBackgroundTile(type.createBackgroundTileMetaData(this, x, y));
+	public void setBackgroundTile(int x, int y, BackgroundTile t) {
+		Objects.requireNonNull(t, "t == null");
+		t.setX(x);
+		t.setY(y);
+		setBackgroundTile(t);
 	}
 
 	public Random getRandom() {

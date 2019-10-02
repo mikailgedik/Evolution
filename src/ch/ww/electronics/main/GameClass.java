@@ -133,7 +133,7 @@ public class GameClass extends JFrame {
 		game.getGame().setMenu(new TextureLoadMenu(game.getGame(), null, new TextureLoadMenu.LoadEnd() {
 			@Override
 			public void act() {
-				game.getGame().setLevel(new LevelTest(game.getGame(), 10, 10));
+				game.getGame().setLevel(new LevelTest(game.getGame(), 12, 12));
 			}
 		}));
 		game.start();

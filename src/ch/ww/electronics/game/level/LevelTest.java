@@ -18,7 +18,7 @@ public class LevelTest extends Level {
 		}
 		*/
 		new Animal(this, getLevelWidth()/2, getLevelHeight()/2);
-		new Animal(this, getLevelWidth()/2, getLevelHeight()/2+4);
+//		new Animal(this, getLevelWidth()/2, getLevelHeight()/2+4);
 	}
 
 	@Override

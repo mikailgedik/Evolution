@@ -3,7 +3,8 @@ package ch.ww.electronics.game.level;
 import java.util.Random;
 
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
-import ch.ww.electronics.level.backgroundtile.BackgroundTileMetaData;
+import ch.ww.electronics.level.backgroundtile.BackgroundTileDirt;
+import ch.ww.electronics.level.backgroundtile.BackgroundTileStone;
 import ch.ww.electronics.util.CoordinatesCreator;
 
 public class DefaultLevelCreator implements LevelCreator {
@@ -38,7 +39,7 @@ public class DefaultLevelCreator implements LevelCreator {
 		System.out.println("Creating background...");
 		for (int x = 0; x < level.getLevelWidth(); x++) {
 			for (int y = 0; y < level.getLevelHeight(); y++) {
-				level.setBackgroundTile(BackgroundTile.BACKGROUND_DIRT.createBackgroundTileMetaData(level, x, y));
+				level.setBackgroundTile(new BackgroundTileDirt(x, y));
 			}
 		}
 
@@ -56,11 +57,8 @@ public class DefaultLevelCreator implements LevelCreator {
 					getRandom().nextInt(level.getLevelHeight()) };
 
 			for (Integer[] loc : CoordinatesCreator.createFilledCircle(center[0], center[1], radius)) {
-				if (loc[0] == center[0] && loc[1] == center[1]) {
-					//TODO
-					setBackgroundTile(loc[0], loc[1], BackgroundTile.BACKGROUND_STONE);
-				} else if ((getRandom().nextInt(max) > loc[2])) {
-					setBackgroundTile(loc[0], loc[1], BackgroundTile.BACKGROUND_STONE);
+				if ((getRandom().nextInt(max) > loc[2])) {
+					setBackgroundTile(new BackgroundTileStone(loc[0], loc[1]));
 				}
 			}
 		}
@@ -68,16 +66,11 @@ public class DefaultLevelCreator implements LevelCreator {
 		return count;
 	}
 
-	public void setBackgroundTile(int x, int y, BackgroundTile type) {
-		setBackgroundTile(type.createBackgroundTileMetaData(level, x, y));
-	}
-
-	public void setBackgroundTile(BackgroundTileMetaData d) {
-		Level l = d.getLevel();
-		if (d.getX() < 0 || d.getX() >= l.getLevelWidth() || d.getY() < 0 || d.getY() >= l.getLevelHeight()) {
+	public void setBackgroundTile(BackgroundTile d) {
+		if (d.getX() < 0 || d.getX() >= level.getLevelWidth() || d.getY() < 0 || d.getY() >= level.getLevelHeight()) {
 			return;
 		} else {
-			l.setBackgroundTile(d);
+			level.setBackgroundTile(d);
 		}
 	}
 }
