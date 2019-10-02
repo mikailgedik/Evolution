@@ -53,6 +53,7 @@ public class Brain {
 		case SEARCHING_FOOD:
 			if(nearby.size() > 0) {
 				target = nearby.get(animal.getRandom().nextInt(nearby.size()));
+				System.out.println(target);
 				status = Status.CHASING;
 			} else {
 				status = Status.IDLE;
