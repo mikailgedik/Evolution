@@ -3,6 +3,7 @@ package ch.ww.electronics.game.gameobject;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ch.ww.electronics.util.MutableVector2D;
 import ch.ww.electronics.util.Vector2D;
 
 public class Brain {
@@ -45,8 +46,9 @@ public class Brain {
 			}
 			break;
 		case CHASING:
-			double winkel=Math.atan((target.getY()-animal.getY())/(target.getX()-animal.getX()));
-			animal.setMotion(new Vector2D(Math.sin(winkel)*animal.getDNA().getMaxSpeed(), Math.cos(winkel)*animal.getDNA().getMaxSpeed()));
+			MutableVector2D v = new MutableVector2D(this.animal.getX(), this.animal.getY());
+			double factor = v.getLength() / dna.getMaxSpeed();
+			animal.setMotion(new MutableVector2D(v.getX() * factor, v.getY() * factor));
 			break;
 		case SEARCHING_FOOD:
 			if(nearby.size() > 0) {
@@ -54,6 +56,7 @@ public class Brain {
 				status = Status.CHASING;
 			} else {
 				status = Status.IDLE;
+				target = null;
 			}
 			
 			break;
