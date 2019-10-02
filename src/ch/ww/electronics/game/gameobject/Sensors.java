@@ -19,7 +19,7 @@ public class Sensors{
 					//atan(steigung) ist der Winkel
 					double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
 					winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
-					if(winkel<(animal.getDNA().getView+animal.getBrain().getFacingAngle())%(2*Math.PI) & winkel>animal.getBrain().getFacingAngle()){
+					if(winkel<(animal.getDNA().getViewangle()+animal.getBrain().getFacingAngle())%(2*Math.PI) & winkel>animal.getBrain().getFacingAngle()){
 						animals.add(a);
 					}
 				}
