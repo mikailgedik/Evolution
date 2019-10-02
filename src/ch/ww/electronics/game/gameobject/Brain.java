@@ -38,6 +38,7 @@ public class Brain {
 			status = Status.SEARCHING_FOOD;
 			System.out.println("Hungry");
 		}
+		status=Status.IDLE;
 		switch(status) {
 		case IDLE:
 			
@@ -49,13 +50,13 @@ public class Brain {
 			} else if(animal.getLevel().getRandom().nextDouble() < 0.1) {
 				animal.setMotion(new Vector2D(0,0));
 			}
-//			if(getAnimal().getEnergy()/getAnimal().getDNA().getMaxEnergy()>0.8){
-//				Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
-//				baby.getDNA().variate(0);
-//				baby.setEnergy(baby.getEnergy()/2);
-//				getAnimal().setEnergy(getAnimal().getEnergy()/3);
-//				
-//			}
+			if(getAnimal().getEnergy()/getAnimal().getDNA().getMaxEnergy()>0.8){
+				Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
+				baby.getDNA().variate(0);
+				baby.setEnergy(baby.getEnergy()/2);
+				getAnimal().setEnergy(getAnimal().getEnergy()/3);
+				
+			}
 			break;
 		case CHASING:
 			if(this.animal.isTouching(target)) {
