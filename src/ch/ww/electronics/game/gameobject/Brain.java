@@ -46,7 +46,7 @@ public class Brain {
 			}
 			break;
 		case CHASING:
-			MutableVector2D v = new MutableVector2D(this.animal.getX(), this.animal.getY());
+			MutableVector2D v = new MutableVector2D(target.getX() - this.animal.getX(), target.getY() - this.animal.getY());
 			double factor = v.getLength() / dna.getMaxSpeed();
 			animal.setMotion(new MutableVector2D(v.getX() * factor, v.getY() * factor));
 			break;
