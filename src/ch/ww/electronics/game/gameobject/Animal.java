@@ -33,7 +33,7 @@ public class Animal extends GameObject{
 		setTexture(new Screen((int) (BackgroundTile.SIZE * dna.getSize()), (int) (BackgroundTile.SIZE * dna.getSize()),
 				0xffffff));
 		this.brain = new Brain(this);
-		motion = new MutableVector2D(0, 0);
+		setMotion(new Vector2D(0, 0));
 		this.energy = dna.getMaxEnergy();
 	}
 
@@ -45,12 +45,12 @@ public class Animal extends GameObject{
 		if(!isDead) {
 			brain.think();
 			adjustEnergy();
-			setLocation(getX() + motion.getX(), getY() + motion.getY());
+			setLocation(getX() + getMotion().getX(), getY() + getMotion().getY());
 		}
 	}
 	
 	private void adjustEnergy() {
-		addEnergy(-motion.getLength() * dna.getSize());
+		addEnergy(-getMotion().getLength() * dna.getSize());
 		addEnergy(-0.01); //Passive energy burning
 	}
 	
@@ -73,8 +73,7 @@ public class Animal extends GameObject{
 			c = 0x551A8B;
 			break;
 		default:
-			break;
-		
+			throw new RuntimeException();		
 		}
 		Screen s = new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
 				c);

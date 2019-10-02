@@ -30,7 +30,7 @@ public class DNA {
 	public void randomize() {
 		size = (animal.getRandom().nextDouble());
 		fur = (animal.getRandom().nextDouble());
-		maxSpeed = (animal.getRandom().nextDouble()) * 0.1;
+		maxSpeed = (animal.getRandom().nextDouble()) * 0.1 + 0.2;
 		viewrange = (animal.getRandom().nextDouble()) * 5;
 		viewrange = 10;
 		viewangle = 2*Math.PI;

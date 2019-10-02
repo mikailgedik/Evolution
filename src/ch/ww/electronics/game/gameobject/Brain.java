@@ -121,18 +121,21 @@ public class Brain {
 	}
 	
 	private void run(ArrayList<Animal> nearby) {
-		if(this.animal.getMotion().getLength() * 0.9 < this.animal.getDNA().getMaxSpeed()) {
+		if(this.animal.getMotion().getLength() < this.animal.getDNA().getMaxSpeed() * 0.9) {
 			setMotionToRandomDirection(dna.getMaxSpeed());
 		}
 		
 		//Je mehr Gegner es sieht, desto eher rennt es weiter
 		if(animal.getRandom().nextDouble() < Math.pow(0.005, nearby.size())) {
 			status = Status.IDLE;
+			System.out.println("dsf");
 		}
 	}
 	
 	private void stunned(ArrayList<Animal> nearby) {
-		this.animal.setMotion(new Vector2D(0, 0));
+		if(this.animal.getMotion().getLength() != 0) {
+			this.animal.setMotion(new Vector2D(0, 0));
+		}
 
 		if(animal.getRandom().nextDouble() < 0.001) {
 			status = Status.IDLE;
