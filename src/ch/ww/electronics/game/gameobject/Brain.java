@@ -3,6 +3,7 @@ package ch.ww.electronics.game.gameobject;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.util.MutableVector2D;
 import ch.ww.electronics.util.Vector2D;
 
@@ -46,10 +47,15 @@ public class Brain {
 			}
 			break;
 		case CHASING:
-			MutableVector2D v = new MutableVector2D(target.getX() - this.animal.getX(), target.getY() - this.animal.getY());
-			double factor = v.getLength() / dna.getMaxSpeed();
-			animal.setMotion(new MutableVector2D(v.getX() * factor, v.getY() * factor));
-			break;
+			if(this.animal.isTouching(target)) {
+				animal.getLevel().fight(this.animal, target);
+				System.out.println("Kill");
+			} else {
+				MutableVector2D v = new MutableVector2D(target.getX() - this.animal.getX(), target.getY() - this.animal.getY());
+				double factor = v.getLength() / dna.getMaxSpeed();
+				animal.setMotion(new MutableVector2D(v.getX() * factor, v.getY() * factor));
+				break;
+			}
 		case SEARCHING_FOOD:
 			if(nearby.size() > 0) {
 				target = nearby.get(animal.getRandom().nextInt(nearby.size()));

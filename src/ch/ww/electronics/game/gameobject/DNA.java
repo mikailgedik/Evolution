@@ -28,7 +28,8 @@ public class DNA {
 		fur = (animal.getRandom().nextDouble());
 		maxSpeed = (animal.getRandom().nextDouble());
 		viewrange = (animal.getRandom().nextDouble()) * 5;
-		viewangle = Math.PI;
+		viewrange = 10;
+		viewangle = 2*Math.PI;
 		this.maxEnergy = (animal.getRandom().nextDouble()) * 100;
 	}
 

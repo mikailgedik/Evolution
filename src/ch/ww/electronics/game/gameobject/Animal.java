@@ -52,7 +52,7 @@ public class Animal extends GameObject{
 	
 	private void adjustEnergy() {
 		addEnergy(-motion.getLength() * desoxyribonukleinsaeure.getSize());
-		addEnergy(-0.1); //Passive energy burning
+		addEnergy(-0.01); //Passive energy burning
 		if(energy < 0) {
 			isDead= true;
 			energy = 0;

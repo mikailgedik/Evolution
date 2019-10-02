@@ -12,10 +12,13 @@ public class LevelTest extends Level {
 
 	@Override
 	public void onStart() {
-		new Emmy(this, getLevelWidth() / 3, getLevelHeight() / 2);
+		/*
 		for(int i = 0; i < 100; i++) {
 			new Animal(this, getRandom().nextInt(getLevelWidth()),  getRandom().nextInt(getLevelHeight()));
 		}
+		*/
+		new Animal(this, 10, 10);
+		new Animal(this, 10, 14);
 	}
 
 	@Override
