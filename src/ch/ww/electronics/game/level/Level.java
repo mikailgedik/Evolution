@@ -8,8 +8,10 @@ import java.util.Random;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
+import ch.ww.electronics.game.gameobject.Brain;
 import ch.ww.electronics.game.gameobject.Fight;
 import ch.ww.electronics.game.gameobject.GameObject;
+import ch.ww.electronics.graphics.FontCreator;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 import ch.ww.electronics.level.backgroundtile.BackgroundTileMetaData;
@@ -159,6 +161,26 @@ public abstract class Level {
 
 	private void renderHUD(Screen screen) {
 		//TODO
+		int[] s = new int[3];
+		for(GameObject o: objects) {
+			if(o instanceof Animal) {
+				switch(((Animal)o).getStatus()) {
+				case IDLE:
+					s[0]++;
+					break;
+				case CHASING:
+					s[1]++;
+					break;
+				case SEARCHING_FOOD:
+					s[2]++;
+					break;
+				}
+			}
+		}
+		
+		String text = "Idle:" + s[0] + "\n" + "Chasing:" + s[1] + "\n" + "Searching Food:" + s[2] + "\n";
+		
+		FontCreator.drawFontOnScreen(text, 0, 0, screen, 0x00);
 	}
 
 	public GameListener getGameListener() {

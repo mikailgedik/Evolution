@@ -96,6 +96,11 @@ public class Brain {
 	public Animal getAnimal() {
 		return animal;
 	}
+	
+	public Status getStatus() {
+		return status;
+	}
+	
 	public double getFacingAngle(){
 		return (facingangle);
 	}

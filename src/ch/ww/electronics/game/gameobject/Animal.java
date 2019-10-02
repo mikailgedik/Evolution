@@ -2,6 +2,7 @@ package ch.ww.electronics.game.gameobject;
 
 import org.json.JSONObject;
 
+import ch.ww.electronics.game.gameobject.Brain.Status;
 import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
@@ -10,7 +11,7 @@ import ch.ww.electronics.util.Vector2D;
 
 public class Animal extends GameObject{
 	//TODO Es gibt eine Size in Gameobject, aber die wird in der Grafik nicht benutzt. Auch die getsize gibt immer nur 1 zurück. 
-	private DNA desoxyribonukleinsaeure;
+	private DNA dna;
 	private Vector2D motion;
 	private double energy;
 	private final Brain brain;
@@ -28,18 +29,18 @@ public class Animal extends GameObject{
 
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
-		desoxyribonukleinsaeure = new DNA(this);
-		setTexture(new Screen((int) (BackgroundTile.SIZE * desoxyribonukleinsaeure.getSize()), (int) (BackgroundTile.SIZE * desoxyribonukleinsaeure.getSize()),
+		dna = new DNA(this);
+		setTexture(new Screen((int) (BackgroundTile.SIZE * dna.getSize()), (int) (BackgroundTile.SIZE * dna.getSize()),
 				0xffffff));
 		this.brain = new Brain(this);
 		motion = new MutableVector2D(0, 0);
-		this.energy = desoxyribonukleinsaeure.getMaxEnergy();
+		this.energy = dna.getMaxEnergy();
 	}
 
 	@Override
 	public void tick() {
 		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
-				0xffffff).darkScreen(getEnergy()/desoxyribonukleinsaeure.getMaxEnergy()));
+				0xffffff).darkScreen(getEnergy()/dna.getMaxEnergy()));
 		
 		if(!isDead) {
 			brain.think();
@@ -49,7 +50,7 @@ public class Animal extends GameObject{
 	}
 	
 	private void adjustEnergy() {
-		addEnergy(-motion.getLength() * desoxyribonukleinsaeure.getSize());
+		addEnergy(-motion.getLength() * dna.getSize());
 		addEnergy(-0.01); //Passive energy burning
 	}
 	
@@ -73,8 +74,8 @@ public class Animal extends GameObject{
 			energy = 0;
 			isDead= true;
 		}
-		if(energy > desoxyribonukleinsaeure.getMaxEnergy()) {
-			energy = desoxyribonukleinsaeure.getMaxEnergy();
+		if(energy > dna.getMaxEnergy()) {
+			energy = dna.getMaxEnergy();
 		}
 	}
 	
@@ -91,11 +92,11 @@ public class Animal extends GameObject{
 	}
 	
 	public void setDNA(DNA dna){
-		this.desoxyribonukleinsaeure=dna;
+		this.dna=dna;
 	}
 	
 	public DNA getDNA(){
-		return(desoxyribonukleinsaeure);
+		return(dna);
 	}
 	
 	public Brain getBrain(){
@@ -107,11 +108,15 @@ public class Animal extends GameObject{
 	}
 	
 	public double getSize() {
-		return desoxyribonukleinsaeure.getSize();
+		return dna.getSize();
 	}
 	
 	@Override
 	public String toString() {
 		return "[isDead:" + isDead() + "]";
+	}
+
+	public Status getStatus() {
+		return brain.getStatus();
 	}
 }
