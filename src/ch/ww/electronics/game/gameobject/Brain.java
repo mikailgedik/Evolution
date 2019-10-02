@@ -47,10 +47,9 @@ public class Brain {
 		case CHASING:
 			break;
 		case SEARCHING_FOOD:
-			if(animal.getEnergy()/dna.getMaxEnergy() < 0.8 && nearby.size() != 0) {
-				target = nearby.get(animal.getRandom().nextInt(nearby.size()));
-				status = Status.CHASING;
-			}
+			target = nearby.get(animal.getRandom().nextInt(nearby.size()));
+			status = Status.CHASING;
+			
 			break;
 		default:
 			throw new RuntimeException("Should not reach this step");
