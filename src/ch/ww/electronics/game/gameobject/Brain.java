@@ -47,8 +47,12 @@ public class Brain {
 		case CHASING:
 			break;
 		case SEARCHING_FOOD:
-			target = nearby.get(animal.getRandom().nextInt(nearby.size()));
-			status = Status.CHASING;
+			if(nearby.size() > 0) {
+				target = nearby.get(animal.getRandom().nextInt(nearby.size()));
+				status = Status.CHASING;
+			} else {
+				status = Status.IDLE;
+			}
 			
 			break;
 		default:
