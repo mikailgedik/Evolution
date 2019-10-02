@@ -22,7 +22,7 @@ public class Sensors{
 						double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
 						winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
 						
-						System.out.println(winkel);
+						//System.out.println(winkel);
 						
 						if(winkel<(animal.getDNA().getViewangle()+animal.getDNA().getViewangle())%(2*Math.PI) & winkel>animal.getBrain().getFacingAngle()){
 							animals.add(a);
