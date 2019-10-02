@@ -16,8 +16,6 @@ public class LevelTest extends Level {
 			new Animal(this, getRandom().nextInt(getLevelWidth()),  getRandom().nextInt(getLevelHeight()));
 		}
 		
-		new Animal(this, 10, 10);
-		new Animal(this, 10, 14);
 	}
 
 	@Override
