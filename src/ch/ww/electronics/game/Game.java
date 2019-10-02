@@ -14,7 +14,7 @@ import ch.ww.electronics.menu.Menu;
 import ch.ww.electronics.menu.MenuPause;
 
 public class Game implements EventExecuter {
-	private final Screen screen, background, errorScreen;
+	private final Screen screen, errorScreen;
 	private long totalLevelTicks = 0, totalMenuTicks = 0, totalInventoryTicks = 0;
 	private final Random random;
 	private GameCanvas gameCanvas;
@@ -29,13 +29,14 @@ public class Game implements EventExecuter {
 	public Game(Screen screen, GameCanvas gameCanvas) {
 		this.screen = screen;
 		this.gameCanvas = gameCanvas;
-		background = new Screen(screen.getWidth(), screen.getHeight());
 		errorScreen = new Screen(screen.getWidth(), screen.getHeight(), 0x0);
 		menu = null;
 		random = new Random();
 		loader = new GameLoader(this);
 
 		gameCanvas.getListener().addExecuter(this);
+		
+		test = screen.getHeight();
 	}
 
 	public GameLoader getGameLoader() {
@@ -53,7 +54,7 @@ public class Game implements EventExecuter {
 	public int getHeight() {
 		return screen.getHeight();
 	}
-
+		
 	public void tick() {
 		getGameListener().flushEvents();
 		if (getMenu() != null) {
@@ -89,8 +90,6 @@ public class Game implements EventExecuter {
 			}
 			getMenu().renderOnScreen(screen);
 		} else if (getLevel() != null) {
-			screen.drawScreen(0, 0, background);
-
 			screen.drawScreen(0, 0, getLevel().getScreenToRender(true));
 		} else {
 			FontCreator.drawFontOnScreen("NO MENU\nNO LEVEL\nERROR", screen.getWidth() / 2, screen.getHeight() / 2,

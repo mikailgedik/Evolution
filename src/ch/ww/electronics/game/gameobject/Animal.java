@@ -6,7 +6,6 @@ import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 import ch.ww.electronics.util.MutableVector2D;
-import ch.ww.electronics.util.Vector;
 import ch.ww.electronics.util.Vector2D;
 
 public class Animal extends GameObject{
