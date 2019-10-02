@@ -7,17 +7,19 @@ public class DNA {
 	private double fur;
 	private double maxSpeed;
 	private double viewrange;
+	private double viewangle;
 	private double maxEnergy;
 
 	private static final double VARIATION = 0.1;
 
-	public DNA(Animal game, double size, double fur, double maxSpeed, double viewrange, double maxEnergy) {
+	public DNA(Animal game, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy) {
 		this.animal = game;
 
 		this.size = size;
 		this.fur = fur;
 		this.maxSpeed = maxSpeed;
 		this.viewrange = viewrange;
+		this.viewangle = viewangle;
 		this.maxEnergy = maxEnergy;
 	}
 
@@ -26,6 +28,7 @@ public class DNA {
 		fur = (animal.getRandom().nextDouble());
 		maxSpeed = (animal.getRandom().nextDouble());
 		viewrange = (animal.getRandom().nextDouble());
+		viewangle = Math.PI;
 		this.maxEnergy = (animal.getRandom().nextDouble()) * 100;
 	}
 
@@ -74,5 +77,13 @@ public class DNA {
 
 	public void setMaxEnergy(double maxEnergy) {
 		this.maxEnergy = maxEnergy;
+	}
+	
+	public double getViewangle() {
+		return viewangle;
+	}
+	
+	public void setViewangle(double viewangle) {
+		this.viewangle = viewangle;
 	}
 }
