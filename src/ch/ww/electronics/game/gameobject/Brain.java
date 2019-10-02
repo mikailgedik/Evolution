@@ -45,6 +45,8 @@ public class Brain {
 			}
 			break;
 		case CHASING:
+			double winkel=Math.atan((target.getY()-animal.getY())/(target.getX()-animal.getX()));
+			animal.setMotion(new Vector2D(Math.sin(winkel)*animal.getDNA().getMaxSpeed(), Math.cos(winkel)*animal.getDNA().getMaxSpeed()));
 			break;
 		case SEARCHING_FOOD:
 			if(nearby.size() > 0) {
