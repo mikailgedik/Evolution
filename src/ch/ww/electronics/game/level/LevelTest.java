@@ -35,17 +35,4 @@ public class LevelTest extends Level {
 	public void reset() {
 
 	}
-	
-	@Override
-	public void fight(Animal a1, Animal a2) {
-		double diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
-		if(diff >= 0) {
-			a1.addEnergy(a2.getEnergy());
-			a2.setEnergy(0);
-		} else if(diff < 0) {
-			a2.addEnergy(a1.getEnergy());
-			a1.setEnergy(0);
-		} else {
-		}
-	}
 }

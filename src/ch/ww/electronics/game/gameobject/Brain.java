@@ -73,8 +73,7 @@ public class Brain {
 	
 	private void chasing(ArrayList<Animal> nearby) {
 		if(this.animal.isTouching(target)) {
-			animal.getLevel().fight(this.animal, target);
-			System.out.println("Kill");
+			animal.getLevel().addFight(new Fight(this.animal, target));
 			status = Status.IDLE;
 		} else {
 			MutableVector2D v = new MutableVector2D(target.getX() - this.animal.getX(), target.getY() - this.animal.getY());

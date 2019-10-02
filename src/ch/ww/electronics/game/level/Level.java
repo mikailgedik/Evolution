@@ -5,10 +5,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.function.Predicate;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
+import ch.ww.electronics.game.gameobject.Fight;
 import ch.ww.electronics.game.gameobject.GameObject;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
@@ -22,6 +22,7 @@ public abstract class Level {
 	private final int levelWidth, levelHeight;
 	private final Screen screen;
 	private final ArrayList<GameObject> objects;
+	private final ArrayList<Fight> fights;
 	private final BackgroundTileMetaData[] backgroundTile;
 	private final LevelCreator levelCreator;
 	private double viewX, viewY;
@@ -34,7 +35,7 @@ public abstract class Level {
 		this.levelHeight = levelHeight;
 
 		objects = new ArrayList<>();
-
+		fights = new ArrayList<>();
 		this.backgroundTile = new BackgroundTileMetaData[levelWidth * levelHeight];
 
 		this.levelCreator = new DefaultLevelCreator(game.getRandom());
@@ -181,6 +182,13 @@ public abstract class Level {
 			((GameObject) o).tick();
 		}
 		
+		fights.forEach((f) -> {
+			System.out.println("Fight!");
+			this.fight(f.getA1(), f.getA2());
+		});
+		
+		fights.clear();
+		
 		objects.removeIf((t) -> {
 			if(t instanceof Animal) {
 			return ((Animal)t).isDead();
@@ -254,6 +262,27 @@ public abstract class Level {
 	public Random getRandom() {
 		return getGame().getRandom();
 	}
-
-	public abstract void fight(Animal a1, Animal a2);
+	
+	public void addFight(Fight f) {
+		for(Fight a: fights) {
+			if(a.equals(f)) {
+				return;
+			}
+		}
+		fights.add(f);
+	}
+	
+	private void fight(Animal a1, Animal a2) {
+		double diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
+		if(diff == 0) {
+			diff = getRandom().nextBoolean() ? 1 : -1;
+		}
+		if(diff > 0) {
+			a1.addEnergy(a2.getEnergy());
+			a2.setEnergy(0);
+		} else if(diff < 0) {
+			a2.addEnergy(a1.getEnergy());
+			a1.setEnergy(0);
+		}
+	}
 }
