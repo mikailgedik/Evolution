@@ -45,12 +45,12 @@ public class Brain {
 			}
 			break;
 		case CHASING:
-			//TODO
+			double winkel=Math.atan((target.getY()-animal.getY())/(target.getX()-animal.getX()));
+			animal.setMotion(new Vector2D(Math.sin(winkel)*animal.getDNA().getMaxSpeed(), Math.cos(winkel)*animal.getDNA().getMaxSpeed()));
 			break;
 		case SEARCHING_FOOD:
 			target = nearby.get(animal.getRandom().nextInt(nearby.size()));
 			status = Status.CHASING;
-			
 			break;
 		default:
 			throw new RuntimeException("Should not reach this step");
