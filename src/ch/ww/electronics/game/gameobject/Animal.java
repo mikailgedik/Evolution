@@ -46,7 +46,7 @@ public class Animal extends GameObject{
 		
 		adjustEnergy();
 		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
-				0xffffff).darkScreen(energy/desoxyribonukleinsaeure.getMaxEnergy()));
+				0xffffff).darkScreen(getEnergy()/desoxyribonukleinsaeure.getMaxEnergy()));
 		
 		if(!isDead) {
 			setLocation(getX() + motion.getX(), getY() + motion.getY());
@@ -74,9 +74,10 @@ public class Animal extends GameObject{
 	
 	public void setEnergy(double energy) {
 		this.energy = energy;
-		if(energy < 0) {
+		if(energy <= 0) {
 			energy = 0;
 			isDead= true;
+			this.getLevel().removeGameObject(this);
 		}
 		if(energy > desoxyribonukleinsaeure.getMaxEnergy()) {
 			energy = desoxyribonukleinsaeure.getMaxEnergy();
@@ -98,9 +99,11 @@ public class Animal extends GameObject{
 	public void setDNA(DNA dna){
 		this.desoxyribonukleinsaeure=dna;
 	}
+	
 	public DNA getDNA(){
 		return(desoxyribonukleinsaeure);
 	}
+	
 	public Brain getBrain(){
 		return(brain);
 	}
@@ -111,5 +114,10 @@ public class Animal extends GameObject{
 	
 	public double getSize() {
 		return desoxyribonukleinsaeure.getSize();
+	}
+	
+	@Override
+	public String toString() {
+		return "[isDead:" + isDead() + "]";
 	}
 }

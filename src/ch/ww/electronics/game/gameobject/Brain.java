@@ -53,10 +53,12 @@ public class Brain {
 			if(this.animal.isTouching(target)) {
 				animal.getLevel().fight(this.animal, target);
 				System.out.println("Kill");
+				status = Status.IDLE;
 			} else {
 				MutableVector2D v = new MutableVector2D(target.getX() - this.animal.getX(), target.getY() - this.animal.getY());
-				double factor = v.getLength() / dna.getMaxSpeed();
-				animal.setMotion(new MutableVector2D(v.getX() * factor, v.getY() * factor));
+				double factor = dna.getMaxSpeed() / v.getLength();
+				v = new MutableVector2D(v.getX() * factor, v.getY() * factor);
+				animal.setMotion(v);
 				break;
 			}
 		case SEARCHING_FOOD:
