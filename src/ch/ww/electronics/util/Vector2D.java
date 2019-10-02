@@ -34,4 +34,12 @@ public class Vector2D implements Vector {
 	public String toString() {
 		return getClass().getName() + "[x = " + getX() + ", y = " + getY() + "]";
 	}
+	
+	public static double dotProduct(Vector2D a, Vector2D b) {
+		return a.getX() * b.getX() + a.getY() * b.getY();
+	}
+	
+	public static Vector2D add(Vector2D a, Vector2D b) {
+		return new Vector2D(a.getX() + b.getX(), a.getY() + b.getY());
+	}
 }
