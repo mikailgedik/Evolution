@@ -30,7 +30,7 @@ public class Animal extends GameObject{
 		
 		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
 				0xffffff));
-		desoxyribonukleinsaeure = new DNA(this, 0,0,0,0,0);
+		desoxyribonukleinsaeure = new DNA(this, 0,0,0,0,0,0);
 		desoxyribonukleinsaeure.randomize();
 		this.brain = new Brain(this);
 		motion = new MutableVector2D(0, 0);
