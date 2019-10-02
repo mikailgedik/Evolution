@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import ch.ww.electronics.util.Vector2D;
-//import jdk.internal.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 public class Brain {
 	public enum Status {IDLE, CHASING, SEARCHING_FOOD};
