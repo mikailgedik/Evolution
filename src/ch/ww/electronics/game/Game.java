@@ -35,8 +35,6 @@ public class Game implements EventExecuter {
 		loader = new GameLoader(this);
 
 		gameCanvas.getListener().addExecuter(this);
-		
-		test = screen.getHeight();
 	}
 
 	public GameLoader getGameLoader() {
