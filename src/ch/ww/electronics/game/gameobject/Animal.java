@@ -9,6 +9,7 @@ import ch.ww.electronics.util.MutableVector2D;
 import ch.ww.electronics.util.Vector2D;
 
 public class Animal extends GameObject{
+	//TODO Es gibt eine Size in Gameobject, aber die wird in der Grafik nicht benutzt. Auch die getsize gibt immer nur 1 zurück. 
 	private DNA desoxyribonukleinsaeure;
 	private Vector2D motion;
 	private double energy;
@@ -27,11 +28,9 @@ public class Animal extends GameObject{
 
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
-		
-		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
+		desoxyribonukleinsaeure = new DNA(this);
+		setTexture(new Screen((int) (BackgroundTile.SIZE * desoxyribonukleinsaeure.getSize()), (int) (BackgroundTile.SIZE * desoxyribonukleinsaeure.getSize()),
 				0xffffff));
-		desoxyribonukleinsaeure = new DNA(this, 0,0,0,0,0,0);
-		desoxyribonukleinsaeure.randomize();
 		this.brain = new Brain(this);
 		motion = new MutableVector2D(0, 0);
 		this.energy = desoxyribonukleinsaeure.getMaxEnergy();
@@ -39,12 +38,12 @@ public class Animal extends GameObject{
 
 	@Override
 	public void tick() {
-		
 		if(!isDead) {
 			brain.think();
 		}
 		
 		adjustEnergy();
+
 		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
 				0xffffff).darkScreen(getEnergy()/desoxyribonukleinsaeure.getMaxEnergy()));
 		

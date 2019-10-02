@@ -22,6 +22,10 @@ public class DNA {
 		this.viewangle = viewangle;
 		this.maxEnergy = maxEnergy;
 	}
+	public DNA(Animal animal){
+		this.animal=animal;
+		randomize();
+	}
 
 	public void randomize() {
 		size = (animal.getRandom().nextDouble());

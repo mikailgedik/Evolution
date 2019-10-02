@@ -11,6 +11,7 @@ public class LevelTest extends Level {
 
 	@Override
 	public void onStart() {
+		
 		/*
 		for(int i = 0; i < 100; i++) {
 			new Animal(this, getRandom().nextInt(getLevelWidth()),  getRandom().nextInt(getLevelHeight()));
