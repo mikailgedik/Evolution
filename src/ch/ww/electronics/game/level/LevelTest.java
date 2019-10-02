@@ -13,7 +13,9 @@ public class LevelTest extends Level {
 	@Override
 	public void onStart() {
 		new Emmy(this, getLevelWidth() / 3, getLevelHeight() / 2);
-		Animal a = new Animal(this, getLevelWidth()/2, getLevelHeight()/2);
+		for(int i = 0; i < 100; i++) {
+			new Animal(this, getRandom().nextInt(getLevelWidth()),  getRandom().nextInt(getLevelHeight()));
+		}
 	}
 
 	@Override
@@ -29,5 +31,18 @@ public class LevelTest extends Level {
 	@Override
 	public void reset() {
 
+	}
+	
+	@Override
+	public void fight(Animal a1, Animal a2) {
+		double diff = a1.getSize() * a2.getEnergy() - a2.getSize() * a2.getEnergy();
+		if(diff > 0) {
+			a1.addEnergy(a2.getEnergy());
+			a2.setEnergy(0);
+		} else if(diff < 0) {
+			a2.addEnergy(a1.getEnergy());
+			a1.setEnergy(0);
+		} else {
+		}
 	}
 }

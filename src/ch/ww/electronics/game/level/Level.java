@@ -5,8 +5,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import ch.ww.electronics.game.Game;
+import ch.ww.electronics.game.gameobject.Animal;
 import ch.ww.electronics.game.gameobject.GameObject;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
@@ -79,7 +81,7 @@ public abstract class Level {
 			gameObject.setLevel(this);
 		}
 	}
-
+	
 	public GameObject getObjectAtSpot(double xPoint, double yPoint) {
 		double x, y;
 		for (GameObject o : objects) {
@@ -158,28 +160,35 @@ public abstract class Level {
 		//TODO
 	}
 
-
 	public GameListener getGameListener() {
 		return getGame().getGameListener();
 	}
 
 	public void tick() {
-		
 		if(getGameListener().isKeyDown(KeyEvent.VK_A)) {
-			viewX -= 0.1;
+			viewX -= 0.3;
 		}
 		if(getGameListener().isKeyDown(KeyEvent.VK_D)) {
-			viewX += 0.1;
+			viewX += 0.3;
 		}
 		if(getGameListener().isKeyDown(KeyEvent.VK_W)) {
-			viewY -= 0.1;
+			viewY -= 0.3;
 		}
 		if(getGameListener().isKeyDown(KeyEvent.VK_S)) {
-			viewY += 0.1;
+			viewY += 0.3;
 		}
 		for (Object o : objects.toArray()) {
 			((GameObject) o).tick();
 		}
+		
+		objects.removeIf((t) -> {
+			if(t instanceof Animal) {
+			return ((Animal)t).isDead();
+			} else {
+				return false;
+			}
+		});
+		
 		BackgroundTileMetaData t;
 		for (int i = 0; i < backgroundTile.length; i++) {
 			t = backgroundTile[i];
@@ -245,4 +254,6 @@ public abstract class Level {
 	public Random getRandom() {
 		return getGame().getRandom();
 	}
+
+	public abstract void fight(Animal a1, Animal a2);
 }
