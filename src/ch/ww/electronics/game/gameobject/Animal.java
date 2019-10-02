@@ -39,7 +39,10 @@ public class Animal extends GameObject{
 
 	@Override
 	public void tick() {
-		brain.think();
+		
+		if(!isDead) {
+			brain.think();
+		}
 		
 		adjustEnergy();
 		setTexture(new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
@@ -53,10 +56,6 @@ public class Animal extends GameObject{
 	private void adjustEnergy() {
 		addEnergy(-motion.getLength() * desoxyribonukleinsaeure.getSize());
 		addEnergy(-0.01); //Passive energy burning
-		if(energy < 0) {
-			isDead= true;
-			energy = 0;
-		}
 	}
 	
 	@Override
@@ -77,6 +76,7 @@ public class Animal extends GameObject{
 		this.energy = energy;
 		if(energy < 0) {
 			energy = 0;
+			isDead= true;
 		}
 		if(energy > desoxyribonukleinsaeure.getMaxEnergy()) {
 			energy = desoxyribonukleinsaeure.getMaxEnergy();

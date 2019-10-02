@@ -34,7 +34,7 @@ public class Brain {
 		ArrayList<Animal> nearby = sensors.getEyeInput();
 		if(animal.getEnergy()/dna.getMaxEnergy() < 1 && status != Status.CHASING) {
 			status = Status.SEARCHING_FOOD;
-			System.out.println("Hungyry");
+			System.out.println("Hungry");
 		}
 		switch(status) {
 		case IDLE:
@@ -62,7 +62,6 @@ public class Brain {
 		case SEARCHING_FOOD:
 			if(nearby.size() > 0) {
 				target = nearby.get(animal.getRandom().nextInt(nearby.size()));
-				System.out.println(target);
 				status = Status.CHASING;
 			} else {
 				status = Status.IDLE;

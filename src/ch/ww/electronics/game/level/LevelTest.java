@@ -2,7 +2,6 @@ package ch.ww.electronics.game.level;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
-import ch.ww.electronics.game.gameobject.Emmy;
 
 public class LevelTest extends Level {
 
@@ -38,8 +37,8 @@ public class LevelTest extends Level {
 	
 	@Override
 	public void fight(Animal a1, Animal a2) {
-		double diff = a1.getSize() * a2.getEnergy() - a2.getSize() * a2.getEnergy();
-		if(diff > 0) {
+		double diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
+		if(diff >= 0) {
 			a1.addEnergy(a2.getEnergy());
 			a2.setEnergy(0);
 		} else if(diff < 0) {
