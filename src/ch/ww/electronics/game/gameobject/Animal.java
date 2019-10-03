@@ -30,11 +30,11 @@ public class Animal extends GameObject{
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
 		dna = new DNA(this);
-		setTexture(new Screen((int) (BackgroundTile.SIZE * dna.getSize()), (int) (BackgroundTile.SIZE * dna.getSize()),
+		setTexture(new Screen((int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)), (int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)),
 				0xffffff));
 		this.brain = new Brain(this);
 		setMotion(new Vector2D(0, 0));
-		this.energy = dna.getMaxEnergy();
+		this.energy = dna.get(DNA.MAX_ENERGY);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class Animal extends GameObject{
 	}
 	
 	private void adjustEnergy() {
-		addEnergy(-getMotion().getLength() * dna.getSize());
+		addEnergy(-getMotion().getLength() * dna.get(DNA.SIZE));
 		addEnergy(-0.01); //Passive energy burning
 	}
 	
@@ -75,10 +75,10 @@ public class Animal extends GameObject{
 		default:
 			throw new RuntimeException();		
 		}
-		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().getSize()), (int) (BackgroundTile.SIZE * getDNA().getSize()),
+		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)), (int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)),
 				-1);
 		s.fillCircle(0, 0, c, s.getHeight()/2);
-		setTexture(s.darkScreen(getEnergy()/dna.getMaxEnergy()));
+		setTexture(s.darkScreen(getEnergy()/dna.get(DNA.MAX_ENERGY)));
 	}
 	
 	@Override
@@ -101,8 +101,8 @@ public class Animal extends GameObject{
 			energy = 0;
 			isDead= true;
 		}
-		if(energy > dna.getMaxEnergy()) {
-			energy = dna.getMaxEnergy();
+		if(energy > dna.get(DNA.MAX_ENERGY)) {
+			energy = dna.get(DNA.MAX_ENERGY);
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class Animal extends GameObject{
 	}
 	
 	public double getSize() {
-		return dna.getSize();
+		return dna.get(DNA.SIZE);
 	}
 	
 	@Override
