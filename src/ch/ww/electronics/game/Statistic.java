@@ -10,11 +10,13 @@ import ch.ww.electronics.game.level.Level;
 
 public class Statistic {
 	private HashMap<Long, HashMap<String, Double>> info;
+	private long lastTick;
 	public Statistic() {
 		info = new HashMap<>();
 	}
 	
 	public void addStatistic(Level l, long tick) {
+		lastTick = tick > lastTick ? tick : lastTick;
 		HashMap<String, Double> average = new HashMap<>();
 		int count = 0;
 		for(GameObject o: l.getObjectsInLevel()) {
@@ -36,6 +38,10 @@ public class Statistic {
 	
 	public HashMap<Long, HashMap<String, Double>> getInfo() {
 		return info;
+	}
+	
+	public long getLastTick() {
+		return lastTick;
 	}
 	
 }
