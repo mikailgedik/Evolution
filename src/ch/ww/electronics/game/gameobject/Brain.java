@@ -38,7 +38,7 @@ public class Brain {
 	public void think() {
 		ArrayList<Animal> nearby = sensors.getEyeInput();
 		if(status != Status.RUNNING && status != Status.STUNNED) {
-			if(animal.getEnergy()/dna.get(DNA.MAX_ENERGY) < 0.9 && status != Status.CHASING) {
+			if(animal.getEnergy()/dna.get(DNA.MAX_ENERGY) < dna.get(DNA.START_SEARCHING_FOOD) && status != Status.CHASING) {
 				status = Status.SEARCHING_FOOD;
 			}
 		}
@@ -138,7 +138,7 @@ public class Brain {
 			this.animal.setMotion(new Vector2D(0, 0));
 		}
 
-		if(animal.getRandom().nextDouble() < 0.001) {
+		if(animal.getRandom().nextDouble() < dna.get(DNA.STUNNED_TIME)) {
 			status = Status.IDLE;
 		}
 	}
