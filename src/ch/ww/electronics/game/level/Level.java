@@ -215,6 +215,15 @@ public abstract class Level {
 					"STUNNED:" + s[4] + "\n" +
 					"KILLS:" + killcounter + "\n" ;
 		}
+		if(getGameListener().isKeyDown(KeyEvent.VK_I)){
+			text="";
+			for(int i=0;i<100;i++){
+				for(int j=0;j<100;j++){
+					text+="Ian was herer!";
+				}
+				text+="\n";
+			}
+		}
 		if(getGameListener().isKeyDown(KeyEvent.VK_M)){
 			if(selected!=null){
 				if(selected instanceof Animal){
