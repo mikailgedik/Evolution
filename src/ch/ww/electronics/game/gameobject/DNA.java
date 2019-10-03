@@ -35,6 +35,18 @@ public class DNA {
 		specifications.put(BABY_WHEN_ENERGIE, new Double[]{0d, 1d , 0.05d});
 	}
 	
+	public void setgood(){
+		values.put(SIZE, 0.8);
+		values.put(FUR, 0.5);
+		values.put(MAX_SPEED, 0.08);
+		values.put(VIEWRANGE, 10d);
+		values.put(MAX_ENERGY,20000d);
+		values.put(STUNNED_TIME,0.5);
+		values.put(RUNNING_TIME, 0.5);
+		values.put(START_SEARCHING_FOOD,1d);
+		values.put(BABY_WHEN_ENERGIE, 0.5);
+	}
+	
 	public DNA(Animal animal, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy, double stunnedTime, double runningTime, double startSearchingFood, double idleProbability, double babyWhenEnergie) {
 		this.animal = animal;
 		
@@ -87,6 +99,7 @@ public class DNA {
 				return;
 			}
 		}
+		setgood();
 	}
 	
 	public double get(String key){
