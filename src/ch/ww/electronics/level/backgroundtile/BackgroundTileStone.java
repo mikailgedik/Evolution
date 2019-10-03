@@ -8,7 +8,7 @@ public class BackgroundTileStone extends BackgroundTile {
 	public static final String NAME = "backgroundTile.backgroundTileStone";
 
 	public BackgroundTileStone(int x, int y) {
-		super(0, x, y);
+		super(x, y);
 		screen = TextureManager.getInstance().getTexture(NAME);
 	}
 

@@ -8,7 +8,7 @@ public class BackgroundTileDirt extends BackgroundTile {
 	public static final String NAME = "backgroundTile.backgroundTileDirt";
 	
 	public BackgroundTileDirt(int x, int y) {
-		super(0, x, y);
+		super(x, y);
 		this.screen = TextureManager.getInstance().getTexture(NAME);
 	}
 	

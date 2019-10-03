@@ -16,6 +16,10 @@ public abstract class BackgroundTile {
 		this.y = y;
 	}
 	
+	public BackgroundTile(int x, int y) {
+		this(0.5, x, y);
+	}
+	
 	public double getTemperature() {
 		return temperature;
 	}
