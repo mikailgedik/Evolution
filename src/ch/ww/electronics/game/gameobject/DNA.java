@@ -66,7 +66,7 @@ public class DNA {
 
 	public void variate(double radiation) {
 		values.forEach((String key, Double value) -> {
-			values.put(key, values.get(key) + animal.getLevel().getRandom().nextDouble()*specifications.get(key)[2]);
+			values.put(key, values.get(key) + (radiation+1)*(animal.getLevel().getRandom().nextDouble()*specifications.get(key)[2]));
 		});
 		validate();
 	}
