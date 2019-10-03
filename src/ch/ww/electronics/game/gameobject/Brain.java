@@ -81,8 +81,7 @@ public class Brain {
 			animal.setMotion(new Vector2D(0,0));
 		}
 		
-		if(getAnimal().getEnergy()/getAnimal().getDNA().get(DNA.MAX_ENERGY) > 0.8/* && r.nextDouble() < 0.01 */){
-			System.out.println("NEW BABY");
+		if(getAnimal().getEnergy()/getAnimal().getDNA().get(DNA.MAX_ENERGY) > animal.getDNA().get(DNA.BABY_WHEN_ENERGIE)/* && r.nextDouble() < 0.01 */){
 			Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
 			baby.setDNA(animal.getDNA().clone());
 			baby.getDNA().variate(0);
