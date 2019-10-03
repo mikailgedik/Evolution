@@ -24,14 +24,14 @@ public class DNA {
 		//1: maximum
 		//2: variation
 		specifications = new HashMap<>();
-		specifications.put(SIZE, new Double[]{0.5d, 2d, 0.1d});
+		specifications.put(SIZE, new Double[]{0.05d, 0.2d, 0.1d});
 		specifications.put(FUR, new Double[]{0d,1d,0.1d});
 		specifications.put(MAX_SPEED, new Double[]{0.05d,0.1d,0.01});
-		specifications.put(VIEWRANGE, new Double[]{2d,10d, 0.5});
+		specifications.put(VIEWRANGE, new Double[]{5d,10d, 0.5});
 		specifications.put(MAX_ENERGY, new Double[]{0.1d,5000d, 10d});
 		specifications.put(STUNNED_TIME, new Double[]{0d, 1d, 0.1d});
 		specifications.put(RUNNING_TIME, new Double[]{0d, 1d, 0.1d});
-		specifications.put(START_SEARCHING_FOOD, new Double[]{0d, 1d, 0.05d});
+		specifications.put(START_SEARCHING_FOOD, new Double[]{0.6d, 1d, 0.05d});
 		specifications.put(BABY_WHEN_ENERGIE, new Double[]{0d, 1d , 0.05d});
 	}
 	
