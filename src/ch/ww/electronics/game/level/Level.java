@@ -301,6 +301,9 @@ public abstract class Level {
 		}
 		if(diff == 0) {
 			diff = getRandom().nextBoolean() ? 1 : -1;
+		}else{
+			Animal.killcounter++;
+			System.out.println("killcounter:"+Animal.killcounter);
 		}
 		if(diff > 0) {
 			a1.addEnergy(a2.getEnergy());
