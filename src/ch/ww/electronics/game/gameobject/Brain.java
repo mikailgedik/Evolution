@@ -13,7 +13,7 @@ public class Brain {
 	 * RUNNING: vom etwasem abhauen (z. B. Kinder von Eltern)
 	 * STUNNED: eltern nach der geburt (damit sie kinder nicht sofort fressen)
 	 * */
-	public enum Status {IDLE, CHASING, SEARCHING_FOOD, RUNNING, STUNNED};
+	public enum Status {IDLE, CHASING, SEARCHING_FOOD, RUNNING, STUNNED, BE_FOOD};
 	
 	private final Animal animal;
 	private final Random r;
