@@ -48,7 +48,6 @@ public class DNA {
 		values.put(RUNNING_TIME, runningTime);
 		values.put(START_SEARCHING_FOOD, startSearchingFood);
 		values.put(BABY_WHEN_ENERGIE, babyWhenEnergie);
-		
 		validate();
 	}
 	
