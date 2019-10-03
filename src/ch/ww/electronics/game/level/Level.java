@@ -337,11 +337,9 @@ public abstract class Level {
 		if(a1.getStatus() == Brain.Status.BE_FOOD) {
 			diff = -1;
 			foodeaten++;
-			System.out.println("foodeaten:"+foodeaten);
 		} else if(a2.getStatus() == Brain.Status.BE_FOOD) {
 			diff = 1;
 			foodeaten++;
-			System.out.println("foodeaten:"+foodeaten);
 		} else {
 			killcounter++;
 			System.out.println("killcounter:"+killcounter);

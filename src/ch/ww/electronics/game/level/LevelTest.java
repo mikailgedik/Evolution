@@ -44,7 +44,10 @@ public class LevelTest extends Level {
 			}
 		}
 		
-		if(getRandom().nextInt(getLevelWidth() * getLevelHeight()) > count * count) {
+//		if(getRandom().nextInt(getLevelWidth() * getLevelHeight()) > count * count) {
+//			new Food(this, getLevelWidth()*getRandom().nextDouble(), getLevelHeight()*getRandom().nextDouble());
+//		}
+		if(count<1000){
 			new Food(this, getLevelWidth()*getRandom().nextDouble(), getLevelHeight()*getRandom().nextDouble());
 		}
 	}
