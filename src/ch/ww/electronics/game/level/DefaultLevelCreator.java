@@ -87,7 +87,7 @@ public class DefaultLevelCreator implements LevelCreator {
 			ArrayList<Integer[]> circle = CoordinatesCreator.createFilledCircle(center[0], center[1], (int)(gridsize));
 			for(Integer[] c: circle) {
 				t = temp + (getRandom().nextInt(2) * 2 -1)  * getRandom().nextDouble() * Math.exp(c[2]/(gridsize* gridsize));
-				getBackgroundTile(c[0], c[1]).setTemperature(t);
+				getBackgroundTile(c[0], c[1]).setTemperature(temp);
 			}
 		}
 		
