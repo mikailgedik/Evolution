@@ -1,15 +1,24 @@
 package ch.ww.electronics.menu;
 
+import java.awt.Dialog;
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.Statistic;
-import ch.ww.electronics.graphics.FontCreator;
+import ch.ww.electronics.game.gameobject.DNA;
 import ch.ww.electronics.graphics.Screen;
+import ch.ww.electronics.menu.action.ActionInfo;
 
 public class MenuStatistics extends DefaultMenu {
 	private Statistic stat;
+	private TextedButton outputToFile;
 	
 	private ListComponent<String> list;
 	
@@ -17,6 +26,27 @@ public class MenuStatistics extends DefaultMenu {
 		super(game, parentMenu);
 		this.stat = game.getStatistic();
 		list = new ListComponent<String>(100, 100, this);
+		outputToFile = new TextedButton("Output to file");
+		
+		outputToFile.addActionExecuter((ActionInfo s) -> {
+			FileDialog d = new FileDialog((Frame) getGame().getGameCanvas().getParent().getParent().getParent().getParent());
+			d.setDirectory("C:\\Users\\Mikail Gedik\\Desktop");
+			d.setTitle("Saving data to...");
+			d.setMode(FileDialog.SAVE);
+			
+			d.setVisible(true);
+			if(d.getFiles().length != 0) {
+				try {
+					writeStatsToFile(d.getFiles()[0]);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			
+			d.setVisible(false);
+		});
+		
+		this.addMenuComponent(outputToFile);
 	}
 	
 	@Override
@@ -36,9 +66,7 @@ public class MenuStatistics extends DefaultMenu {
 		int color[] = new int[] {	0x0000ff,0x00ff00,0xff0000,
 									0xff00ff,0x00ffff,0xffff00,
 									0xff7fff,0x7fffff,0xffff7f,};
-		for(int i = 0; i < color.length; i++) {
-			color[i] = (int) (0xffffff * i / color.length);
-		}
+		
 		for(Entry<Long, HashMap<String, Double>> e :stat.getInfo().entrySet()) {
 			for(Entry<String, Double> a: e.getValue().entrySet()) {
 				int x = (int)(xFactor * e.getKey());
@@ -50,7 +78,7 @@ public class MenuStatistics extends DefaultMenu {
 			num = 0;
 		}
 		
-		if(list.getComponents().size() == 0) {
+		if(list.getCount() == 0) {
 			for(Entry<String, Double> e: stat.getInfo().get(0L).entrySet()) {
 				list.addContent(e.getKey(), e.getKey());
 			}
@@ -58,8 +86,35 @@ public class MenuStatistics extends DefaultMenu {
 			list.setBounds(drawOn.getWidth() -100, 150);
 			list.setX(drawOn.getWidth() / 2 - list.getWidth() / 2);
 			list.setY(50 + s.getHeight() + 20);
-		}		
+			
+			outputToFile.setX(drawOn.getWidth()/2 - outputToFile.getWidth() / 2);
+			outputToFile.setY(drawOn.getHeight() - outputToFile.getHeight());
+		}
 		
 		drawOn.drawScreen(50, 50, s);
+	}
+
+	public void writeStatsToFile(File f) throws IOException {
+		BufferedWriter w = new BufferedWriter(new FileWriter(f));
+		
+		w.write("tick;");
+		for(Entry<String, Double> e: stat.getInfo().get(0L).entrySet()) {
+			w.write(e.getKey() + ";");
+		}
+		
+		w.newLine();
+		
+		for(Entry<Long, HashMap<String, Double>> map: stat.getInfo().entrySet()) {
+			w.write(Long.toString(map.getKey()) + ";");
+			
+			for(Entry<String, Double> e: map.getValue().entrySet()) {
+				w.write(Math.round(e.getValue() * 100)/100.0 + ";");
+
+			}
+			w.newLine();
+		}
+		
+		w.close();
+		System.out.println("DONE");
 	}
 }

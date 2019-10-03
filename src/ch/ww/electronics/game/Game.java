@@ -189,6 +189,10 @@ public class Game implements EventExecuter {
 		return statistic;
 	}
 	
+	public GameCanvas getGameCanvas() {
+		return gameCanvas;
+	}
+	
 	public Random getRandom() {
 		return random;
 	}
