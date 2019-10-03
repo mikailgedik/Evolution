@@ -47,7 +47,7 @@ public class DefaultLevelCreator implements LevelCreator {
 		stoneBouldersCount = (level.getLevelWidth() + level.getLevelHeight()) / 10;
 		System.out.println("Created " + createStoneBoulders() + " stoneboulders");
 		
-		createHeatMap();
+		//createHeatMap();
 	}
 
 	private int createStoneBoulders() {
