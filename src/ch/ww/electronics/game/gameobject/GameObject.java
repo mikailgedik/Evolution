@@ -30,7 +30,8 @@ public abstract class GameObject {
 	private double x, y;
 	private Screen texture;
 	private boolean canGetOutOfWorldBounds = false;
-
+	private double size;
+	
 	/**
 	 * Objects are automatically added into the level if the level is not
 	 * <code>null</code>.
@@ -40,6 +41,7 @@ public abstract class GameObject {
 		this.level = level;
 		this.x = x;
 		this.y = y;
+		this.size = 1;
 		if (level != null) {
 			level.addGameObject(this);
 		}
@@ -73,28 +75,19 @@ public abstract class GameObject {
 		if (!canGetOutOfWorldBounds) {
 			if (x < 0)
 				x = 0;
-			if (x + getWidth() >= level.getLevelWidth())
-				x = level.getLevelWidth() - 1;
+			if (x > level.getLevelWidth())
+				x = level.getLevelWidth();
 			if (y < 0)
 				y = 0;
-			if (y + getHeight() >= level.getLevelHeight())
-				y = level.getLevelHeight() - 1;
+			if (y > level.getLevelHeight())
+				y = level.getLevelHeight();
 		}
 	}
 
 	public boolean isTouching(GameObject o) {
-		double oX = o.getX(), oY = o.getY();
-
-		for (int i = 0; i < 2; i++) {
-			if (this.x <= oX && this.y <= oY) {
-				if (this.x + getWidth() >= oX && this.y + getHeight() >= oY) {
-					return true;
-				}
-			}
-			oX += o.getWidth();
-			oY += o.getHeight();
+		if(this.distanceTo(o) <= o.getSize() + this.getSize()) {
+			return true;
 		}
-
 		return false;
 	}
 
@@ -146,12 +139,12 @@ public abstract class GameObject {
 		this.texture = texture;
 	}
 
-	public double getWidth() {
-		return 1;
+	public double getSize() {
+		return size;
 	}
-
-	public double getHeight() {
-		return 1;
+	
+	public void setSize(double size) {
+		this.size = size;
 	}
 
 	private void checkIsInLevel() throws IllegalLocationException {

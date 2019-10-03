@@ -128,7 +128,6 @@ public class Brain {
 		//Je mehr Gegner es sieht, desto eher rennt es weiter
 		if(animal.getRandom().nextDouble() < Math.pow(0.005, nearby.size())) {
 			status = Status.IDLE;
-			System.out.println("dsf");
 		}
 	}
 	
