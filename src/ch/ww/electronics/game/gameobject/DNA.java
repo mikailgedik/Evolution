@@ -22,6 +22,7 @@ public class DNA {
 		this.maxEnergy = maxEnergy;
 		this.stunned = stunned;
 		make_valid();
+		System.out.print();
 	}
 	public DNA(Animal animal){
 		this.animal=animal;
