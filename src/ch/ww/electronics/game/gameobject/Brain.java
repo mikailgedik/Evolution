@@ -65,7 +65,6 @@ public class Brain {
 		default:
 			throw new RuntimeException("Should not reach this step");
 		}
-		System.out.println("HI");
 	}
 	
 	private void setMotionToRandomDirection(double speed) {
