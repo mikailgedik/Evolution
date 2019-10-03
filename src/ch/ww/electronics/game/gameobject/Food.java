@@ -13,5 +13,10 @@ public class Food extends Animal{
 		s.fillCircle(0, 0, 0x00ff00, s.getHeight()/2);
 		setTexture(s.darkScreen(getEnergy()/getDNA().getMaxEnergy()));
 	}
-	@Override public void tick(){}
+	
+	
+	@Override
+	public void tick() {
+		
+	}
 }
