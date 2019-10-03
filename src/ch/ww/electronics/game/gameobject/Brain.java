@@ -65,8 +65,6 @@ public class Brain {
 		default:
 			throw new RuntimeException("Should not reach this step");
 		}
-		
-		
 	}
 	
 	private void setMotionToRandomDirection(double speed) {
