@@ -1,7 +1,6 @@
 package ch.ww.electronics.game.gameobject;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class DNA {
 	private Animal animal;
@@ -12,7 +11,7 @@ public class DNA {
 	public static final String VIEWRANGE = "viewrange";
 	public static final String MAX_ENERGY = "maxEnergy";
 	public static final String STUNNED = "stunned";
-//	
+	
 //	private double size;
 //	private double fur;
 //	private double maxSpeed;
@@ -20,9 +19,9 @@ public class DNA {
 //	private double maxEnergy;
 //	private double stunned;
 
-	private Map<String, Double> values;
+	private HashMap<String, Double> values;
 	
-	private static final Map <String, Double[]> specifications;
+	private static final HashMap <String, Double[]> specifications;
 	static {
 		//0: minimum
 		//1: maximum
@@ -58,11 +57,19 @@ public class DNA {
 		
 		validate();
 	}
+	
 	public DNA(Animal animal){
 		this.animal=animal;
 		randomize();
 	}
-
+	
+	@Override
+	protected DNA clone() {
+		DNA dna = new DNA(this.animal);
+		dna.values = (HashMap<String, Double>) this.values.clone();
+		return dna;
+	}
+	
 	public void randomize() {
 //		size = (prandom());
 //		fur = animal.getRandom().nextDouble();
