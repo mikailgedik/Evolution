@@ -1,6 +1,5 @@
 package ch.ww.electronics.menu;
 
-import java.awt.Dialog;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.io.BufferedWriter;
@@ -12,7 +11,7 @@ import java.util.Map.Entry;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.Statistic;
-import ch.ww.electronics.game.gameobject.DNA;
+import ch.ww.electronics.graphics.FontCreator;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.menu.action.ActionInfo;
 
@@ -54,7 +53,7 @@ public class MenuStatistics extends DefaultMenu {
 		super.renderOnScreen(screen);
 		drawInfo(screen);
 	}
-
+	
 	private void drawInfo(Screen drawOn) {
 		if(stat.getInfo().size() == 0) {
 			return;
@@ -65,7 +64,7 @@ public class MenuStatistics extends DefaultMenu {
 		int num = 0;
 		int color[] = new int[] {	0x0000ff,0x00ff00,0xff0000,
 									0xff00ff,0x00ffff,0xffff00,
-									0xff7fff,0x7fffff,0xffff7f,};
+									0x7f7f7f,0x0, 0xBFBFBF};
 		
 		for(Entry<Long, HashMap<String, Double>> e :stat.getInfo().entrySet()) {
 			for(Entry<String, Double> a: e.getValue().entrySet()) {
@@ -76,6 +75,14 @@ public class MenuStatistics extends DefaultMenu {
 				num++;
 			}
 			num = 0;
+		}
+		
+		num = 0;
+		for(Entry<String, Double> e: stat.getInfo().get(0L).entrySet()) {
+			Screen f = FontCreator.createFont(e.getKey(), color[num], -1);
+			f = f.getScaledScreen(f.getWidth()/2, f.getHeight()/2);
+			s.drawScreen(s.getWidth( )- f.getWidth(), num * f.getHeight(), f);
+			num++;
 		}
 		
 		if(list.getCount() == 0) {
