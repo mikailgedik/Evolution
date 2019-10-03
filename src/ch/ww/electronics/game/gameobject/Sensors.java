@@ -12,25 +12,9 @@ public class Sensors{
 		animal.getGame().getLevel().getObjectsInLevel().forEach((GameObject go) -> {
 			if(go instanceof Animal) {
 				Animal a = (Animal) go;
-				if(this.animal!=a){
-					if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) {
-						
-						//animals.add(a);
-					
-						//(a.getY()-animal.getY())/(a.getX()-animal.getX()) ist die Steigung
-						//atan(steigung) ist der Winkel
-						double winkel=Math.atan((a.getY()-animal.getY())/(a.getX()-animal.getX()));
-						//winkel=(winkel+3*Math.PI/2)%(2*Math.PI);
-						
-						//System.out.println("Winkel: "+winkel+"/facing angle: "+animal.getBrain().getFacingAngle()+"/Viewangle: "+animal.getDNA().getViewangle());
-						
-						if(winkel<(animal.getBrain().getFacingAngle()+animal.getDNA().getViewangle()) & winkel>animal.getBrain().getFacingAngle()){
-							animals.add(a);
-						} else {
-							animals.add(a);
-						}
-					}
-				}
+				if(this.animal!=a)
+					if(this.animal.distanceTo(a) <= animal.getDNA().getViewrange()) 
+						animals.add(a);
 			}
 		});
 		return(animals);
