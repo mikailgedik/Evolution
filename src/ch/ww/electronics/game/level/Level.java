@@ -203,11 +203,11 @@ public abstract class Level {
 					"STUNNED:" + s[4] + "\n" +
 					"KILLS:" + killcounter + "\n" ;
 		}
-		if(selected!=null){
-			
-		}else{
-			text = "Kein Objekt ausgewählt"; 
-		}
+//		if(selected!=null){
+//			
+//		}else{
+//			text = "Kein Objekt ausgewählt"; 
+//		}
 		
 		FontCreator.drawFontOnScreen(text, 0, 0, screen, 0x00ff00);
 	}
