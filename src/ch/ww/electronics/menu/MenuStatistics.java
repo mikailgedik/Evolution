@@ -17,7 +17,10 @@ public class MenuStatistics extends DefaultMenu {
 		drawInfo(screen);
 	}
 
-	private void drawInfo(Screen screen) {
+	private void drawInfo(Screen drawOn) {
+		Screen s = new Screen(drawOn.getWidth() - 100, drawOn.getHeight() - 100, 0xffffff);
 		
+		
+		drawOn.drawScreen(50, 50, s);
 	}
 }

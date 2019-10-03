@@ -33,7 +33,8 @@ public class Game implements EventExecuter {
 		menu = null;
 		random = new Random();
 		loader = new GameLoader(this);
-
+		statistic = new Statistic();
+		
 		gameCanvas.getListener().addExecuter(this);
 	}
 
