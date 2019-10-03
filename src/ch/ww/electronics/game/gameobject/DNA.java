@@ -86,23 +86,20 @@ public class DNA {
 	}
 
 	public void variate(double radiation) {
-		values.forEach((String key, Double value) -> {
-			values.put(key, values.get(key) + (radiation+1)*(animal.getLevel().getRandom().nextDouble()*specifications.get(key)[2]));
-		});
+		for(Entry <String, Double>e:values.entrySet()){
+			values.put(e.getKey(), values.get(e.getKey()) + (radiation+1)*(animal.getLevel().getRandom().nextDouble()*specifications.get(e.getKey())[2]));
+		}
 		validate();
 	}
 	private void validate(){
 		for(Entry <String, Double> e: values.entrySet()){
 			if(e.getValue()<specifications.get(e.getKey())[0]) {
 				values.put(e.getKey(), specifications.get(e.getKey())[0]);
-				return;
 			}
 			if(e.getValue()>specifications.get(e.getKey())[1]) {
 				values.put(e.getKey(), specifications.get(e.getKey())[1]);
-				return;
 			}
 		}
-		if(values.get(SIZE)>1)System.out.println("HEy");
 	}
 	
 	public double get(String key){
