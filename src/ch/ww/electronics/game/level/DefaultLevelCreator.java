@@ -74,7 +74,7 @@ public class DefaultLevelCreator implements LevelCreator {
 		ArrayList<int[]> coordinates = new ArrayList<>();
 		for(int y = 0; y < level.getLevelHeight(); y += gridsize) {
 			for(int x = 0; x < level.getLevelWidth(); x += gridsize) {
-				level.getBackgroundTile(x, y).setTemperature(getRandom().nextDouble());
+				level.getBackgroundTile(x, y).setTemperature(getRandom().nextDouble() * 0.3);
 				coordinates.add(new int[] {x, y});
 			}
 		}

@@ -53,7 +53,7 @@ public class Animal extends GameObject{
 	private void adjustEnergy() {
 		addEnergy(-getMotion().getLength() * dna.get(DNA.SIZE));
 		if(getLevel().getBackgroundTile((int) getX(), (int) getY()) != null) {
-			addEnergy(1 * -Math.exp(1.0/Math.abs(dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature())));
+			addEnergy(1 * Math.exp(1.0/Math.abs(dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature())));
 		}
 		addEnergy(-1 * dna.get(DNA.VIEWRANGE));
 		
