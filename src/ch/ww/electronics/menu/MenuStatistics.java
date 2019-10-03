@@ -38,7 +38,6 @@ public class MenuStatistics extends DefaultMenu {
 				s.setPixel(x, y, color[num]);
 				num++;
 			}
-			
 			num = 0;
 		}
 		
