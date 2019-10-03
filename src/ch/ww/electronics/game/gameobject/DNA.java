@@ -79,20 +79,16 @@ public class DNA {
 	}
 	private void validate(){
 		for(Entry <String, Double> e: values.entrySet()){
-			if(e.getValue()value<specifications.get(key)[0]){
-				
+			if(e.getValue()<specifications.get(e.getKey())[0]){
+				e.setValue(specifications.get(e.getKey())[0]);
+				return;
+			}
+			if(e.getValue()>specifications.get(e.getKey())[1]){
+				e.setValue(specifications.get(e.getKey())[1]);
+				return;
 			}
 		}
-		values.forEach((String key, Double value)->{
-			if(value<specifications.get(key)[0]){
-				value=specifications.get(key)[0];
-				return;
-			}
-			if(value>specifications.get(key)[1]){
-				value=specifications.get(key)[1];
-				return;
-			}
-		});
+
 	}
 	
 	public double get(String key){
