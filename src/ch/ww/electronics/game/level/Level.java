@@ -155,7 +155,7 @@ public abstract class Level {
 	}
 
 	private void renderHUD(Screen screen) {
-		int[] s = new int[5];
+		int[] s = new int[6];
 		for(GameObject o: objects) {
 			if(o instanceof Animal) {
 				switch(((Animal)o).getStatus()) {
@@ -174,13 +174,19 @@ public abstract class Level {
 				case STUNNED:
 					s[4]++;
 					break;
+				case BE_FOOD:
+					s[5]++;
 				default:
 					break;
 				}
 			}
 		}
 		
-		String text = "TOTAL" + objects.size() + "\n" + "IDLE:" + s[0] + "\n" + "CHASING:" + s[1] + "\n" + "SEARCHING_FOOD:" + s[2] + "\n" + "RUNNING:" + s[3] + "\n" + "STUNNED:" + s[4] + "\n";
+		String text = 
+				"TOTAL" + objects.size() + "\n" + "IDLE:" + s[0] + "\n" + 
+				"CHASING:" + s[1] + "\n" 		+ "SEARCHING_FOOD:" + s[2] + "\n" +
+				"RUNNING:" + s[3] + "\n" 		+ "STUNNED:" + s[4] + "\n" +
+				"FOOD_SOURCE:" + s[5] + "\n";
 		
 		FontCreator.drawFontOnScreen(text, 0, 0, screen, 0x00ff00);
 	}
