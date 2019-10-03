@@ -88,7 +88,6 @@ public class DNA {
 				return;
 			}
 		}
-
 	}
 	
 	public double get(String key){
