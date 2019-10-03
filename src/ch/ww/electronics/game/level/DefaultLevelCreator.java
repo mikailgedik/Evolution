@@ -70,7 +70,7 @@ public class DefaultLevelCreator implements LevelCreator {
 	}
 
 	private void createHeatMap() {
-		int gridsize = 70;
+		int gridsize = (getLevel().getLevelHeight() + getLevel().getLevelWidth()) / 10;
 		ArrayList<int[]> coordinates = new ArrayList<>();
 		for(int y = 0; y < level.getLevelHeight(); y += gridsize) {
 			for(int x = 0; x < level.getLevelWidth(); x += gridsize) {
@@ -82,18 +82,23 @@ public class DefaultLevelCreator implements LevelCreator {
 		for(int[] center: coordinates) {
 			final double temp =  getBackgroundTile(center[0], center[1]).getTemperature();
 			double t = temp;
-			ArrayList<Integer[]> circle = CoordinatesCreator.createFilledCircle(center[0], center[1], (int)(gridsize));
+			ArrayList<Integer[]> circle = CoordinatesCreator.createFilledCircle(center[0], center[1], (int)(gridsize/2));
 
 			for(Integer[] c: circle) {
 				t = temp;
-				t *= getRandom().nextDouble() * (2 + c[2] / (gridsize * gridsize * 1.1));
-				if(t < 0)
-					t = 0;
-				if(t > 1)
-					t = 1;
+				t *= getRandom().nextDouble() * (1 + c[2] / (gridsize * gridsize * 10));
 				if(getLevel().coordinatesInLevel(c[0], c[1])) {
 					getBackgroundTile(c[0], c[1]).setTemperature(t);
+					
+					if(getBackgroundTile(c[0], c[1]).getTemperature() > 1) {
+						getBackgroundTile(c[0], c[1]).setTemperature(1);
+					}
+					if(getBackgroundTile(c[0], c[1]).getTemperature() < 0) {
+						getBackgroundTile(c[0], c[1]).setTemperature(0);
+					}
+					
 				}
+				
 			}
 		}
 		

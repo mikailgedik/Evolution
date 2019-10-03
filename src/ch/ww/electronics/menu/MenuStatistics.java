@@ -62,14 +62,14 @@ public class MenuStatistics extends DefaultMenu {
 		double xFactor = 1.0 * s.getWidth() / stat.getLastTick();
 		double yFactor = s.getHeight() / 1;
 		int num = 0;
-		int color[] = new int[] {	0x0000ff,0x00ff00,0xff0000,
-									0xff00ff,0x00ffff,0xffff00,
-									0x7f7f7f,0x0, 0xBFBFBF};
+		int color[] = new int[] {	0xBFBFBF, 0x00ff00,0xff0000,
+									0xff00ff, 0x00ffff,0xffff00,
+									0x0		, 0xff0000, 0x7f7f7f};
 		
 		for(Entry<Long, HashMap<String, Double>> e :stat.getInfo().entrySet()) {
 			for(Entry<String, Double> a: e.getValue().entrySet()) {
 				int x = (int)(xFactor * e.getKey());
-				int y = (int)(a.getValue() * yFactor);
+				int y = s.getHeight() - (int)(a.getValue() * yFactor);
 				s.fillCircle(x-1, y-1, color[num], 1);
 				s.setPixel(x, y, color[num]);
 				num++;
