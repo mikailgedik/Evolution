@@ -4,8 +4,8 @@ import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.graphics.TextureManager;
 
 public class BackgroundTileStone extends BackgroundTile {
-	public static final String NAME = "backgroundTile.backgroundTileStone";
 	private Screen screen;
+	public static final String NAME = "backgroundTile.backgroundTileStone";
 
 	public BackgroundTileStone(int x, int y) {
 		super(0, x, y);

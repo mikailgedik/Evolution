@@ -21,6 +21,9 @@ public abstract class BackgroundTile {
 	}
 	
 	public void setTemperature(double temperature) {
+		if(temperature == 0) {
+			System.out.print("");
+		}
 		this.temperature = temperature;
 	}
 	
