@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
@@ -117,13 +118,15 @@ public class GameCanvas extends Canvas {
 			long now = System.currentTimeMillis();
 			fps = 0;
 			ticks = 0;
+			boolean fastMode = game.getGameListener().isKeyDown(KeyEvent.VK_K);
 			while (running) {
+				fastMode = game.getGameListener().isKeyDown(KeyEvent.VK_K);
 				if (g == null) {
 					GameCanvas.this.createBufferStrategy(2);
 					g = getGraphics();
 				}
 				try {
-					executeTick();
+					executeTick(fastMode);
 				} catch (Exception e) {
 					System.out.println("Exception while ticking the game");
 					System.out.println("Thread will be stopped");
@@ -136,7 +139,7 @@ public class GameCanvas extends Canvas {
 						resizeCanvas();
 						shouldResize = false;
 					}
-					executeRender(g);
+					executeRender(g,fastMode);
 				} catch (Exception e) {
 					System.out.println("Exception while rendering the game");
 					System.out.println("Thread will be stopped");
@@ -162,7 +165,12 @@ public class GameCanvas extends Canvas {
 			running = false;
 		}
 
-		private void executeRender(Graphics g) {
+		private void executeRender(Graphics g, boolean fastMode) {
+			if(fastMode) {
+				if(this.fps > 1) {
+					return;
+				}
+			}
 			game.render();
 			Screen s = scaler.scaledInstance();
 			assert s.getPixels().length == pixels.length : "Wrong things";
@@ -173,8 +181,8 @@ public class GameCanvas extends Canvas {
 			this.fps++;
 		}
 
-		private void executeTick() {
-			if (System.currentTimeMillis() - lastTimeTicked > 1000 / MAX_TICKS_PER_SECOND) {
+		private void executeTick(boolean fastMode) {
+			if (fastMode || System.currentTimeMillis() - lastTimeTicked > 1000 / MAX_TICKS_PER_SECOND) {
 				game.tick();
 				lastTimeTicked = System.currentTimeMillis();
 				ticks++;
