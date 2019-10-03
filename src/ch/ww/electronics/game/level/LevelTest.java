@@ -2,6 +2,7 @@ package ch.ww.electronics.game.level;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
+import ch.ww.electronics.game.gameobject.Food;
 
 public class LevelTest extends Level {
 
@@ -19,6 +20,8 @@ public class LevelTest extends Level {
 		*/
 		new Animal(this, getLevelWidth()/2, getLevelHeight()/2);
 //		new Animal(this, getLevelWidth()/2, getLevelHeight()/2+4);
+		
+		new Food(this, 5, 5);
 	}
 
 	@Override
