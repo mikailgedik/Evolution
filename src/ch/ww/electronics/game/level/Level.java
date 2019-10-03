@@ -205,7 +205,7 @@ public abstract class Level {
 		if(getGameListener().isKeyDown(KeyEvent.VK_M)){
 			if(selected!=null){
 				if(selected instanceof Animal){
-					text= ((Animal) selected).getDNA().niceText();
+					text= ((Animal) selected).getNiceText();
 				}else{
 					text="Es ist kein Tier ausgewählt";
 				}
