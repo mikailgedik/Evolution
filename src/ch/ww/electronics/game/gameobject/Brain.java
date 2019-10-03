@@ -59,6 +59,9 @@ public class Brain {
 		case STUNNED:
 			stunned(nearby);
 			break;
+		case BE_FOOD:
+			animal.setMotion(new Vector2D(0,0));
+			break;
 		default:
 			throw new RuntimeException("Should not reach this step");
 		}
