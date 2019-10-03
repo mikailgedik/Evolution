@@ -161,7 +161,7 @@ public class Animal extends GameObject{
 		text+="Energie: " + energy + "\n";
 		text+="isdead: " + isDead + "\n";
 		text+=dna.getNiceText();
-		if(getLevel().getGameListener().isKeyDown(KeyEvent.VK_M)){
+		if(getLevel().getGameListener().isKeyDown(KeyEvent.VK_I)){
 			text="";
 			for(int i=0;i<10;i++){
 				for(int j=0;j<50;j++){
