@@ -83,7 +83,7 @@ public class Animal extends GameObject{
 		}
 		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)), (int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)),
 				-1);
-//		System.out.println(getDNA().get(DNA.SIZE));
+		System.out.println(getDNA().get(DNA.SIZE));
 		s.fillCircle(0, 0, c, s.getHeight()/2);
 		setTexture(s.darkScreen(getEnergy()/dna.get(DNA.MAX_ENERGY)));
 	}
