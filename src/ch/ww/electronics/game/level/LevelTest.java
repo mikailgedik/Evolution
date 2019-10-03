@@ -3,6 +3,7 @@ package ch.ww.electronics.game.level;
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
 import ch.ww.electronics.game.gameobject.Food;
+import ch.ww.electronics.game.gameobject.GameObject;
 
 public class LevelTest extends Level {
 
@@ -20,10 +21,6 @@ public class LevelTest extends Level {
 		*/
 		new Animal(this, getLevelWidth()/2, getLevelHeight()/2);
 //		new Animal(this, getLevelWidth()/2, getLevelHeight()/2+4);
-		
-		for(int i=0;i<10;i++){
-			new Food(this, (int)(getLevelWidth()*getRandom().nextDouble()), (int)(getLevelHeight()*getRandom().nextDouble()));
-		}
 	}
 
 	@Override
@@ -39,5 +36,21 @@ public class LevelTest extends Level {
 	@Override
 	public void reset() {
 
+	}
+	
+	@Override
+	public void tick() {
+		super.tick();
+		int count = 0;
+		
+		for(GameObject o: this.getObjectsInLevel()) {
+			if(o instanceof Food) {
+				count++;
+			}
+		}
+		
+		if(getRandom().nextInt(10000) > count * count * count * count) {
+			new Food(this, getLevelWidth()*getRandom().nextDouble(), getLevelHeight()*getRandom().nextDouble());
+		}
 	}
 }
