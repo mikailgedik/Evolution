@@ -14,6 +14,7 @@ public class DNA {
 	public static final String STUNNED_TIME = "stunnedTime";
 	public static final String RUNNING_TIME ="runningTime";
 	public static final String START_SEARCHING_FOOD = "startSearchingFood";
+	public static final String BABY_WHEN_ENERGIE = "babieWhenEnergie";
 	
 	private HashMap<String, Double> values;
 	
@@ -31,9 +32,10 @@ public class DNA {
 		specifications.put(STUNNED_TIME, new Double[]{0d, 1d, 0.1d});
 		specifications.put(RUNNING_TIME, new Double[]{0d, 1d, 0.1d});
 		specifications.put(START_SEARCHING_FOOD, new Double[]{0d, 1d, 0.05d});
+		specifications.put(BABY_WHEN_ENERGIE, new Double[]{0d, 1d , 0.05d});
 	}
 	
-	public DNA(Animal animal, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy, double stunnedTime, double runningTime, double startSearchingFood, double idleProbability) {
+	public DNA(Animal animal, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy, double stunnedTime, double runningTime, double startSearchingFood, double idleProbability, double babyWhenEnergie) {
 		this.animal = animal;
 		
 		values = new HashMap<String, Double>();
@@ -45,12 +47,13 @@ public class DNA {
 		values.put(STUNNED_TIME, stunnedTime);
 		values.put(RUNNING_TIME, runningTime);
 		values.put(START_SEARCHING_FOOD, startSearchingFood);
+		values.put(BABY_WHEN_ENERGIE, babyWhenEnergie);
 		
 		validate();
 	}
 	
 	public DNA(Animal animal){
-		this(animal, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		this(animal, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		randomize();
 	}
 	
