@@ -33,6 +33,7 @@ public class DNA {
 		maxSpeed = prandom() * 0.1 + 0.2;
 		viewrange = prandom() * 5;
 		viewangle = prandom()*Math.PI;
+		viewangle = Math.PI*3;
 		this.maxEnergy = prandom() * 100;
 	}
 	private double prandom(){
