@@ -189,8 +189,18 @@ public abstract class Level {
 				"TOTAL" + objects.size() + "\n" + "IDLE:" + s[0] + "\n" + 
 				"CHASING:" + s[1] + "\n" 		+ "SEARCHING_FOOD:" + s[2] + "\n" +
 				"RUNNING:" + s[3] + "\n" 		+ "STUNNED:" + s[4] + "\n" +
-				"FOOD_SOURCE:" + s[5] + "\n" ;//+
-				//"KIllS:" + killcounter +"\n";
+				"FOOD_SOURCE:" + s[5] + "\n" ;
+		if(getGameListener().isKeyDown(KeyEvent.VK_L)){
+			text = 
+					"Animals" + (objects.size()-s[5]) + "\n" + "IDLE:" + s[0] + "\n" + 
+					"FOOD_SOURCE:" + s[5] + "\n" +
+							
+					"CHASING:" + s[1] + "\n" +
+					"SEARCHING_FOOD:" + s[2] + "\n" +
+					"RUNNING:" + s[3] + "\n" +
+					"STUNNED:" + s[4] + "\n" +
+					"KILLS:" + killcounter + "\n" ;
+		}
 		
 		FontCreator.drawFontOnScreen(text, 0, 0, screen, 0x00ff00);
 	}
