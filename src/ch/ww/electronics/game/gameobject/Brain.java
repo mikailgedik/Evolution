@@ -85,7 +85,7 @@ public class Brain {
 			Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
 			baby.setDNA(animal.getDNA().clone());
 			baby.getDNA().variate(0);
-			baby.setEnergy(baby.getEnergy()/2);
+			baby.setEnergy(getAnimal().getEnergy()/2);
 			getAnimal().setEnergy(getAnimal().getEnergy()/2);
 			
 			getAnimal().setStatus(Status.STUNNED);
