@@ -100,7 +100,7 @@ public class DNA {
 	public HashMap<String, Double> getValues() {
 		return values;
 	}
-	public String niceText(){
+	public String getNiceText(){
 		String text="";
 		for(Entry<String, Double> e: values.entrySet()) {
 			text += e.getKey() + ":" + e.getValue() + "\n";

@@ -150,4 +150,15 @@ public class Animal extends GameObject{
 	public void setStatus(Status s) {
 		brain.setStatus(s);
 	}
+	
+	public String getNiceText(){
+		String text="";
+		text+="x: " + getX() + "\n";
+		text+="y: " + getY() + "\n";
+		text+="Motion: " + motion + "\n";
+		text+="Energie: " + energy + "\n";
+		text+="isdead: " + isDead + "\n";
+		text+=dna.getNiceText();
+		return(text);
+	}
 }
