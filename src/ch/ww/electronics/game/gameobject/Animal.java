@@ -53,6 +53,9 @@ public class Animal extends GameObject{
 	
 	private void adjustEnergy() {
 		addEnergy(-getMotion().getLength() * dna.get(DNA.SIZE));
+		addEnergy(10 * -Math.abs(dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature()));
+		addEnergy(10 * dna.get(DNA.VIEWRANGE));
+		
 		addEnergy(-10); //Passive energy burning
 	}
 	
