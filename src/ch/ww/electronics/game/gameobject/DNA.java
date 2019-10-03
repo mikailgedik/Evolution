@@ -68,9 +68,6 @@ public class DNA {
 		values.forEach((String key, Double value) -> {
 			values.put(key, animal.getLevel().getRandom().nextDouble()*(specifications.get(key)[1]-specifications.get(key)[0])+specifications.get(key)[0]);
 		});
-		
-		
-		
 		validate();
 	}
 
@@ -81,6 +78,11 @@ public class DNA {
 		validate();
 	}
 	private void validate(){
+		for(Entry <String, Double> e: values.entrySet()){
+			if(value<specifications.get(key)[0]){
+				
+			}
+		}
 		values.forEach((String key, Double value)->{
 			if(value<specifications.get(key)[0]){
 				value=specifications.get(key)[0];
