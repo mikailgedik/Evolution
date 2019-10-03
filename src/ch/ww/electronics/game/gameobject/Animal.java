@@ -35,8 +35,7 @@ public class Animal extends GameObject{
 		this.brain = new Brain(this);
 		setMotion(new Vector2D(0, 0));
 		this.energy = dna.get(DNA.MAX_ENERGY);
-		setTexture(new Screen((int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)), (int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)),
-				0xffffff));
+		adjustTexture();
 	}
 
 	@Override
@@ -54,11 +53,11 @@ public class Animal extends GameObject{
 	private void adjustEnergy() {
 		addEnergy(-getMotion().getLength() * dna.get(DNA.SIZE));
 		if(getLevel().getBackgroundTile((int) getX(), (int) getY()) != null) {
-			addEnergy(10 * -Math.abs(dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature()));
+			addEnergy(1 * -Math.abs(dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature()));
 		}
-		addEnergy(10 * dna.get(DNA.VIEWRANGE));
+		addEnergy(-1 * dna.get(DNA.VIEWRANGE));
 		
-		addEnergy(-10); //Passive energy burning
+		addEnergy(-1); //Passive energy burning
 	}
 	
 	private void adjustTexture() {

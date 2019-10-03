@@ -24,11 +24,11 @@ public class DNA {
 		//1: maximum
 		//2: variation
 		specifications = new HashMap<>();
-		specifications.put(SIZE, new Double[]{0.5d, 1d, 0.1d});
+		specifications.put(SIZE, new Double[]{0.5d, 2d, 0.1d});
 		specifications.put(FUR, new Double[]{0d,1d,0.1d});
-		specifications.put(MAX_SPEED, new Double[]{0.01d,0.1d,0.01});
+		specifications.put(MAX_SPEED, new Double[]{0.05d,0.1d,0.01});
 		specifications.put(VIEWRANGE, new Double[]{2d,10d, 0.5});
-		specifications.put(MAX_ENERGY, new Double[]{0.1d,20000d, 10d});
+		specifications.put(MAX_ENERGY, new Double[]{0.1d,5000d, 10d});
 		specifications.put(STUNNED_TIME, new Double[]{0d, 1d, 0.1d});
 		specifications.put(RUNNING_TIME, new Double[]{0d, 1d, 0.1d});
 		specifications.put(START_SEARCHING_FOOD, new Double[]{0d, 1d, 0.05d});
@@ -36,6 +36,7 @@ public class DNA {
 	}
 	
 	public void setgood(){
+		/*
 		values.put(SIZE, 0.8);
 		values.put(FUR, 0.5);
 		values.put(MAX_SPEED, 0.08);
@@ -45,6 +46,7 @@ public class DNA {
 		values.put(RUNNING_TIME, 0.01d);
 		values.put(START_SEARCHING_FOOD,1d);
 		values.put(BABY_WHEN_ENERGIE, 0.5);
+		*/
 	}
 	
 	public DNA(Animal animal, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy, double stunnedTime, double runningTime, double startSearchingFood, double idleProbability, double babyWhenEnergie) {
@@ -80,7 +82,7 @@ public class DNA {
 			values.put(key, animal.getLevel().getRandom().nextDouble()*(specifications.get(key)[1]-specifications.get(key)[0])+specifications.get(key)[0]);
 		});
 		validate();
-		setgood();
+		//setgood();
 	}
 
 	public void variate(double radiation) {
@@ -91,12 +93,12 @@ public class DNA {
 	}
 	private void validate(){
 		for(Entry <String, Double> e: values.entrySet()){
-			if(e.getValue()<specifications.get(e.getKey())[0]){
-				e.setValue(specifications.get(e.getKey())[0]);
+			if(e.getValue()<specifications.get(e.getKey())[0]) {
+				values.put(e.getKey(), specifications.get(e.getKey())[0]);
 				return;
 			}
-			if(e.getValue()>specifications.get(e.getKey())[1]){
-				e.setValue(specifications.get(e.getKey())[1]);
+			if(e.getValue()>specifications.get(e.getKey())[1]) {
+				values.put(e.getKey(), specifications.get(e.getKey())[1]);
 				return;
 			}
 		}

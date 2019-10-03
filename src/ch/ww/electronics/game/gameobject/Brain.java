@@ -123,7 +123,14 @@ public class Brain {
 	
 	private void run(ArrayList<Animal> nearby) {
 		if(this.animal.getMotion().getLength() < this.animal.getDNA().get(DNA.MAX_SPEED) * 0.9) {
-			setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
+			if(animal.getMotion().getLength() == 0) {
+				setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
+			} else {
+				Vector2D v = animal.getMotion();
+				double factor = dna.get(DNA.MAX_SPEED) / v.getLength();
+				v = new MutableVector2D(v.getX() * factor, v.getY() * factor);
+				animal.setMotion(v);
+			}
 		}
 		
 //		//Je mehr Gegner es sieht, desto eher rennt es weiter

@@ -70,7 +70,7 @@ public class DefaultLevelCreator implements LevelCreator {
 	}
 
 	private void createHeatMap() {
-		int gridsize = 20;
+		int gridsize = 70;
 		ArrayList<int[]> coordinates = new ArrayList<>();
 		for(int y = 0; y < level.getLevelHeight(); y += gridsize) {
 			for(int x = 0; x < level.getLevelWidth(); x += gridsize) {

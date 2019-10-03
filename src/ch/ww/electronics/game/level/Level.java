@@ -161,6 +161,10 @@ public abstract class Level {
 			xOnScreen -= o.getTexture().getWidth() / 2;
 			yOnScreen -= o.getTexture().getHeight() / 2;
 			
+			if(xOnScreen < -FIELD_SIZE || yOnScreen < -FIELD_SIZE || xOnScreen >= screen.getWidth() || yOnScreen >= screen.getHeight()) {
+				continue;
+			}
+			
 			screen.drawScreen((int) xOnScreen, (int) yOnScreen, o.getTexture());
 		}
 		
