@@ -135,7 +135,11 @@ public abstract class Level {
 			if (t != null) {
 				xOnScreen = t.getX() * FIELD_SIZE + xInPixels;
 				yOnScreen = t.getY() * FIELD_SIZE + yInPixels;
-
+				
+				if(xOnScreen < -FIELD_SIZE || yOnScreen < -FIELD_SIZE || xOnScreen >= screen.getWidth() || yOnScreen >= screen.getHeight()) {
+					
+				}
+				
 				tScreen = t.getScreenToRender();
 
 				screen.drawScreen((int) xOnScreen, (int) yOnScreen, tScreen);
