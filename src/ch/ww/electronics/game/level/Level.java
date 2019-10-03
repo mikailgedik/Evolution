@@ -196,19 +196,23 @@ public abstract class Level {
 			text = 
 					"Animals" + (objects.size()-s[5]) + "\n" + "IDLE:" + s[0] + "\n" + 
 					"FOOD_SOURCE:" + s[5] + "\n" +
-							
 					"CHASING:" + s[1] + "\n" +
 					"SEARCHING_FOOD:" + s[2] + "\n" +
 					"RUNNING:" + s[3] + "\n" +
 					"STUNNED:" + s[4] + "\n" +
 					"KILLS:" + killcounter + "\n" ;
 		}
-//		if(selected!=null){
-//			
-//		}else{
-//			text = "Kein Objekt ausgewählt"; 
-//		}
-		
+		if(getGameListener().isKeyDown(KeyEvent.VK_M)){
+			if(selected!=null){
+				if(selected instanceof Animal){
+					text= ((Animal) selected).getDNA().niceText();
+				}else{
+					text="Es ist kein Tier ausgewählt";
+				}
+			}else{
+				text = "Kein Objekt ausgewählt"; 
+			}
+		}
 		FontCreator.drawFontOnScreen(text, 0, 0, screen, 0x00ff00);
 	}
 
