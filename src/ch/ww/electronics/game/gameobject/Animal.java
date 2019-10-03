@@ -6,7 +6,6 @@ import ch.ww.electronics.game.gameobject.Brain.Status;
 import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
-import ch.ww.electronics.util.MutableVector2D;
 import ch.ww.electronics.util.Vector2D;
 
 public class Animal extends GameObject{
@@ -76,7 +75,8 @@ public class Animal extends GameObject{
 			throw new RuntimeException();		
 		}
 		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().getSize()), (int) (BackgroundTile.SIZE * getDNA().getSize()),
-				c);
+				-1);
+		s.fillCircle(0, 0, c, s.getHeight()/2);
 		setTexture(s.darkScreen(getEnergy()/dna.getMaxEnergy()));
 	}
 	
