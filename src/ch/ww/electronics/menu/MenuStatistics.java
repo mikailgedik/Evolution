@@ -59,6 +59,7 @@ public class MenuStatistics extends DefaultMenu {
 			list.setX(drawOn.getWidth() / 2 - list.getWidth() / 2);
 			list.setY(50 + s.getHeight() + 20);
 		}
+		System.out.println("HI");
 		
 		
 		drawOn.drawScreen(50, 50, s);
