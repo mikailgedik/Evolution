@@ -111,6 +111,7 @@ public class Brain {
 	private void searchingFood(ArrayList<Animal> nearby) {
 		if(nearby.size() > 0) {
 			target = nearby.get(animal.getRandom().nextInt(nearby.size()));
+			target = nearby.get(0);
 			status = Status.CHASING;
 		} else {
 			if(r.nextDouble() < 0.01) {
