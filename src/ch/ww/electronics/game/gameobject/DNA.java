@@ -28,13 +28,15 @@ public class DNA {
 	}
 
 	public void randomize() {
-		size = (animal.getRandom().nextDouble());
-		fur = (animal.getRandom().nextDouble());
-		maxSpeed = (animal.getRandom().nextDouble()) * 0.1 + 0.2;
-		viewrange = (animal.getRandom().nextDouble()) * 5;
-		viewangle = (animal.getRandom().nextDouble())*Math.PI;
-		this.maxEnergy = (animal.getRandom().nextDouble()) * 100;
-		this.maxEnergy = 3000;
+		size = (prandom());
+		fur = animal.getRandom().nextDouble();
+		maxSpeed = prandom() * 0.1 + 0.2;
+		viewrange = prandom() * 5;
+		viewangle = prandom()*Math.PI;
+		this.maxEnergy = prandom() * 100;
+	}
+	private double prandom(){
+		return(animal.getRandom().nextDouble()*0.5+0.5);
 	}
 
 	public void variate(double radiation) {
