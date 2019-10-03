@@ -28,6 +28,9 @@ public abstract class Level {
 	private final BackgroundTile[] backgroundTile;
 	private final LevelCreator levelCreator;
 	private double viewX, viewY;
+	
+	private int killcounter=0;
+	private int foodeaten=0;
 
 	public Level(Game game, int levelWidth, int levelHeight) {
 		this.game = game;
@@ -295,15 +298,18 @@ public abstract class Level {
 		double diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
 		if(a1.getStatus() == Brain.Status.BE_FOOD) {
 			diff = -1;
-		}
-		if(a2.getStatus() == Brain.Status.BE_FOOD) {
+			foodeaten++;
+			System.out.println("foodeaten:"+foodeaten);
+		} else if(a2.getStatus() == Brain.Status.BE_FOOD) {
 			diff = 1;
+			foodeaten++;
+			System.out.println("foodeaten:"+foodeaten);
+		} else {
+			killcounter++;
+			System.out.println("killcounter:"+killcounter);
 		}
 		if(diff == 0) {
 			diff = getRandom().nextBoolean() ? 1 : -1;
-		}else{
-			Animal.killcounter++;
-			System.out.println("killcounter:"+Animal.killcounter);
 		}
 		if(diff > 0) {
 			a1.addEnergy(a2.getEnergy());

@@ -10,7 +10,6 @@ import ch.ww.electronics.util.Vector2D;
 
 public class Animal extends GameObject{
 	
-	public static int killcounter=0;
 	//TODO Es gibt eine Size in Gameobject, aber die wird in der Grafik nicht benutzt. Auch die getsize gibt immer nur 1 zurück. 
 	private DNA dna;
 	private Vector2D motion;
