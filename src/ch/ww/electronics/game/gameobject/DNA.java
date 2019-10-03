@@ -24,7 +24,9 @@ public class DNA {
 	
 	private static final Map <String, Double[]> specifications;
 	static {
-		//0: 
+		//0: minimum
+		//1: maximum
+		//2: variation
 		specifications = new HashMap<>();
 		specifications.put(SIZE, new Double[]{0d, 1d, 0.1d});
 		specifications.put(FUR, new Double[]{0d,1d,0.1d});
@@ -54,7 +56,7 @@ public class DNA {
 //		this.maxEnergy = maxEnergy;
 //		this.stunned = stunned;
 		
-		make_valid();
+		validate();
 	}
 	public DNA(Animal animal){
 		this.animal=animal;
@@ -70,76 +72,97 @@ public class DNA {
 //		stunned = animal.getRandom().nextDouble()*200;
 		
 		values.forEach((String key, Double value) -> {
-			value=animal.getLevel().getRandom().nextDouble()*specifications.get(key)[0];
+			value=animal.getLevel().getRandom().nextDouble()*(specifications.get(key)[1]-specifications.get(key)[0])+specifications.get(key)[0];
 		});
 		
-		make_valid();
+		validate();
 	}
 //	private double prandom(){
 //		return(animal.getRandom().nextDouble()*0.5+0.5);
 //	}
 
 	public void variate(double radiation) {
-		size += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
-		fur += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
-		maxSpeed += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
-		viewrange += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
-		stunned += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation)*10;
-		make_valid();
+//		size += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
+//		fur += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
+//		maxSpeed += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
+//		viewrange += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation);
+//		stunned += (animal.getRandom().nextDouble() * 2 - 1) * VARIATION * (1 + radiation)*10;
+		values.forEach((String key, Double value) -> {
+			value+=animal.getLevel().getRandom().nextDouble()*specifications.get(key)[2];
+		});
+		validate();
 	}
-	private void make_valid(){
-		if(size<0.5)size=1;
-		if(fur<0)fur=0; if(fur>1)fur=1;
-		if(maxSpeed<0)maxSpeed=0;
-		if(viewrange<0)viewrange=0;
-		if(stunned<0)stunned=0;
-	}
-
-	public double getSize() {
-		return size;
-	}
-
-	public void setSize(double size) {
-		this.size = size;
-	}
-
-	public double getFur() {
-		return fur;
-	}
-
-	public void setFur(double fur) {
-		this.fur = fur;
-	}
-
-	public double getMaxSpeed() {
-		return maxSpeed;
-	}
-
-	public void setMaxSpeed(double speed) {
-		this.maxSpeed = speed;
-	}
-
-	public double getViewrange() {
-		return viewrange;
-	}
-
-	public void setViewrange(double viewrange) {
-		this.viewrange = viewrange;
-	}
-
-	public double getMaxEnergy() {
-		return maxEnergy;
-	}
-
-	public void setMaxEnergy(double maxEnergy) {
-		this.maxEnergy = maxEnergy;
-	}
-
-	public double getStunned() {
-		return stunned;
+	private void validate(){
+		
+//		if(size<0.5)size=1;
+//		if(fur<0)fur=0; if(fur>1)fur=1;
+//		if(maxSpeed<0)maxSpeed=0;
+//		if(viewrange<0)viewrange=0;
+//		if(stunned<0)stunned=0;
+		values.forEach((String key, Double value)->{
+			if(value<specifications.get(key)[0]){
+				value=specifications.get(key)[0];
+				return;
+			}
+			if(value>specifications.get(key)[1]){
+				value=specifications.get(key)[1];
+				return;
+			}
+		});
 	}
 	
-	public void getStunned(double stunned) {
-		this.stunned = stunned;
+	public double get(String key){
+		return values.get(key);
 	}
+	public void set(String key, Double value){
+		if(values.put(key, value)==null) throw new RuntimeException("Not a valid key");
+	}
+	
+//	public double getSize() {
+//		return size;
+//	}
+//
+//	public void setSize(double size) {
+//		this.size = size;
+//	}
+//
+//	public double getFur() {
+//		return fur;
+//	}
+//
+//	public void setFur(double fur) {
+//		this.fur = fur;
+//	}
+//
+//	public double getMaxSpeed() {
+//		return maxSpeed;
+//	}
+//
+//	public void setMaxSpeed(double speed) {
+//		this.maxSpeed = speed;
+//	}
+//
+//	public double getViewrange() {
+//		return viewrange;
+//	}
+//
+//	public void setViewrange(double viewrange) {
+//		this.viewrange = viewrange;
+//	}
+//
+//	public double getMaxEnergy() {
+//		return maxEnergy;
+//	}
+//
+//	public void setMaxEnergy(double maxEnergy) {
+//		this.maxEnergy = maxEnergy;
+//	}
+//
+//	public double getStunned() {
+//		return stunned;
+//	}
+//	
+//	public void getStunned(double stunned) {
+//		this.stunned = stunned;
+//	}
 }
