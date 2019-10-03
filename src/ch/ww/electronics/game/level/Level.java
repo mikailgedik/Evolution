@@ -8,6 +8,7 @@ import java.util.Random;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
+import ch.ww.electronics.game.gameobject.Brain;
 import ch.ww.electronics.game.gameobject.Fight;
 import ch.ww.electronics.game.gameobject.GameObject;
 import ch.ww.electronics.graphics.FontCreator;
@@ -139,6 +140,9 @@ public abstract class Level {
 		for (GameObject o : objects) {
 			xOnScreen = o.getX() * FIELD_SIZE + xInPixels;
 			yOnScreen = o.getY() * FIELD_SIZE + yInPixels;
+			
+			xOnScreen -= o.getTexture().getWidth() / 2;
+			yOnScreen -= o.getTexture().getHeight() / 2;
 			
 			screen.drawScreen((int) xOnScreen, (int) yOnScreen, o.getTexture());
 		}
@@ -283,6 +287,12 @@ public abstract class Level {
 	
 	private void fight(Animal a1, Animal a2) {
 		double diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
+		if(a1.getStatus() == Brain.Status.BE_FOOD) {
+			diff = -1;
+		}
+		if(a2.getStatus() == Brain.Status.BE_FOOD) {
+			diff = 1;
+		}
 		if(diff == 0) {
 			diff = getRandom().nextBoolean() ? 1 : -1;
 		}
