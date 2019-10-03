@@ -22,7 +22,7 @@ public class LevelTest extends Level {
 //		new Animal(this, getLevelWidth()/2, getLevelHeight()/2+4);
 		
 		for(int i=0;i<10;i++){
-			new Food(this, (int)(getLevelWidth()/getRandom().nextDouble()), (int)(getLevelHeight()/getRandom().nextDouble()));
+			new Food(this, (int)(getLevelWidth()*getRandom().nextDouble()), (int)(getLevelHeight()*getRandom().nextDouble()));
 		}
 	}
 
