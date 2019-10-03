@@ -238,7 +238,6 @@ public abstract class Level {
 		}
 		
 		fights.forEach((f) -> {
-			System.out.println("Fight!");
 			this.fight(f.getA1(), f.getA2());
 		});
 		
@@ -342,7 +341,6 @@ public abstract class Level {
 			foodeaten++;
 		} else {
 			killcounter++;
-			System.out.println("killcounter:"+killcounter);
 		}
 		if(diff == 0) {
 			diff = getRandom().nextBoolean() ? 1 : -1;
