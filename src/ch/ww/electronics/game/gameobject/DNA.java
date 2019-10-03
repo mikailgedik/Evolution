@@ -27,8 +27,8 @@ public class DNA {
 		specifications.put(MAX_SPEED, new Double[]{0.01d,0.1d,0.01});
 		specifications.put(VIEWRANGE, new Double[]{2d,10d, 0.5});
 		specifications.put(MAX_ENERGY, new Double[]{0.1d,20000d, 10d});
-		specifications.put(STUNNED_TIME, new Double[]{0d, 1d, 100d});
-		specifications.put(RUNNING_TIME, new Double[]{0d, 1d, 100d});
+		specifications.put(STUNNED_TIME, new Double[]{0d, 1d, 0.1d});
+		specifications.put(RUNNING_TIME, new Double[]{0d, 1d, 0.1d});
 		specifications.put(START_SEARCHING_FOOD, new Double[]{0d, 1d, 0.05d});
 	}
 	
@@ -94,5 +94,9 @@ public class DNA {
 	}
 	public void set(String key, Double value){
 		if(values.put(key, value)==null) throw new RuntimeException("Not a valid key");
+	}
+	
+	public HashMap<String, Double> getValues() {
+		return values;
 	}
 }
