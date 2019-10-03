@@ -24,7 +24,7 @@ public class DNA {
 		//1: maximum
 		//2: variation
 		specifications = new HashMap<>();
-		specifications.put(SIZE, new Double[]{0.05d, 0.2d, 0.1d});
+		specifications.put(SIZE, new Double[]{0.05d, 1d, 0.1d});
 		specifications.put(FUR, new Double[]{0d,1d,0.1d});
 		specifications.put(MAX_SPEED, new Double[]{0.05d,0.1d,0.01});
 		specifications.put(VIEWRANGE, new Double[]{5d,10d, 0.5});
@@ -74,6 +74,7 @@ public class DNA {
 	protected DNA clone() {
 		DNA dna = new DNA(this.animal);
 		dna.values = (HashMap<String, Double>) this.values.clone();
+		validate();
 		return dna;
 	}
 	
@@ -82,7 +83,6 @@ public class DNA {
 			values.put(key, animal.getLevel().getRandom().nextDouble()*(specifications.get(key)[1]-specifications.get(key)[0])+specifications.get(key)[0]);
 		});
 		validate();
-		//setgood();
 	}
 
 	public void variate(double radiation) {
@@ -102,14 +102,15 @@ public class DNA {
 				return;
 			}
 		}
+		if(values.get(SIZE)>1)System.out.println("HEy");
 	}
 	
 	public double get(String key){
 		return values.get(key);
 	}
-	public void set(String key, Double value){
-		if(values.put(key, value)==null) throw new RuntimeException("Not a valid key");
-	}
+//	public void set(String key, Double value){
+//		if(values.put(key, value)==null) throw new RuntimeException("Not a valid key");
+//	}
 	
 	public HashMap<String, Double> getValues() {
 		return values;
