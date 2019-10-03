@@ -31,6 +31,8 @@ public abstract class Level {
 	
 	private int killcounter=0;
 	private int foodeaten=0;
+	
+	private GameObject selected;
 
 	public Level(Game game, int levelWidth, int levelHeight) {
 		this.game = game;
@@ -201,6 +203,11 @@ public abstract class Level {
 					"STUNNED:" + s[4] + "\n" +
 					"KILLS:" + killcounter + "\n" ;
 		}
+		if(selected!=null){
+			
+		}else{
+			text = "Kein Objekt ausgewählt"; 
+		}
 		
 		FontCreator.drawFontOnScreen(text, 0, 0, screen, 0x00ff00);
 	}
@@ -261,6 +268,22 @@ public abstract class Level {
 			int[] co = getBackgroundTilesAt(xScreen, yScreen);
 			int x = co[0], y = co[1];
 			System.out.println("MouseButtonClick at" + x + " " + y);
+		}
+		if (mouseButton == MouseEvent.BUTTON1){
+			double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
+			double yInPixels = (int) (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
+			double x = (xScreen - xInPixels) / FIELD_SIZE;
+			double y = (yScreen - yInPixels) / FIELD_SIZE;
+			
+			double minabstand=-1;
+			for(GameObject o:objects){
+				//sqrt weggelassen, weil keine ROlle
+				double abstand=Math.pow(x - o.getX(),2)+Math.pow(y - o.getY(),2);
+				if(minabstand==-1|abstand<minabstand){
+					minabstand=abstand;
+					selected=o;
+				}
+			}
 		}
 	}
 
