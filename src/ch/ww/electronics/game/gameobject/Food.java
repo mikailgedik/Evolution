@@ -8,10 +8,10 @@ public class Food extends Animal{
 		super(level, x, y);
 		setStatus(Brain.Status.BE_FOOD);
 		
-		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().getSize()), (int) (BackgroundTile.SIZE * getDNA().getSize()),
+		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)), (int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)),
 				-1);
 		s.fillCircle(0, 0, 0x00ff00, s.getHeight()/2);
-		setTexture(s.darkScreen(getEnergy()/getDNA().getMaxEnergy()));
+		setTexture(s.darkScreen(getEnergy()/getDNA().get(DNA.MAX_ENERGY)));
 	}
 	
 	
