@@ -37,7 +37,7 @@ public class Brain {
 	public void think() {
 		ArrayList<Animal> nearby = sensors.getEyeInput();
 		if(status != Status.RUNNING && status != Status.STUNNED) {
-			if(animal.getEnergy()/dna.get(DNA.MAX_ENERGY) < dna.get(DNA.START_SEARCHING_FOOD) && status != Status.CHASING) {
+			if(animal.getEnergy()/dna.get(DNA.MAX_ENERGY) < dna.get(DNA.START_SEARCHING_FOOD) && status != Status.CHASING & status!= Status.SEARCHING_FOOD) {
 				status = Status.SEARCHING_FOOD;
 			}
 		}
