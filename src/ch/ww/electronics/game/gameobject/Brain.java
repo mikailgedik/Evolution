@@ -38,7 +38,7 @@ public class Brain {
 	public void think() {
 		ArrayList<Animal> nearby = sensors.getEyeInput();
 		if(status != Status.RUNNING && status != Status.STUNNED) {
-			if(animal.getEnergy()/dna.getMaxEnergy() < 0.9 && status != Status.CHASING) {
+			if(animal.getEnergy()/dna.get(DNA.MAX_ENERGY) < 0.9 && status != Status.CHASING) {
 				status = Status.SEARCHING_FOOD;
 			}
 		}
@@ -76,12 +76,12 @@ public class Brain {
 	
 	private void idle(ArrayList<Animal> nearby) {
 		if(animal.getMotion().getLength() == 0 && animal.getLevel().getRandom().nextDouble() < 0.1) {
-			setMotionToRandomDirection(r.nextDouble() *dna.getMaxSpeed());
+			setMotionToRandomDirection(r.nextDouble() * dna.get(DNA.MAX_SPEED));
 		} else if(animal.getLevel().getRandom().nextDouble() < 0.1) {
 			animal.setMotion(new Vector2D(0,0));
 		}
 		
-		if(getAnimal().getEnergy()/getAnimal().getDNA().getMaxEnergy()> 0.8/* && r.nextDouble() < 0.01 */){
+		if(getAnimal().getEnergy()/getAnimal().getDNA().get(DNA.MAX_ENERGY) > 0.8/* && r.nextDouble() < 0.01 */){
 			System.out.println("NEW BABY");
 			Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
 			baby.setDNA(animal.getDNA().copy());
@@ -104,7 +104,7 @@ public class Brain {
 			status = Status.IDLE;
 		} else {
 			MutableVector2D v = new MutableVector2D(target.getX() - this.animal.getX(), target.getY() - this.animal.getY());
-			double factor = dna.getMaxSpeed() / v.getLength();
+			double factor = dna.get(DNA.MAX_SPEED) / v.getLength();
 			v = new MutableVector2D(v.getX() * factor, v.getY() * factor);
 			animal.setMotion(v);
 		}
@@ -116,15 +116,15 @@ public class Brain {
 			status = Status.CHASING;
 		} else {
 			if(r.nextDouble() < 0.01) {
-				setMotionToRandomDirection(r.nextDouble() *dna.getMaxSpeed());
+				setMotionToRandomDirection(r.nextDouble() * dna.get(DNA.MAX_SPEED));
 			}
 			target = null;
 		}
 	}
 	
 	private void run(ArrayList<Animal> nearby) {
-		if(this.animal.getMotion().getLength() < this.animal.getDNA().getMaxSpeed() * 0.9) {
-			setMotionToRandomDirection(dna.getMaxSpeed());
+		if(this.animal.getMotion().getLength() < this.animal.getDNA().get(DNA.MAX_SPEED) * 0.9) {
+			setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
 		}
 		
 		//Je mehr Gegner es sieht, desto eher rennt es weiter
