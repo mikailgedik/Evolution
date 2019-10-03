@@ -79,7 +79,7 @@ public class DNA {
 	}
 	private void validate(){
 		for(Entry <String, Double> e: values.entrySet()){
-			if(value<specifications.get(key)[0]){
+			if(e.getValue()value<specifications.get(key)[0]){
 				
 			}
 		}
