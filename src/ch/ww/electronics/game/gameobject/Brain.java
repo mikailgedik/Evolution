@@ -20,7 +20,6 @@ public class Brain {
 	private final DNA dna;
 	
 	private final Sensors sensors;
-	private double facingangle;
 	
 	private Status status;
 	
@@ -149,11 +148,6 @@ public class Brain {
 	public Status getStatus() {
 		return status;
 	}
-	
-	public double getFacingAngle(){
-		return (facingangle);
-	}
-
 	public void setStatus(Status status) {
 		this.status = status;
 	}
