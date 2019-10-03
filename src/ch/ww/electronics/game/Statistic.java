@@ -33,5 +33,9 @@ public class Statistic {
 		
 		info.put(tick, average);
 	}
-
+	
+	public HashMap<Long, HashMap<String, Double>> getInfo() {
+		return info;
+	}
+	
 }
