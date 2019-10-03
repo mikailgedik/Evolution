@@ -1,6 +1,7 @@
 package ch.ww.electronics.game.level;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -124,6 +125,8 @@ public abstract class Level {
 	}
 
 	public synchronized Screen getScreenToRender(boolean renderHUD) {
+		boolean renderHeat = getGameListener().isKeyDown(KeyEvent.VK_H);
+		
 		screen.fill(0);
 		double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
 		double yInPixels = (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
@@ -141,7 +144,13 @@ public abstract class Level {
 				}
 				
 				tScreen = t.getScreenToRender();
-
+				
+				if(renderHeat) {
+					tScreen = tScreen.copy();
+					tScreen.fill(0xffffff);
+					tScreen.darkScreen(t.getTemperature());
+				}
+				
 				screen.drawScreen((int) xOnScreen, (int) yOnScreen, tScreen);
 			}
 		}
