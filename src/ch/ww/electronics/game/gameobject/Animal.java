@@ -30,11 +30,11 @@ public class Animal extends GameObject{
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
 		dna = new DNA(this);
-		setTexture(new Screen((int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)), (int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)),
-				0xffffff));
 		this.brain = new Brain(this);
 		setMotion(new Vector2D(0, 0));
 		this.energy = dna.get(DNA.MAX_ENERGY);
+		setTexture(new Screen((int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)), (int) (BackgroundTile.SIZE * dna.get(DNA.SIZE)),
+				0xffffff));
 	}
 
 	@Override
