@@ -45,7 +45,7 @@ public class DefaultLevelCreator implements LevelCreator {
 		}
 
 		stoneBouldersCount = (level.getLevelWidth() + level.getLevelHeight()) / 10;
-		System.out.println("Created " + createStoneBoulders() + " stoneboulders");
+		//System.out.println("Created " + createStoneBoulders() + " stoneboulders");
 		
 		createHeatMap();
 	}
@@ -79,11 +79,10 @@ public class DefaultLevelCreator implements LevelCreator {
 			}
 		}
 		
-		
 		for(int[] center: coordinates) {
 			final double temp =  getBackgroundTile(center[0], center[1]).getTemperature();
 			double t = temp;
-			ArrayList<Integer[]> circle = CoordinatesCreator.createFilledCircle(center[0], center[1], (int)(gridsize*1.14));
+			ArrayList<Integer[]> circle = CoordinatesCreator.createFilledCircle(center[0], center[1], (int)(gridsize));
 
 			for(Integer[] c: circle) {
 				t = temp;
