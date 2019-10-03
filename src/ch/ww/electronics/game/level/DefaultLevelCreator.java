@@ -1,5 +1,6 @@
 package ch.ww.electronics.game.level;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
@@ -45,6 +46,8 @@ public class DefaultLevelCreator implements LevelCreator {
 
 		stoneBouldersCount = (level.getLevelWidth() + level.getLevelHeight()) / 10;
 		System.out.println("Created " + createStoneBoulders() + " stoneboulders");
+		
+		createHeatMap();
 	}
 
 	private int createStoneBoulders() {
@@ -66,6 +69,34 @@ public class DefaultLevelCreator implements LevelCreator {
 		return count;
 	}
 
+	private void createHeatMap() {
+		int gridsize = 20;
+		int[][] coordinates = new int[(level.getLevelWidth() / gridsize) * (level.getLevelHeight() / gridsize)][2];
+
+		for(int y = 0; y < level.getLevelHeight(); y += gridsize) {
+			for(int x = 0; x < level.getLevelWidth()/gridsize; x += gridsize) {
+				level.getBackgroundTile(x, y).setTemperature(getRandom().nextDouble());
+				coordinates[(x/gridsize) + (y/gridsize* level.getLevelWidth())][0] = x;
+				coordinates[(x/gridsize) + (y/gridsize* level.getLevelWidth())][1] = y;
+			}
+		}
+		
+		for(int[] center: coordinates) {
+			final double temp =  getBackgroundTile(center[0], center[1]).getTemperature();
+			double t = temp;
+			ArrayList<Integer[]> circle = CoordinatesCreator.createFilledCircle(center[0], center[1], (int)(gridsize));
+			for(Integer[] c: circle) {
+				t = temp + (getRandom().nextInt(2) * 2 -1)  * getRandom().nextDouble() * Math.exp(c[2]/(gridsize* gridsize));
+				getBackgroundTile(c[0], c[1]).setTemperature(t);
+			}
+		}
+		
+	}
+	
+	public BackgroundTile getBackgroundTile(int x, int y) {
+		return level.getBackgroundTile(x, y);
+	}
+	
 	public void setBackgroundTile(BackgroundTile d) {
 		if (d.getX() < 0 || d.getX() >= level.getLevelWidth() || d.getY() < 0 || d.getY() >= level.getLevelHeight()) {
 			return;
