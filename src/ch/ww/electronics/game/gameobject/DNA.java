@@ -7,7 +7,6 @@ public class DNA {
 	private double fur;
 	private double maxSpeed;
 	private double viewrange;
-	private double viewangle;
 	private double maxEnergy;
 	private double stunned;
 
@@ -20,7 +19,6 @@ public class DNA {
 		this.fur = fur;
 		this.maxSpeed = maxSpeed;
 		this.viewrange = viewrange;
-		this.viewangle = viewangle;
 		this.maxEnergy = maxEnergy;
 		this.stunned = stunned;
 	}
@@ -34,8 +32,6 @@ public class DNA {
 		fur = animal.getRandom().nextDouble();
 		maxSpeed = prandom() * 0.1 + 0.2;
 		viewrange = prandom() * 5;
-		viewangle = prandom()*Math.PI;
-		viewangle = Math.PI*3;
 		maxEnergy = prandom() * 100;
 		stunned = animal.getRandom().nextDouble()*200;
 	}
@@ -89,14 +85,7 @@ public class DNA {
 	public void setMaxEnergy(double maxEnergy) {
 		this.maxEnergy = maxEnergy;
 	}
-	
-	public double getViewangle() {
-		return viewangle;
-	}
-	
-	public void setViewangle(double viewangle) {
-		this.viewangle = viewangle;
-	}
+
 	public double getStunned() {
 		return stunned;
 	}
