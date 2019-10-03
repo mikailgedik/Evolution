@@ -75,7 +75,7 @@ public class Animal extends GameObject{
 		default:
 			throw new RuntimeException();		
 		}
-		Screen s = new Screen((int) (BackgroundTile.SIZE * getWidth()), (int) (BackgroundTile.SIZE * getHeight()),
+		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().getSize()), (int) (BackgroundTile.SIZE * getDNA().getSize()),
 				c);
 		setTexture(s.darkScreen(getEnergy()/dna.getMaxEnergy()));
 	}
