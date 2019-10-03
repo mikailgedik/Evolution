@@ -1,5 +1,7 @@
 package ch.ww.electronics.game.gameobject;
 
+import java.awt.event.KeyEvent;
+
 import org.json.JSONObject;
 
 import ch.ww.electronics.game.gameobject.Brain.Status;
@@ -159,6 +161,15 @@ public class Animal extends GameObject{
 		text+="Energie: " + energy + "\n";
 		text+="isdead: " + isDead + "\n";
 		text+=dna.getNiceText();
+		if(getLevel().getGameListener().isKeyDown(KeyEvent.VK_M)){
+			text="";
+			for(int i=0;i<10;i++){
+				for(int j=0;j<50;j++){
+					text+="Ian was herer!";
+				}
+				text+="\n";
+			}
+		}
 		return(text);
 	}
 }
