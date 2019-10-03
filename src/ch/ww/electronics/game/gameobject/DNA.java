@@ -9,10 +9,11 @@ public class DNA {
 	private double viewrange;
 	private double viewangle;
 	private double maxEnergy;
+	private double stunned;
 
 	private static final double VARIATION = 0.1;
 
-	public DNA(Animal game, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy) {
+	public DNA(Animal game, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy, double stunned) {
 		this.animal = game;
 
 		this.size = size;
@@ -21,6 +22,7 @@ public class DNA {
 		this.viewrange = viewrange;
 		this.viewangle = viewangle;
 		this.maxEnergy = maxEnergy;
+		this.stunned = stunned;
 	}
 	public DNA(Animal animal){
 		this.animal=animal;
@@ -34,7 +36,8 @@ public class DNA {
 		viewrange = prandom() * 5;
 		viewangle = prandom()*Math.PI;
 		viewangle = Math.PI*3;
-		this.maxEnergy = prandom() * 100;
+		maxEnergy = prandom() * 100;
+		stunned = animal.getRandom().nextDouble()*200;
 	}
 	private double prandom(){
 		return(animal.getRandom().nextDouble()*0.5+0.5);
@@ -93,5 +96,12 @@ public class DNA {
 	
 	public void setViewangle(double viewangle) {
 		this.viewangle = viewangle;
+	}
+	public double getStunned() {
+		return stunned;
+	}
+	
+	public void getStunned(double stunned) {
+		this.stunned = stunned;
 	}
 }
