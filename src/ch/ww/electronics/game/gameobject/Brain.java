@@ -82,7 +82,6 @@ public class Brain {
 		}
 		
 		if(getAnimal().getEnergy()/getAnimal().getDNA().get(DNA.MAX_ENERGY) > animal.getDNA().get(DNA.BABY_WHEN_ENERGIE)/* && r.nextDouble() < 0.01 */){
-			System.out.println("NEW BABY");
 			Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
 			baby.setDNA(animal.getDNA().clone());
 			baby.getDNA().variate(0);
