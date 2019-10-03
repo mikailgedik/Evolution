@@ -19,7 +19,7 @@ public class Game implements EventExecuter {
 	private final Random random;
 	private GameCanvas gameCanvas;
 	private GameLoader loader;
-
+	private Statistic statistic;
 	/*
 	 * Priority of rendering/ticking: <br> Menu<br>OldInventory<br>Level
 	 */
@@ -62,6 +62,8 @@ public class Game implements EventExecuter {
 			if (totalLevelTicks == 0) {
 				getLevel().onStart();
 			}
+			statistic.addStatistic(level, totalLevelTicks);
+
 			getLevel().tick();
 			totalLevelTicks++;
 		} else {
@@ -182,6 +184,10 @@ public class Game implements EventExecuter {
 		}
 	}
 
+	public Statistic getStatistic() {
+		return statistic;
+	}
+	
 	public Random getRandom() {
 		return random;
 	}

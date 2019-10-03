@@ -2,12 +2,22 @@ package ch.ww.electronics.menu;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.Statistic;
+import ch.ww.electronics.graphics.Screen;
 
-public class MenuStatistics extends Menu {
+public class MenuStatistics extends DefaultMenu {
 	private Statistic stat;
 	public MenuStatistics(Game game, Menu parentMenu) {
 		super(game, parentMenu);
 		this.stat = game.getStatistic();
 	}
+	
+	@Override
+	public void renderOnScreen(Screen screen) {
+		super.renderOnScreen(screen);
+		drawInfo(screen);
+	}
 
+	private void drawInfo(Screen screen) {
+		
+	}
 }
