@@ -1,6 +1,7 @@
 package ch.ww.electronics.game.gameobject;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class DNA {
 	private Animal animal;
@@ -99,4 +100,12 @@ public class DNA {
 	public HashMap<String, Double> getValues() {
 		return values;
 	}
+	public String niceText(){
+		String text="";
+		for(Entry<String, Double> e: values.entrySet()) {
+			text += e.getKey() + ":" + e.getValue() + "\n";
+		}
+		return(text);
+	}
+	
 }
