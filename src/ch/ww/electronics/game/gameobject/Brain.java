@@ -74,9 +74,9 @@ public class Brain {
 	}
 	
 	private void idle(ArrayList<Animal> nearby) {
-		if(animal.getMotion().getLength() == 0 && animal.getLevel().getRandom().nextDouble() < 0.1) {
+		if(animal.getMotion().getLength() == 0 && animal.getLevel().getRandom().nextDouble() < 0.01) {
 			setMotionToRandomDirection(r.nextDouble() * dna.get(DNA.MAX_SPEED));
-		} else if(animal.getLevel().getRandom().nextDouble() < 0.1) {
+		} else if(animal.getLevel().getRandom().nextDouble() < 0.01) {
 			animal.setMotion(new Vector2D(0,0));
 		}
 		
