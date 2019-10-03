@@ -125,9 +125,12 @@ public class Brain {
 			setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
 		}
 		
-		//Je mehr Gegner es sieht, desto eher rennt es weiter
-		if(animal.getRandom().nextDouble() < Math.pow(dna.get(DNA.RUNNING_TIME), nearby.size())) {
-			status = Status.IDLE;
+//		//Je mehr Gegner es sieht, desto eher rennt es weiter
+//		if(animal.getRandom().nextDouble() < Math.pow(dna.get(DNA.RUNNING_TIME), nearby.size())) {
+//			status = Status.IDLE;
+//		}
+		if(animal.getRandom().nextDouble() < dna.get(DNA.RUNNING_TIME)){
+			status= Status.IDLE;
 		}
 	}
 	

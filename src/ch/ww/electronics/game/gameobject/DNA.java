@@ -42,7 +42,7 @@ public class DNA {
 		values.put(VIEWRANGE, 10d);
 		values.put(MAX_ENERGY,20000d);
 		values.put(STUNNED_TIME,0.5);
-		values.put(RUNNING_TIME, 0d);
+		values.put(RUNNING_TIME, 1d);
 		values.put(START_SEARCHING_FOOD,1d);
 		values.put(BABY_WHEN_ENERGIE, 0.5);
 	}
