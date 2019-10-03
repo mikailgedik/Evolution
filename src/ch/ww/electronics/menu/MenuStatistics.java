@@ -42,7 +42,7 @@ public class MenuStatistics extends DefaultMenu {
 			num = 0;
 		}
 		
-		FontCreator.drawFontOnScreen("Hi", 150, 0, drawOn, 0xffffff);
+		FontCreator.drawFontOnScreen("Hadi", 150, 0, drawOn, 0xffffff);
 		
 		drawOn.drawScreen(50, 50, s);
 	}
