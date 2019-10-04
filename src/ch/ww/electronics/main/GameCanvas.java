@@ -120,7 +120,7 @@ public class GameCanvas extends Canvas {
 			ticks = 0;
 			boolean fastMode = game.getGameListener().isKeyDown(KeyEvent.VK_K);
 			while (running) {
-				fastMode = !game.getGameListener().isKeyDown(KeyEvent.VK_K);
+				fastMode = game.getGameListener().isKeyDown(KeyEvent.VK_K);
 
 				if (g == null) {
 					GameCanvas.this.createBufferStrategy(2);
@@ -168,7 +168,7 @@ public class GameCanvas extends Canvas {
 
 		private void executeRender(Graphics g, boolean fastMode) {
 			if(fastMode) {
-				if(this.fps > 1) {
+				if(this.fps >= 1) {
 					return;
 				}
 			}

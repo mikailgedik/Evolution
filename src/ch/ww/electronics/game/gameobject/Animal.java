@@ -82,8 +82,7 @@ public class Animal extends GameObject{
 		}
 		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)), (int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)),
 				-1);
-		System.out.print("");
-		assert s.getHeight() < BackgroundTile.SIZE;
+		//assert s.getHeight() < BackgroundTile.SIZE;
 		
 //		System.out.println(getDNA().get(DNA.SIZE));
 		s.fillCircle(0, 0, c, s.getHeight()/2);
