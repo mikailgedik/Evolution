@@ -40,6 +40,7 @@ public class Animal extends GameObject{
 
 	@Override
 	public void tick() {
+		
 		adjustTexture();
 		
 		
@@ -52,10 +53,11 @@ public class Animal extends GameObject{
 	
 	private void adjustEnergy() {
 		addEnergy(-getMotion().getLength() * dna.get(DNA.SIZE));
-		if(getLevel().getBackgroundTile((int) getX(), (int) getY()) != null) {		
-			addEnergy(-(1.1 - Math.exp(-Math.pow(5 * (dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature()), 2))));
+		if(getLevel().getBackgroundTile((int) getX(), (int) getY()) != null) {
+			addEnergy(1 * -Math.exp(1.0/Math.abs(dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature())));
 		}
 		addEnergy(-1 * dna.get(DNA.VIEWRANGE));
+		
 		addEnergy(-1); //Passive energy burning
 	}
 	
@@ -80,11 +82,12 @@ public class Animal extends GameObject{
 		default:
 			throw new RuntimeException();		
 		}
+		
+		
 		Screen s = new Screen((int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)), (int) (BackgroundTile.SIZE * getDNA().get(DNA.SIZE)),
 				-1);
 		//assert s.getHeight() < BackgroundTile.SIZE;
 		
-//		System.out.println(getDNA().get(DNA.SIZE));
 		s.fillCircle(0, 0, c, s.getHeight()/2);
 		setTexture(s.darkScreen(getEnergy()/dna.get(DNA.MAX_ENERGY)));
 	}
@@ -167,15 +170,6 @@ public class Animal extends GameObject{
 		text+="Energie: " + energy + "\n";
 		text+="isdead: " + isDead + "\n";
 		text+=dna.getNiceText();
-		if(getLevel().getGameListener().isKeyDown(KeyEvent.VK_I)){
-			text="";
-			for(int i=0;i<10;i++){
-				for(int j=0;j<50;j++){
-					text+="Ian was herer!";
-				}
-				text+="\n";
-			}
-		}
 		return(text);
 	}
 }
