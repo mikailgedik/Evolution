@@ -134,7 +134,7 @@ public class Brain {
 		}
 		
 //		//Je mehr Gegner es sieht, desto eher rennt es weiter
-//		if(animal.getRandom().nextDouble() < Math.pow(dna.get(DNA.RUNNING_TIME), nearby.size())) {
+//		if(animal.getRandom().nextDouble() < Math.pow(dna.get(DNA.RUNNING_TIME), nearby.S())) {
 //			status = Status.IDLE;
 //		}
 		if(animal.getRandom().nextDouble() < dna.get(DNA.RUNNING_TIME)){
