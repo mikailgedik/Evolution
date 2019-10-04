@@ -46,12 +46,13 @@ public class LevelTest extends Level {
 			}
 		}
 		
-		int max = (int)(Math.sqrt((getLevelWidth() * getLevelHeight())) * 30);
+		int max = (int)(Math.sqrt((getLevelWidth() * getLevelHeight())) * 20);
 		
 		if(foodC< max){
 			int n = (int)(getRandom().nextInt(max - foodC) * getRandom().nextDouble());
-			for(int i = 0; i < n; i++)
-			new Food(this, getLevelWidth()*getRandom().nextDouble(), getLevelHeight()*getRandom().nextDouble());
+			for(int i = 0; i < n; i++) {
+				new Food(this, getLevelWidth()*getRandom().nextDouble(), getLevelHeight()*getRandom().nextDouble());
+			}
 		}
 		
 		if(animalC == 0) {
