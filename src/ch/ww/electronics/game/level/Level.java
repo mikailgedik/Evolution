@@ -10,6 +10,7 @@ import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
 import ch.ww.electronics.game.gameobject.Brain;
 import ch.ww.electronics.game.gameobject.Fight;
+import ch.ww.electronics.game.gameobject.Food;
 import ch.ww.electronics.game.gameobject.GameObject;
 import ch.ww.electronics.graphics.FontCreator;
 import ch.ww.electronics.graphics.Screen;
@@ -220,7 +221,7 @@ public abstract class Level {
 		}
 		if(getGameListener().isKeyDown(KeyEvent.VK_M)){
 			if(selected!=null){
-				if(selected instanceof Animal){
+				if(!(selected instanceof Food)){
 					text= ((Animal) selected).getNiceText();
 				}else{
 					text="Es ist kein Tier ausgewählt";
