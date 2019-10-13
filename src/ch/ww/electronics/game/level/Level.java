@@ -127,6 +127,7 @@ public abstract class Level {
 		boolean renderHeat = getGameListener().isKeyDown(KeyEvent.VK_H);
 		
 		screen.fill(0);
+		
 		double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
 		double yInPixels = (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
 		

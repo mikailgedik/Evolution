@@ -87,18 +87,23 @@ public class Game implements EventExecuter {
 	public void render() {
 		if (getMenu() != null) {
 			if (getLevel() != null) {
-				screen.drawScreen(0, 0, getLevel().getScreenToRender(false));
+				//Render Level without HUD
+				renderLevel(false);
 			}
 			getMenu().renderOnScreen(screen);
 		} else if (getLevel() != null) {
-			screen.drawScreen(0, 0, getLevel().getScreenToRender(true));
+			renderLevel(true);
 		} else {
 			FontCreator.drawFontOnScreen("NO MENU\nNO LEVEL\nERROR", screen.getWidth() / 2, screen.getHeight() / 2,
 					getErrorScreen(), 0xffffff);
 			throw new RuntimeException("menu == null && level == null");
 		}
 	}
-
+	
+	private void renderLevel(boolean renderHUD) {
+		screen.drawScreen(0, 0, getLevel().getScreenToRender(renderHUD));
+	}
+	
 	public Level getLevel() {
 		return level;
 	}
