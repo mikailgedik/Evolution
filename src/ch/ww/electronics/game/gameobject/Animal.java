@@ -1,7 +1,5 @@
 package ch.ww.electronics.game.gameobject;
 
-import java.awt.event.KeyEvent;
-
 import org.json.JSONObject;
 
 import ch.ww.electronics.game.gameobject.Brain.Status;

@@ -31,7 +31,6 @@ public abstract class Level {
 	private double viewX, viewY;
 	
 	private int killcounter=0;
-	private int foodeaten=0;
 	
 	private GameObject selected;
 
@@ -352,10 +351,8 @@ public abstract class Level {
 		double diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
 		if(a1.getStatus() == Brain.Status.BE_FOOD) {
 			diff = -1;
-			foodeaten++;
 		} else if(a2.getStatus() == Brain.Status.BE_FOOD) {
 			diff = 1;
-			foodeaten++;
 		} else {
 			killcounter++;
 		}

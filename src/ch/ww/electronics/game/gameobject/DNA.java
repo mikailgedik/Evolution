@@ -70,6 +70,7 @@ public class DNA {
 		randomize();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected DNA clone() {
 		DNA dna = new DNA(this.animal);

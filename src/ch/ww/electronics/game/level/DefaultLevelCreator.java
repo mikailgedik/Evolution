@@ -5,14 +5,13 @@ import java.util.Random;
 
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 import ch.ww.electronics.level.backgroundtile.BackgroundTileDirt;
-import ch.ww.electronics.level.backgroundtile.BackgroundTileStone;
 import ch.ww.electronics.util.CoordinatesCreator;
 
 public class DefaultLevelCreator implements LevelCreator {
 	private final Random random;
 	private Level level;
 
-	private int stoneBouldersCount;
+//	private int stoneBouldersCount;
 
 	public DefaultLevelCreator(long seed) {
 		random = new Random(seed);
@@ -44,30 +43,31 @@ public class DefaultLevelCreator implements LevelCreator {
 			}
 		}
 
-		stoneBouldersCount = (level.getLevelWidth() + level.getLevelHeight()) / 10;
-		//System.out.println("Created " + createStoneBoulders() + " stoneboulders");
+//		stoneBouldersCount = (level.getLevelWidth() + level.getLevelHeight()) / 10;
+//		System.out.println("Created " + createStoneBoulders() + " stoneboulders");
 		
 		createHeatMap();
 	}
 
-	private int createStoneBoulders() {
-		int radius = 6, max = radius * radius;
-		int count = this.stoneBouldersCount;
-
-		int[] center;
-		for (int circle = 0; circle < count; circle++) {
-			center = new int[] { getRandom().nextInt(level.getLevelWidth()),
-					getRandom().nextInt(level.getLevelHeight()) };
-
-			for (Integer[] loc : CoordinatesCreator.createFilledCircle(center[0], center[1], radius)) {
-				if ((getRandom().nextInt(max) > loc[2])) {
-					setBackgroundTile(new BackgroundTileStone(loc[0], loc[1]));
-				}
-			}
-		}
-
-		return count;
-	}
+	
+//	private int createStoneBoulders() {
+//		int radius = 6, max = radius * radius;
+//		int count = this.stoneBouldersCount;
+//
+//		int[] center;
+//		for (int circle = 0; circle < count; circle++) {
+//			center = new int[] { getRandom().nextInt(level.getLevelWidth()),
+//					getRandom().nextInt(level.getLevelHeight()) };
+//
+//			for (Integer[] loc : CoordinatesCreator.createFilledCircle(center[0], center[1], radius)) {
+//				if ((getRandom().nextInt(max) > loc[2])) {
+//					setBackgroundTile(new BackgroundTileStone(loc[0], loc[1]));
+//				}
+//			}
+//		}
+//
+//		return count;
+//	}
 
 	private void createHeatMap() {
 		int gridsize = (getLevel().getLevelHeight() + getLevel().getLevelWidth()) / 10;
