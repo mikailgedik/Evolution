@@ -23,7 +23,11 @@ public abstract class Level {
 
 	private final Game game;
 	private final int levelWidth, levelHeight;
-	private final Screen screen;
+	private final Screen endScreen;
+	private Screen renderScreen;
+	
+	private int renderWidth, renderHeight;
+	
 	private final ArrayList<GameObject> objects;
 	private final ArrayList<Fight> fights;
 	private final BackgroundTile[] backgroundTile;
@@ -36,8 +40,12 @@ public abstract class Level {
 
 	public Level(Game game, int levelWidth, int levelHeight) {
 		this.game = game;
-		this.screen = new Screen(game.getWidth(), game.getHeight());
+		this.endScreen = new Screen(game.getWidth(), game.getHeight());
 
+		this.renderWidth = this.endScreen.getWidth();
+		this.renderHeight = this.endScreen.getHeight();
+		this.renderScreen = new Screen(renderWidth, renderHeight);
+		
 		this.levelWidth = levelWidth;
 		this.levelHeight = levelHeight;
 
@@ -115,22 +123,50 @@ public abstract class Level {
 		return levelWidth;
 	}
 
-	public int getScreenHeight() {
-		return screen.getHeight();
+	public int getEndScreenHeight() {
+		return endScreen.getHeight();
 	}
 
-	public int getScreenWidth() {
-		return screen.getWidth();
+	public int getEndScreenWidth() {
+		return endScreen.getWidth();
+	}
+	
+	public int getRenderScreenWidth() {
+		return renderScreen.getWidth();
+	}
+	
+	public int getRenderScreenHeight() {
+		return renderScreen.getHeight();
+	}
+	
+	public void setRenderBounds(int w, int h) {
+		this.renderWidth = w;
+		this.renderHeight = h;
+		
+		this.renderScreen = new Screen(w, h);
+	}
+	
+	public int getRenderWidth() {
+		return renderWidth;
+	}
+	
+	public int getRenderHeight() {
+		return renderHeight;
 	}
 
 	public synchronized Screen getScreenToRender(boolean renderHUD) {
 		boolean renderHeat = getGameListener().isKeyDown(KeyEvent.VK_H);
 		
-		screen.fill(0);
+		endScreen.fill(0);
+
+		Screen screen = this.renderScreen;
+				
+		double xInPixels = (-viewX * FIELD_SIZE) + (getEndScreenWidth() / 2) - (FIELD_SIZE / 2);
+		double yInPixels = (-viewY * FIELD_SIZE) + (getEndScreenHeight() / 2) - (FIELD_SIZE / 2);
 		
-		double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
-		double yInPixels = (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
-		
+		xInPixels = (-viewX * FIELD_SIZE) + (getRenderScreenWidth() / 2) - (FIELD_SIZE / 2);
+		yInPixels = (-viewY * FIELD_SIZE) + (getRenderScreenHeight() / 2) - (FIELD_SIZE / 2);
+
 		double xOnScreen, yOnScreen;
 
 		Screen tScreen;
@@ -169,11 +205,12 @@ public abstract class Level {
 			screen.drawScreen((int) xOnScreen, (int) yOnScreen, o.getTexture());
 		}
 		
+		this.endScreen.drawScreen(0, 0, renderScreen.getScaledScreen(this.getEndScreenWidth(), this.getEndScreenHeight()));
+
 		if (renderHUD) {
-			renderHUD(screen);
+			renderHUD(this.endScreen);
 		}
-		
-		return screen;
+		return this.endScreen;
 	}
 
 	private void renderHUD(Screen screen) {
@@ -285,19 +322,24 @@ public abstract class Level {
 
 	public void mouseClicked(int xScreen, int yScreen, int mouseButton) {
 		if (mouseButton == MouseEvent.BUTTON1) {
+		}
+		
+		if (mouseButton == MouseEvent.BUTTON1){
+			
 			int[] co = getBackgroundTilesAt(xScreen, yScreen);
 			int x = co[0], y = co[1];
 			System.out.println("MouseButtonClick at" + x + " " + y);
-		}
-		if (mouseButton == MouseEvent.BUTTON1){
+//			TODO
+			/*
 			double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
 			double yInPixels = (int) (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
 			double x = (xScreen - xInPixels) / FIELD_SIZE;
 			double y = (yScreen - yInPixels) / FIELD_SIZE;
+			*/
 			
 			double minabstand=-1;
 			for(GameObject o:objects){
-				//sqrt weggelassen, weil keine ROlle
+				//sqrt weggelassen, weil keine Rolle
 				double abstand=Math.pow(x - o.getX(),2)+Math.pow(y - o.getY(),2);
 				if(minabstand==-1|abstand<minabstand){
 					minabstand=abstand;
@@ -308,8 +350,9 @@ public abstract class Level {
 	}
 
 	public int[] getBackgroundTilesAt(int xScreen, int yScreen) {
-		int xInPixels = (int) (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
-		int yInPixels = (int) (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
+		
+		int xInPixels = (int) (-viewX * FIELD_SIZE) + (getEndScreenWidth() / 2) - (FIELD_SIZE / 2);
+		int yInPixels = (int) (-viewY * FIELD_SIZE) + (getEndScreenHeight() / 2) - (FIELD_SIZE / 2);
 
 		int x = (xScreen - xInPixels) / FIELD_SIZE;
 		int y = (yScreen - yInPixels) / FIELD_SIZE;

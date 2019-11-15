@@ -88,7 +88,7 @@ public class Game implements EventExecuter {
 		if (getMenu() != null) {
 			if (getLevel() != null) {
 				//Render Level without HUD
-				renderLevel(false);
+				getMenu().setBackground(renderLevel(false).darkScreen(0.5));
 			}
 			getMenu().renderOnScreen(screen);
 		} else if (getLevel() != null) {
@@ -100,8 +100,18 @@ public class Game implements EventExecuter {
 		}
 	}
 	
-	private void renderLevel(boolean renderHUD) {
+	private Screen renderLevel(boolean renderHUD) {
+		double f = 0.5;
+//		
+//		Screen d = new Screen((int)(f * screen.getWidth()), (int) (f * screen.getHeight()));
+//		
+//		screen.fill(0x0);
+//		screen.drawScreen(screen.getWidth() / 2 - d.getWidth() /2, screen.getHeight() / 2 - d.getHeight()/2 , getLevel().getScreenToRender(d, renderHUD));
+//		
+		Level l = getLevel();
+		l.setRenderBounds((int)(l.getEndScreenWidth() * f), (int)(l.getEndScreenHeight() * f));
 		screen.drawScreen(0, 0, getLevel().getScreenToRender(renderHUD));
+		return screen;
 	}
 	
 	public Level getLevel() {

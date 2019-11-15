@@ -62,10 +62,8 @@ public class Menu extends MenuComponent {
 	}
 
 	@Override
-	protected void drawOnScreen(Screen screen) {
-		if (getGame().getLevel() != null) {
-			setBackground(getGame().getLevel().getScreenToRender(false).darkScreen(0.5));
-		} else {
+	protected void drawOnScreen(Screen screen) {		
+		if(getGame().getLevel() == null || getBackground() == null) {
 			Screen b = screen.copy().fill(0);
 			for (int x = 0; x < getWidth(); x += defaultBackground.getWidth()) {
 				for (int y = 0; y < getHeight(); y += defaultBackground.getHeight()) {
