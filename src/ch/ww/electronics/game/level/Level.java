@@ -20,13 +20,14 @@ import ch.ww.electronics.listener.GameListener;
 
 public abstract class Level {
 	public static final int FIELD_SIZE = 32;
-
 	private final Game game;
 	private final int levelWidth, levelHeight;
 	private final Screen endScreen;
 	private Screen renderScreen;
 	
 	private int renderWidth, renderHeight;
+	
+	private double zoom;
 	
 	private final ArrayList<GameObject> objects;
 	private final ArrayList<Fight> fights;
@@ -37,7 +38,9 @@ public abstract class Level {
 	private int killcounter=0;
 	
 	private GameObject selected;
-
+	
+	private int[] temp_loc = {0, 0};
+	
 	public Level(Game game, int levelWidth, int levelHeight) {
 		this.game = game;
 		this.endScreen = new Screen(game.getWidth(), game.getHeight());
@@ -58,6 +61,11 @@ public abstract class Level {
 		
 		viewX = getLevelWidth() / 2;
 		viewY = getLevelHeight() / 2;
+		
+		viewX = 0;
+		viewY = 0;
+		
+		this.zoom = 1;
 	}
 
 	public BackgroundTile[] getBackgroundTiles() {
@@ -154,6 +162,7 @@ public abstract class Level {
 		return renderHeight;
 	}
 
+	
 	public synchronized Screen getScreenToRender(boolean renderHUD) {
 		boolean renderHeat = getGameListener().isKeyDown(KeyEvent.VK_H);
 		
@@ -210,9 +219,61 @@ public abstract class Level {
 		if (renderHUD) {
 			renderHUD(this.endScreen);
 		}
+				
 		return this.endScreen;
 	}
+	
+	public synchronized void renderOnScreen(Screen endScreen, boolean renderHUD) {
+		boolean renderHeat = getGameListener().isKeyDown(KeyEvent.VK_H);
+		renderScreen = new Screen((int)(zoom * endScreen.getWidth()),(int)(zoom * endScreen.getHeight()));
+		renderScreen.fill(0);
+		
+		double drawX, drawY;
+		
+		//These values center the image
+		double xOffset = -FIELD_SIZE * viewX + renderScreen.getWidth()  / 2 - FIELD_SIZE / 2;
+		double yOffset = -FIELD_SIZE * viewY + renderScreen.getHeight() / 2 - FIELD_SIZE / 2;
+		
+		for (BackgroundTile t : backgroundTile) {
+			assert t != null;
+			drawX = t.getX() * FIELD_SIZE + xOffset;
+			drawY = t.getY() * FIELD_SIZE + yOffset;
+			
+			Screen tScreen = t.getScreenToRender();
+			if(renderHeat) {
+				tScreen = tScreen.copy();
+				tScreen.fill(0xffffff);
+				tScreen.darkScreen(t.getTemperature());
+			}
+			
+			renderScreen.drawScreen((int)drawX, (int)drawY, tScreen);
+		}
+		
+		double xOnScreen, yOnScreen;
+		
+		for (GameObject o : objects) {
+			xOnScreen = o.getX() * FIELD_SIZE + xOffset;
+			yOnScreen = o.getY() * FIELD_SIZE + yOffset;
+			
+			xOnScreen -= o.getTexture().getWidth() / 2;
+			yOnScreen -= o.getTexture().getHeight() / 2;
+			
+			if(xOnScreen < -FIELD_SIZE || yOnScreen < -FIELD_SIZE || xOnScreen >= renderScreen.getWidth() || yOnScreen >= renderScreen.getHeight()) {
+				continue;
+			}
+			
+			renderScreen.drawScreen((int) xOnScreen, (int) yOnScreen, o.getTexture());
+		}
+		
+		
+		renderScreen.fillCircle(this.temp_loc[0] * FIELD_SIZE - 5, this.temp_loc[1] * FIELD_SIZE - 5, 0x0, 5);
 
+		endScreen.drawScreen(0, 0, renderScreen.getScaledScreen(endScreen.getWidth(), endScreen.getHeight()));
+		if(renderHUD) {
+			renderHUD(endScreen);
+		}
+	}
+	
 	private void renderHUD(Screen screen) {
 		int[] s = new int[6];
 		for(GameObject o: objects) {
@@ -287,6 +348,13 @@ public abstract class Level {
 		if(getGameListener().isKeyDown(KeyEvent.VK_S)) {
 			viewY += 0.3;
 		}
+		if(getGame().getTotalLevelTicks() % 20 == 0 && getGameListener().isKeyDown(KeyEvent.VK_O)) {
+			zoom *= 2;
+		}
+		if(getGame().getTotalLevelTicks() % 20 == 0 && getGameListener().isKeyDown(KeyEvent.VK_P)) {
+			zoom /= 2;
+		}
+		
 		for (Object o : objects.toArray()) {
 			((GameObject) o).tick();
 		}
@@ -321,24 +389,14 @@ public abstract class Level {
 	public abstract void reset();
 
 	public void mouseClicked(int xScreen, int yScreen, int mouseButton) {
-		if (mouseButton == MouseEvent.BUTTON1) {
-		}
-		
 		if (mouseButton == MouseEvent.BUTTON1){
-			
 			int[] co = getBackgroundTilesAt(xScreen, yScreen);
 			int x = co[0], y = co[1];
-			System.out.println("MouseButtonClick at" + x + " " + y);
-//			TODO
-			/*
-			double xInPixels = (-viewX * FIELD_SIZE) + (getScreenWidth() / 2) - (FIELD_SIZE / 2);
-			double yInPixels = (int) (-viewY * FIELD_SIZE) + (getScreenHeight() / 2) - (FIELD_SIZE / 2);
-			double x = (xScreen - xInPixels) / FIELD_SIZE;
-			double y = (yScreen - yInPixels) / FIELD_SIZE;
-			*/
+			System.out.println("MouseButtonClick at " + x + " " + y);
+			temp_loc = new int[]{x, y};
 			
 			double minabstand=-1;
-			for(GameObject o:objects){
+			for(GameObject o:objects) {
 				//sqrt weggelassen, weil keine Rolle
 				double abstand=Math.pow(x - o.getX(),2)+Math.pow(y - o.getY(),2);
 				if(minabstand==-1|abstand<minabstand){
@@ -346,17 +404,21 @@ public abstract class Level {
 					selected=o;
 				}
 			}
+			
 		}
 	}
 
 	public int[] getBackgroundTilesAt(int xScreen, int yScreen) {
-		
-		int xInPixels = (int) (-viewX * FIELD_SIZE) + (getEndScreenWidth() / 2) - (FIELD_SIZE / 2);
-		int yInPixels = (int) (-viewY * FIELD_SIZE) + (getEndScreenHeight() / 2) - (FIELD_SIZE / 2);
+		xScreen *= zoom;
+		yScreen *= zoom;
+		int ret[] = {0,0};
+		xScreen -= renderScreen.getWidth() / 2 - FIELD_SIZE /2 - viewX * FIELD_SIZE;
+		yScreen -= renderScreen.getHeight() / 2 - FIELD_SIZE /2 - viewY * FIELD_SIZE;
 
-		int x = (xScreen - xInPixels) / FIELD_SIZE;
-		int y = (yScreen - yInPixels) / FIELD_SIZE;
-		return new int[] { x, y };
+		ret[0] = xScreen / FIELD_SIZE;
+		ret[1] = yScreen / FIELD_SIZE;
+		
+		return ret;
 	}
 
 	public void setBackgroundTile(BackgroundTile bgt) {

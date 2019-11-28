@@ -110,7 +110,9 @@ public class Game implements EventExecuter {
 //		
 		Level l = getLevel();
 		l.setRenderBounds((int)(l.getEndScreenWidth() * f), (int)(l.getEndScreenHeight() * f));
-		screen.drawScreen(0, 0, getLevel().getScreenToRender(renderHUD));
+		
+		l.renderOnScreen(screen, renderHUD);
+		
 		return screen;
 	}
 	
