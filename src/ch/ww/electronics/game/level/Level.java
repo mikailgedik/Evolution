@@ -38,9 +38,7 @@ public abstract class Level {
 	private int killcounter=0;
 	
 	private GameObject selected;
-	
-	private int[] temp_loc = {0, 0};
-	
+		
 	public Level(Game game, int levelWidth, int levelHeight) {
 		this.game = game;
 		this.endScreen = new Screen(game.getWidth(), game.getHeight());
@@ -265,9 +263,6 @@ public abstract class Level {
 			renderScreen.drawScreen((int) xOnScreen, (int) yOnScreen, o.getTexture());
 		}
 		
-		
-		renderScreen.fillCircle(this.temp_loc[0] * FIELD_SIZE - 5, this.temp_loc[1] * FIELD_SIZE - 5, 0x0, 5);
-
 		endScreen.drawScreen(0, 0, renderScreen.getScaledScreen(endScreen.getWidth(), endScreen.getHeight()));
 		if(renderHUD) {
 			renderHUD(endScreen);
@@ -392,8 +387,6 @@ public abstract class Level {
 		if (mouseButton == MouseEvent.BUTTON1){
 			int[] co = getBackgroundTilesAt(xScreen, yScreen);
 			int x = co[0], y = co[1];
-			System.out.println("MouseButtonClick at " + x + " " + y);
-			temp_loc = new int[]{x, y};
 			
 			double minabstand=-1;
 			for(GameObject o:objects) {
