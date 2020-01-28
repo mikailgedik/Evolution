@@ -8,10 +8,12 @@ import java.util.Random;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
-import ch.ww.electronics.game.gameobject.Brain;
+import ch.ww.electronics.game.gameobject.DNA;
 import ch.ww.electronics.game.gameobject.Fight;
 import ch.ww.electronics.game.gameobject.Food;
 import ch.ww.electronics.game.gameobject.GameObject;
+import ch.ww.electronics.game.gameobject.State;
+import ch.ww.electronics.game.gameobject.State.Status;
 import ch.ww.electronics.graphics.FontCreator;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
@@ -20,6 +22,8 @@ import ch.ww.electronics.listener.GameListener;
 
 public abstract class Level {
 	public static final int FIELD_SIZE = 32;
+	private static final double ZOOM_SPEED = 1.01;
+	
 	private final Game game;
 	private final int levelWidth, levelHeight;
 	private final Screen endScreen;
@@ -58,10 +62,7 @@ public abstract class Level {
 		this.levelCreator.createLevel(this);
 		
 		viewX = getLevelWidth() / 2;
-		viewY = getLevelHeight() / 2;
-		
-		viewX = 0;
-		viewY = 0;
+		viewY = getLevelHeight() / 2; 
 		
 		this.zoom = 1;
 	}
@@ -273,7 +274,7 @@ public abstract class Level {
 		int[] s = new int[6];
 		for(GameObject o: objects) {
 			if(o instanceof Animal) {
-				switch(((Animal)o).getStatus()) {
+				switch(((Animal)o).getActualState().getStatus()) {
 				case IDLE:
 					s[0]++;
 					break;
@@ -343,26 +344,32 @@ public abstract class Level {
 		if(getGameListener().isKeyDown(KeyEvent.VK_S)) {
 			viewY += 0.3;
 		}
-		if(getGame().getTotalLevelTicks() % 20 == 0 && getGameListener().isKeyDown(KeyEvent.VK_O)) {
-			zoom *= 2;
+		if(getGameListener().isKeyDown(KeyEvent.VK_O)) {
+			zoom *= ZOOM_SPEED;
 		}
-		if(getGame().getTotalLevelTicks() % 20 == 0 && getGameListener().isKeyDown(KeyEvent.VK_P)) {
-			zoom /= 2;
+		if(getGameListener().isKeyDown(KeyEvent.VK_P)) {
+			zoom *= (1.0/ ZOOM_SPEED);
 		}
 		
 		for (Object o : objects.toArray()) {
-			((GameObject) o).tick();
+			//TODO multithreading
+			((GameObject) o).preTick();
 		}
 		
 		fights.forEach((f) -> {
 			this.fight(f.getA1(), f.getA2());
 		});
-		
 		fights.clear();
+		
+		for (Object o : objects.toArray()) {
+			//TODO multithreading
+			((GameObject) o).tick();
+		}
+		
 		
 		objects.removeIf((t) -> {
 			if(t instanceof Animal) {
-			return ((Animal)t).isDead();
+			return ((Animal)t).getActualState().isDead();
 			} else {
 				return false;
 			}
@@ -447,7 +454,10 @@ public abstract class Level {
 	}
 	
 	private void fight(Animal a1, Animal a2) {
-		double diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
+		//TODO
+		double diff;
+		/*
+		diff = a1.getSize() * a1.getEnergy() - a2.getSize() * a2.getEnergy();
 		if(a1.getStatus() == Brain.Status.BE_FOOD) {
 			diff = -1;
 		} else if(a2.getStatus() == Brain.Status.BE_FOOD) {
@@ -455,15 +465,34 @@ public abstract class Level {
 		} else {
 			killcounter++;
 		}
+		*/
+		diff = 0;
+		if(a2.getActualState().getStatus() == State.Status.BE_FOOD) {
+			diff = 1;
+		}
 		if(diff == 0) {
 			diff = getRandom().nextBoolean() ? 1 : -1;
 		}
 		if(diff > 0) {
-			a1.addEnergy(a2.getEnergy());
-			a2.setEnergy(0);
+			a1.getCalculatedState().addEnergy(a2.getCalculatedState().getEnergy());
+			a2.getCalculatedState().setEnergy(0);
 		} else if(diff < 0) {
-			a2.addEnergy(a1.getEnergy());
-			a1.setEnergy(0);
+			a2.getCalculatedState().addEnergy(a1.getCalculatedState().getEnergy());
+			a1.getCalculatedState().setEnergy(0);
 		}
+		
+	}
+
+	public void babyFrom(Animal parent) {
+		Animal baby = new Animal(this, parent.getX(), parent.getY());
+		baby.setDNA(parent.getDNA().clone());
+		
+		double totenergy = parent.getCalculatedState().getEnergy();
+		baby.getCalculatedState().setEnergy(0.5 * baby.getDNA().get(DNA.MAX_ENERGY));
+		totenergy -= 0.5 * baby.getDNA().get(DNA.MAX_ENERGY);
+		parent.getCalculatedState().setEnergy(totenergy);
+		
+		baby.getCalculatedState().setStatus(Status.RUNNING);
+		parent.getCalculatedState().setStatus(Status.STUNNED);
 	}
 }

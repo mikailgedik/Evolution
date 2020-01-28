@@ -2,21 +2,16 @@ package ch.ww.electronics.game.gameobject;
 
 import org.json.JSONObject;
 
-import ch.ww.electronics.game.gameobject.Brain.Status;
+import ch.ww.electronics.game.gameobject.State.Status;
 import ch.ww.electronics.game.level.Level;
 import ch.ww.electronics.graphics.Screen;
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
-import ch.ww.electronics.util.Vector2D;
 
 public class Animal extends GameObject{
-	
 	//TODO Es gibt eine Size in Gameobject, aber die wird in der Grafik nicht benutzt. Auch die getsize gibt immer nur 1 zurück. 
 	private DNA dna;
-	private Vector2D motion;
-	private double energy;
 	private final Brain brain;
-	
-	private boolean isDead;
+	private State calculState, actualState;
 	
 	public static final GameObjectConstructor<Animal> CONSTRUCTOR = new GameObjectConstructor<Animal>() {
 		@Override
@@ -30,38 +25,35 @@ public class Animal extends GameObject{
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
 		dna = new DNA(this);
+		dna = new DNA(this, .5, 0, .1, .5, .5, 10000, .1, .1, .8, 1);
+		this.actualState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE);
+		this.calculState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE);
 		this.brain = new Brain(this);
-		setMotion(new Vector2D(0, 0));
-		this.energy = dna.get(DNA.MAX_ENERGY);
 		adjustTexture();
 	}
 
 	@Override
 	public void tick() {
-		
 		adjustTexture();
 		
-		
-		if(!isDead) {
-			brain.think();
-			adjustEnergy();
-			setLocation(getX() + getMotion().getX(), getY() + getMotion().getY());
-		}
+		this.actualState.updateFrom(calculState);
+		this.setX(this.getX() + this.actualState.getMotion().getX());
+		this.setY(this.getY() + this.actualState.getMotion().getY());
 	}
 	
-	private void adjustEnergy() {
-		addEnergy(-getMotion().getLength() * dna.get(DNA.SIZE));
-		if(getLevel().getBackgroundTile((int) getX(), (int) getY()) != null) {
-			addEnergy(1 * -Math.exp(1.0/Math.abs(dna.get(DNA.FUR) - getLevel().getBackgroundTile((int) getX(), (int) getY()).getTemperature())));
-		}
-		addEnergy(-1 * dna.get(DNA.VIEWRANGE));
+	@Override
+	public void preTick() {
+		brain.think();
 		
-		addEnergy(-1); //Passive energy burning
+		passiveEnergyBurning();
+	}
+	private void passiveEnergyBurning() {
+		this.calculState.addEnergy(- this.dna.get(DNA.MAX_ENERGY) /1000);
 	}
 	
-	private void adjustTexture() {
+	public void adjustTexture() {
 		int c = 0x0;
-		switch(this.getBrain().getStatus()) {
+		switch(this.actualState.getStatus()) {
 		case CHASING:
 			c = 0x0000ff;
 			break;
@@ -77,6 +69,9 @@ public class Animal extends GameObject{
 		case STUNNED:
 			c = 0x551A8B;
 			break;
+		case BE_FOOD:
+			c = 0x00ff00;
+			break;
 		default:
 			throw new RuntimeException();		
 		}
@@ -87,7 +82,7 @@ public class Animal extends GameObject{
 		//assert s.getHeight() < BackgroundTile.SIZE;
 		
 		s.fillCircle(0, 0, c, s.getHeight()/2);
-		setTexture(s.darkScreen(getEnergy()/dna.get(DNA.MAX_ENERGY)));
+		setTexture(s.darkScreen(actualState.getEnergy()/dna.get(DNA.MAX_ENERGY)));
 	}
 	
 	@Override
@@ -98,33 +93,6 @@ public class Animal extends GameObject{
 	@Override
 	public String getName() {
 		return NAME;
-	}
-	
-	public double getEnergy() {
-		return energy;
-	}
-	
-	public void setEnergy(double energy) {
-		this.energy = energy;
-		if(energy <= 0) {
-			energy = 0;
-			isDead= true;
-		}
-		if(energy > dna.get(DNA.MAX_ENERGY)) {
-			energy = dna.get(DNA.MAX_ENERGY);
-		}
-	}
-	
-	public void addEnergy(double ammount) {
-		setEnergy(getEnergy() + ammount);
-	}
-	
-	public Vector2D getMotion() {
-		return motion;
-	}
-	
-	public void setMotion(Vector2D v) {
-		this.motion = v;
 	}
 	
 	public void setDNA(DNA dna){
@@ -139,34 +107,30 @@ public class Animal extends GameObject{
 		return(brain);
 	}
 	
-	public boolean isDead() {
-		return isDead;
-	}
-	
 	public double getSize() {
 		return dna.get(DNA.SIZE);
 	}
 	
+	public State getCalculatedState() {
+		return calculState;
+	}
+	
+	public State getActualState() {
+		return actualState;
+	}
+	
 	@Override
 	public String toString() {
-		return "[isDead:" + isDead() + "]";
-	}
-
-	public Status getStatus() {
-		return brain.getStatus();
+		return "[isDead:" + actualState.isDead() + "]";
 	}
 	
-	public void setStatus(Status s) {
-		brain.setStatus(s);
-	}
-	
-	public String getNiceText(){
-		String text="";
+	public String getNiceText() {
+		String text = "";
 		text+="x: " + getX() + "\n";
 		text+="y: " + getY() + "\n";
-		text+="Motion: " + motion + "\n";
-		text+="Energie: " + energy + "\n";
-		text+="isdead: " + isDead + "\n";
+		text+="Status: " + getActualState().getStatus().toString() + "\n";
+		text += "Energy: " + getActualState().getEnergy() + "\n";
+		text += "isDead: " + getActualState().isDead() + "\n"; 
 		text+=dna.getNiceText();
 		return(text);
 	}

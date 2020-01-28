@@ -66,8 +66,12 @@ public abstract class GameObject {
 			}
 			this.level = newLevel;
 		}
-		setX(x);
-		setY(y);
+		
+		x = Math.round(x * 1000) / 1000.0;
+		y = Math.round(y * 1000) / 1000.0;
+
+		this.x = x;
+		this.y = y;
 		repairCooridnates(canGetOutOfWorldBounds);
 	}
 
@@ -101,9 +105,7 @@ public abstract class GameObject {
 	}
 
 	public void setX(double x) {
-		checkIsInLevel();
-		x = Math.round(x * 1000) / 1000.0;
-		this.x = x;
+		this.setLocation(x, getY());
 	}
 
 	public double getY() {
@@ -112,9 +114,7 @@ public abstract class GameObject {
 	}
 
 	public void setY(double y) {
-		checkIsInLevel();
-		y = Math.round(y * 1000) / 1000.0;
-		this.y = y;
+		this.setLocation(getX(), y);
 	}
 
 	public Level getLevel() {
@@ -177,9 +177,12 @@ public abstract class GameObject {
 		}
 		return ret;
 	}
-
+	
+	/** This method is only used to calculate the next move, not to execute it. It must not change any state*/
+	public abstract void preTick();
+	
 	public abstract void tick();
-
+	
 	public abstract GameObjectConstructor<? extends GameObject> getGameObjectConstructor();
 
 	public abstract String getName();

@@ -3,163 +3,122 @@ package ch.ww.electronics.game.gameobject;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ch.ww.electronics.game.gameobject.State.Status;
 import ch.ww.electronics.util.MutableVector2D;
 import ch.ww.electronics.util.Vector2D;
 
 public class Brain {
-	/**IDLE: nichts
-	 * CHASING: Anderes monster verfolgen
-	 * SEARCHING_FOOD: andere monster suchen
-	 * RUNNING: vom etwasem abhauen (z. B. Kinder von Eltern)
+	/**
+	 * IDLE: nichts CHASING: Anderes monster verfolgen SEARCHING_FOOD: andere
+	 * monster suchen RUNNING: vom etwasem abhauen (z. B. Kinder von Eltern)
 	 * STUNNED: eltern nach der geburt (damit sie kinder nicht sofort fressen)
-	 * */
-	public enum Status {IDLE, CHASING, SEARCHING_FOOD, RUNNING, STUNNED, BE_FOOD};
-	
+	 */
+
 	private final Animal animal;
+	/** Reference to the animal's random */
 	private final Random r;
-	private final DNA dna;
-	
+	/** Reference to the animals's sensor */
 	private final Sensors sensors;
-	
-	private Status status;
-	
-	private Animal target;
-	
+	/** Reference to state of the animal */
+	private final State calculState;
+	/** Reference to the dna of the animal */
+	private final DNA dna;
+
 	public Brain(Animal animal) {
 		this.animal = animal;
 		this.sensors = new Sensors(this.animal);
 		r = animal.getRandom();
-		dna = animal.getDNA();
-		this.target = null;
-		status = Status.IDLE;
+		calculState = animal.getCalculatedState();
+		this.dna = animal.getDNA();
 	}
 
 	public void think() {
-		ArrayList<Animal> nearby = sensors.getEyeInput();
-		if(status != Status.RUNNING && status != Status.STUNNED) {
-			if(animal.getEnergy()/dna.get(DNA.MAX_ENERGY) < dna.get(DNA.START_SEARCHING_FOOD) && status != Status.CHASING & status!= Status.SEARCHING_FOOD) {
-				status = Status.SEARCHING_FOOD;
-			}
-		}
-		
-		switch(status) {
+		switch (this.animal.getActualState().getStatus()) {
 		case IDLE:
-			idle(nearby);
+			idle(sensors.getEyeInput());
 			break;
 		case CHASING:
-			chasing(nearby);
+			chasing(sensors.getEyeInput());
 			break;
 		case SEARCHING_FOOD:
-			searchingFood(nearby);
+			searchingFood(sensors.getEyeInput());
 			break;
 		case RUNNING:
-			run(nearby);
+			run(sensors.getEyeInput());
 			break;
 		case STUNNED:
-			stunned(nearby);
+			stunned(sensors.getEyeInput());
 			break;
 		case BE_FOOD:
-			animal.setMotion(new Vector2D(0,0));
-			break;
+			assert false : "Food should not think";
 		default:
-			throw new RuntimeException("Should not reach this step");
-		}
-	}
-	
-	private void setMotionToRandomDirection(double speed) {
-		MutableVector2D v = new MutableVector2D(r.nextDouble() * (r.nextBoolean() ? 1 : -1), r.nextDouble() * (r.nextBoolean() ? 1 : -1));
-		double factor = speed / v.getLength();
-		v = new MutableVector2D(v.getX() * factor, v.getY() * factor);
-		animal.setMotion(v);
-	}
-	
-	private void idle(ArrayList<Animal> nearby) {
-		if(animal.getMotion().getLength() == 0 && animal.getLevel().getRandom().nextDouble() < 0.01) {
-			setMotionToRandomDirection(r.nextDouble() * dna.get(DNA.MAX_SPEED));
-		} else if(animal.getLevel().getRandom().nextDouble() < 0.01) {
-			animal.setMotion(new Vector2D(0,0));
-		}
-		
-		if(getAnimal().getEnergy()/getAnimal().getDNA().get(DNA.MAX_ENERGY) > animal.getDNA().get(DNA.BABY_WHEN_ENERGIE)/* && r.nextDouble() < 0.01 */){
-			Animal baby = new Animal(animal.getLevel(), animal.getX(), animal.getY());
-			baby.setDNA(animal.getDNA().clone());
-			baby.getDNA().variate(0);
-			baby.setEnergy(getAnimal().getEnergy()/2.1);
-			getAnimal().setEnergy(getAnimal().getEnergy()/2.1);
-			
-			getAnimal().setStatus(Status.STUNNED);
-			baby.setStatus(Status.RUNNING);
-		}
-	}
-	
-	private void chasing(ArrayList<Animal> nearby) {
-		if(this.animal.isTouching(target)) {
-			animal.getLevel().addFight(new Fight(this.animal, target));
-			status = Status.IDLE;
-		} else if(!nearby.contains(target)) {
-			//Target out of sight
-			target = null;
-			status = Status.IDLE;
-		} else {
-			MutableVector2D v = new MutableVector2D(target.getX() - this.animal.getX(), target.getY() - this.animal.getY());
-			double factor = dna.get(DNA.MAX_SPEED) / v.getLength();
-			v = new MutableVector2D(v.getX() * factor, v.getY() * factor);
-			animal.setMotion(v);
-		}
-	}
-	
-	private void searchingFood(ArrayList<Animal> nearby) {
-		if(nearby.size() > 0) {
-			target = nearby.get(animal.getRandom().nextInt(nearby.size()));
-			target = nearby.get(0);
-			status = Status.CHASING;
-		} else {
-			if(r.nextDouble() < 0.01) {
-				setMotionToRandomDirection(r.nextDouble() * dna.get(DNA.MAX_SPEED));
-			}
-			target = null;
-		}
-	}
-	
-	private void run(ArrayList<Animal> nearby) {
-		if(this.animal.getMotion().getLength() < this.animal.getDNA().get(DNA.MAX_SPEED) * 0.9) {
-			if(animal.getMotion().getLength() == 0) {
-				setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
-			} else {
-				Vector2D v = animal.getMotion();
-				double factor = dna.get(DNA.MAX_SPEED) / v.getLength();
-				v = new MutableVector2D(v.getX() * factor, v.getY() * factor);
-				animal.setMotion(v);
-			}
-		}
-		
-//		//Je mehr Gegner es sieht, desto eher rennt es weiter
-//		if(animal.getRandom().nextDouble() < Math.pow(dna.get(DNA.RUNNING_TIME), nearby.S())) {
-//			status = Status.IDLE;
-//		}
-		if(animal.getRandom().nextDouble() < dna.get(DNA.RUNNING_TIME)){
-			status= Status.IDLE;
-		}
-	}
-	
-	private void stunned(ArrayList<Animal> nearby) {
-		if(this.animal.getMotion().getLength() != 0) {
-			this.animal.setMotion(new Vector2D(0, 0));
+			throw new RuntimeException("Step should not be reached");
 		}
 
-		if(animal.getRandom().nextDouble() < dna.get(DNA.STUNNED_TIME)) {
-			status = Status.IDLE;
+	}
+
+	private void setMotionToRandomDirection(double speed) {
+		MutableVector2D v = new MutableVector2D(r.nextDouble() * (r.nextBoolean() ? 1 : -1),
+				r.nextDouble() * (r.nextBoolean() ? 1 : -1));
+		double factor = speed / v.getLength();
+		v = new MutableVector2D(v.getX() * factor, v.getY() * factor);
+		calculState.setMotion(v);
+	}
+
+	private void idle(ArrayList<Animal> nearby) {
+		if (this.dna.get(DNA.START_SEARCHING_FOOD) * dna.get(DNA.MAX_ENERGY) > this.calculState.getEnergy()) {
+			calculState.setStatus(Status.SEARCHING_FOOD);
+		} else if (this.dna.get(DNA.BABY_WHEN_ENERGY) * dna.get(DNA.MAX_ENERGY) > this.calculState.getEnergy()) {
+			this.animal.getLevel().babyFrom(this.animal);
+		} else if (r.nextDouble() < 0.05) {
+			setMotionToRandomDirection(animal.getDNA().get(DNA.MAX_SPEED) * r.nextDouble());
 		}
 	}
-	
+
+	private void chasing(ArrayList<Animal> nearby) {
+		if (!nearby.contains(this.calculState.getTarget())) {
+			this.calculState.setTarget(null);
+		} else {
+			Animal t = this.calculState.getTarget();
+			if(t.isTouching(this.animal)) {
+				this.animal.getLevel().addFight(new Fight(this.animal, t));
+				this.calculState.setTarget(null);
+				this.calculState.setStatus(Status.IDLE);
+			} else {
+				MutableVector2D v = new MutableVector2D(t.getX() - this.animal.getX(), t.getY() - this.animal.getY());
+				v.factor(dna.get(DNA.MAX_SPEED) / v.getLength());
+				this.calculState.setMotion(v);
+			}
+		}
+	}
+
+	private void searchingFood(ArrayList<Animal> nearby) {
+		if (!nearby.isEmpty()) {
+			this.calculState.setTarget(nearby.get(0));
+			this.calculState.setStatus(Status.CHASING);
+		} else {
+			this.calculState.setTarget(null);
+			if (r.nextDouble() < 0.05) {
+				setMotionToRandomDirection(animal.getDNA().get(DNA.MAX_SPEED) * r.nextDouble());
+			}
+		}
+	}
+
+	private void run(ArrayList<Animal> nearby) {
+		if(r.nextDouble() < dna.get(DNA.RUNNING_TIME)) {
+			this.calculState.setStatus(Status.IDLE);
+		} else if(r.nextDouble() < 0.05 || this.calculState.getMotion().getLength() < 0.9 * dna.get(DNA.MAX_SPEED)) {
+			setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
+		}
+	}
+
+	private void stunned(ArrayList<Animal> nearby) {
+		if (r.nextDouble() < dna.get(DNA.STUNNED_TIME)) {
+			this.calculState.setStatus(Status.IDLE);
+		}
+	}
+
 	public Animal getAnimal() {
 		return animal;
-	}
-	
-	public Status getStatus() {
-		return status;
-	}
-	public void setStatus(Status status) {
-		this.status = status;
 	}
 }

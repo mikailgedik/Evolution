@@ -13,51 +13,39 @@ public class LevelTest extends Level {
 
 	@Override
 	public void onStart() {
-		for(int i = 0; i < (int)(Math.sqrt((getLevelWidth() * getLevelHeight()))/10); i++) {
-			new Animal(this, getRandom().nextInt(getLevelWidth()),  getRandom().nextInt(getLevelHeight()));
-		}
+		new Animal(this, getRandom().nextInt(getLevelWidth()),  getRandom().nextInt(getLevelHeight()));
 	}
 
 	@Override
 	public void keyPressed(int code) {
-
 	}
 
 	@Override
 	public void keyReleased(int code) {
-
 	}
 
 	@Override
 	public void reset() {
-
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		int foodC = 0, animalC = 0;
+		int food = 0;
+		int animals = 0;
 		
 		for(GameObject o: this.getObjectsInLevel()) {
 			if(o instanceof Food) {
-				foodC++;
-			} else {
-				animalC++;
+				food++;
+			} else if (o instanceof Animal) {
+				animals++;
 			}
 		}
 		
-		int max = (int)(Math.sqrt((getLevelWidth() * getLevelHeight())) * 20);
-		
-		if(foodC< max){
-			int n = (int)(getRandom().nextInt(max - foodC) * getRandom().nextDouble());
-			for(int i = 0; i < n; i++) {
-				new Food(this, getLevelWidth()*getRandom().nextDouble(), getLevelHeight()*getRandom().nextDouble());
+		if(food < 30) {
+			if(getRandom().nextDouble() < 0.5) {
+				new Food(this, getRandom().nextDouble() * this.getLevelHeight(), getRandom().nextDouble() * this.getLevelWidth());
 			}
-		}
-		
-		if(animalC == 0) {
-			System.out.println("Dead world, readd");
-			onStart();
 		}
 	}
 }

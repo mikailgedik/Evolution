@@ -10,7 +10,7 @@ public class MutableVector2D extends Vector2D {
 	public MutableVector2D withVector(Vector v) {
 		return new MutableVector2D(x + ((Vector2D) v).getX(), y + ((Vector2D) v).getY());
 	}
-
+	
 	@Override
 	public MutableVector2D copy() {
 		return new MutableVector2D(x, y);
@@ -38,12 +38,17 @@ public class MutableVector2D extends Vector2D {
 		setX(x);
 		setY(y);
 	}
-
+	
 	public void add(Vector vector) {
 		setX(((Vector2D) vector).getX() + x);
 		setY(((Vector2D) vector).getY() + y);
 	}
-
+	
+	public void factor(double factor) {
+		set(getX() * factor, getY() * factor );
+	}
+	
+	
 	public void round(int digits) {
 		int z = (int) Math.pow(10, digits);
 		setX(1.0 * Math.round(getX() * z) / z);
