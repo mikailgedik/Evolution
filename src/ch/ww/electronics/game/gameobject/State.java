@@ -4,21 +4,41 @@ import ch.ww.electronics.util.MutableVector2D;
 import ch.ww.electronics.util.Vector2D;
 
 public class State {
-	public enum Status {IDLE, CHASING, SEARCHING_FOOD, RUNNING, STUNNED, BE_FOOD};
+	/**
+	 * IDLE: nichts CHASING: Anderes monster verfolgen SEARCHING_FOOD: andere
+	 * monster suchen RUNNING: vom etwasem abhauen (z. B. Kinder von Eltern)
+	 * STUNNED: eltern nach der geburt (damit sie kinder nicht sofort fressen)
+	 */
+	public enum Status {
+		/** Doing nothing, just wandering around. May create a child in this status*/
+		IDLE,
+		/** Chasing something else*/
+		CHASING,
+		/** It is hungry and searching for something to eat*/
+		SEARCHING_FOOD, 
+		/** Given to an animal after it was born so it flees its mother*/
+		RUNNING,
+		/** Given to an animal after it gave birth to its child so it doesn't eat it*/
+		STUNNED,
+		/** Given to instances of the class {@link Food}*/
+		BE_FOOD};
 	
 	private Vector2D motion;
 	private double energy;
 	private Status status;
 	private boolean isDead;
+	/** The animal with this state*/
+	private Animal animal;
+	/** The animal that is being pursued by this animal*/
 	private Animal target;
 	
-	public State(double energy, Status status) {
+	public State(double energy, Status status, Animal animal) {
 		this.motion = new MutableVector2D(0, 0);
 		this.isDead = false;
-
-		this.setEnergy(energy);
 		this.status = status;
+		this.animal = animal;
 		this.target = null;
+		this.setEnergy(energy);
 	}
 	
 	public void updateFrom(State other) {
@@ -27,6 +47,7 @@ public class State {
 		this.status = other.status;
 		this.isDead = other.isDead;
 		this.target = other.target;
+		this.animal = other.animal;
 	}
 
 	public Vector2D getMotion() {
@@ -46,6 +67,8 @@ public class State {
 		if(this.energy <= 0) {
 			this.isDead = true;
 			this.energy = 0;
+		} else if(this.energy > animal.getDNA().get(DNA.MAX_ENERGY)) {
+			this.energy = animal.getDNA().get(DNA.MAX_ENERGY);
 		}
 	}
 

@@ -5,15 +5,8 @@ import java.util.Random;
 
 import ch.ww.electronics.game.gameobject.State.Status;
 import ch.ww.electronics.util.MutableVector2D;
-import ch.ww.electronics.util.Vector2D;
 
 public class Brain {
-	/**
-	 * IDLE: nichts CHASING: Anderes monster verfolgen SEARCHING_FOOD: andere
-	 * monster suchen RUNNING: vom etwasem abhauen (z. B. Kinder von Eltern)
-	 * STUNNED: eltern nach der geburt (damit sie kinder nicht sofort fressen)
-	 */
-
 	private final Animal animal;
 	/** Reference to the animal's random */
 	private final Random r;
@@ -66,10 +59,10 @@ public class Brain {
 	}
 
 	private void idle(ArrayList<Animal> nearby) {
-		if (this.dna.get(DNA.START_SEARCHING_FOOD) * dna.get(DNA.MAX_ENERGY) > this.calculState.getEnergy()) {
-			calculState.setStatus(Status.SEARCHING_FOOD);
-		} else if (this.dna.get(DNA.BABY_WHEN_ENERGY) * dna.get(DNA.MAX_ENERGY) > this.calculState.getEnergy()) {
+		if (this.dna.get(DNA.BABY_WHEN_ENERGY) * dna.get(DNA.MAX_ENERGY) < this.calculState.getEnergy()) {
 			this.animal.getLevel().babyFrom(this.animal);
+		} else if (this.dna.get(DNA.START_SEARCHING_FOOD) * dna.get(DNA.MAX_ENERGY) > this.calculState.getEnergy()) {
+			calculState.setStatus(Status.SEARCHING_FOOD);
 		} else if (r.nextDouble() < 0.05) {
 			setMotionToRandomDirection(animal.getDNA().get(DNA.MAX_SPEED) * r.nextDouble());
 		}
@@ -80,7 +73,7 @@ public class Brain {
 			this.calculState.setTarget(null);
 		} else {
 			Animal t = this.calculState.getTarget();
-			if(t.isTouching(this.animal)) {
+			if (t.isTouching(this.animal)) {
 				this.animal.getLevel().addFight(new Fight(this.animal, t));
 				this.calculState.setTarget(null);
 				this.calculState.setStatus(Status.IDLE);
@@ -105,9 +98,10 @@ public class Brain {
 	}
 
 	private void run(ArrayList<Animal> nearby) {
-		if(r.nextDouble() < dna.get(DNA.RUNNING_TIME)) {
+		if (r.nextDouble() < dna.get(DNA.RUNNING_TIME)) {
 			this.calculState.setStatus(Status.IDLE);
-		} else if(r.nextDouble() < 0.05 || this.calculState.getMotion().getLength() < 0.9 * dna.get(DNA.MAX_SPEED)) {
+			System.out.println("Return");
+		} else if (r.nextDouble() < 0.05 || this.calculState.getMotion().getLength() < 0.9 * dna.get(DNA.MAX_SPEED)) {
 			setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
 		}
 	}
@@ -115,6 +109,7 @@ public class Brain {
 	private void stunned(ArrayList<Animal> nearby) {
 		if (r.nextDouble() < dna.get(DNA.STUNNED_TIME)) {
 			this.calculState.setStatus(Status.IDLE);
+			System.out.println("Return");
 		}
 	}
 

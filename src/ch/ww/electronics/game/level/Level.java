@@ -485,7 +485,9 @@ public abstract class Level {
 
 	public void babyFrom(Animal parent) {
 		Animal baby = new Animal(this, parent.getX(), parent.getY());
-		baby.setDNA(parent.getDNA().clone());
+		DNA dna = parent.getDNA().clone();
+		dna.variate(0);
+		baby.setDNA(dna);
 		
 		double totenergy = parent.getCalculatedState().getEnergy();
 		baby.getCalculatedState().setEnergy(0.5 * baby.getDNA().get(DNA.MAX_ENERGY));

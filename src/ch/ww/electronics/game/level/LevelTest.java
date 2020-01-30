@@ -13,7 +13,7 @@ public class LevelTest extends Level {
 
 	@Override
 	public void onStart() {
-		new Animal(this, getRandom().nextInt(getLevelWidth()),  getRandom().nextInt(getLevelHeight()));
+		new Animal(this, getRandom().nextDouble() * getLevelWidth(),  getRandom().nextDouble() * getLevelHeight());
 	}
 
 	@Override
@@ -41,8 +41,11 @@ public class LevelTest extends Level {
 				animals++;
 			}
 		}
+		if(animals == 0) {
+			System.out.println("Dead");
+		}
 		
-		if(food < 30) {
+		if(food < 300) {
 			if(getRandom().nextDouble() < 0.5) {
 				new Food(this, getRandom().nextDouble() * this.getLevelHeight(), getRandom().nextDouble() * this.getLevelWidth());
 			}

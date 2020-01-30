@@ -1,8 +1,6 @@
 package ch.ww.electronics.game.gameobject;
 import ch.ww.electronics.game.gameobject.State.Status;
 import ch.ww.electronics.game.level.Level;
-import ch.ww.electronics.graphics.Screen;
-import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 
 public class Food extends Animal{
 	public Food(Level level, double x, double y) {

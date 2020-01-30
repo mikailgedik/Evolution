@@ -25,9 +25,9 @@ public class Animal extends GameObject{
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
 		dna = new DNA(this);
-		dna = new DNA(this, .5, 0, .1, .5, .5, 10000, .1, .1, .8, 1);
-		this.actualState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE);
-		this.calculState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE);
+		//dna = new DNA(this, .5, 0, .1, .5, .5, 10000, .1, .1, .8, 1);
+		this.actualState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE, this);
+		this.calculState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE, this);
 		this.brain = new Brain(this);
 		adjustTexture();
 	}
