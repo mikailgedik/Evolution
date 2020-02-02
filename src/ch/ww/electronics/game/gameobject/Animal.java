@@ -10,7 +10,7 @@ import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 public class Animal extends GameObject{
 	//TODO Es gibt eine Size in Gameobject, aber die wird in der Grafik nicht benutzt. Auch die getsize gibt immer nur 1 zurück. 
 	private DNA dna;
-	private final Brain brain;
+	private Brain brain;
 	private State calculState, actualState;
 	
 	public static final GameObjectConstructor<Animal> CONSTRUCTOR = new GameObjectConstructor<Animal>() {
@@ -25,13 +25,26 @@ public class Animal extends GameObject{
 	public Animal(Level level, double x, double y) {
 		super(level, x, y);
 		dna = new DNA(this);
-		//dna = new DNA(this, .5, 0, .1, .5, .5, 10000, .1, .1, .8, 1);
+		dna.randomize(); 
+		
+		init();
+	}
+	
+	public Animal(Level level, double x, double y, DNA dna) {
+		super(level, x, y);
+		this.dna = dna;
+		this.dna.setAnimal(this);
+		
+		init();
+	}
+	
+	private void init() {
 		this.actualState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE, this);
 		this.calculState = new State(dna.get(DNA.MAX_ENERGY), Status.IDLE, this);
 		this.brain = new Brain(this);
 		adjustTexture();
 	}
-
+	
 	@Override
 	public void tick() {
 		adjustTexture();
@@ -48,7 +61,7 @@ public class Animal extends GameObject{
 		passiveEnergyBurning();
 	}
 	private void passiveEnergyBurning() {
-		this.calculState.addEnergy(- this.dna.get(DNA.MAX_ENERGY) /1000);
+		this.calculState.addEnergy(- this.dna.get(DNA.MAX_ENERGY) / 1000);
 	}
 	
 	public void adjustTexture() {
@@ -97,6 +110,8 @@ public class Animal extends GameObject{
 	
 	public void setDNA(DNA dna){
 		this.dna=dna;
+		//Brain has reference to old DNA
+		this.brain = new Brain(this);
 	}
 	
 	public DNA getDNA(){
@@ -118,6 +133,8 @@ public class Animal extends GameObject{
 	public State getActualState() {
 		return actualState;
 	}
+	
+	
 	
 	@Override
 	public String toString() {

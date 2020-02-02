@@ -26,18 +26,20 @@ public class DNA {
 		//1: maximum
 		//2: variation
 		specifications = new HashMap<>();
-		specifications.put(SIZE, new Double[]{0.05d, 1d, 0.1d});
+		specifications.put(SIZE, new Double[]{0.2d, 1d, 0.1d});
 		specifications.put(FUR, new Double[]{0d,1d,0.05d});
 		specifications.put(MAX_SPEED, new Double[]{0.05d,0.1d,0.01});
 		specifications.put(VIEWRANGE, new Double[]{5d,10d, 0.5});
-		specifications.put(MAX_ENERGY, new Double[]{0.1d,5000d, 10d});
-		specifications.put(STUNNED_TIME, new Double[]{.2d, 1d, 0.1d});
-		specifications.put(RUNNING_TIME, new Double[]{.2d, 1d, 0.1d});
+		specifications.put(MAX_ENERGY, new Double[]{100d,5000d, 10d});
+		specifications.put(STUNNED_TIME, new Double[]{.05d, .1d, 0.1d});
+		specifications.put(RUNNING_TIME, new Double[]{.05d, .1d, 0.1d});
 		specifications.put(START_SEARCHING_FOOD, new Double[]{0.6d, 1d, 0.05d});
 		specifications.put(BABY_WHEN_ENERGY, new Double[]{0d, 1d , 0.05d});
 	}
 	
-	public DNA(Animal animal, double size, double fur, double maxSpeed, double viewrange, double viewangle, double maxEnergy, double stunnedTime, double runningTime, double startSearchingFood, double babyWhenEnergy) {
+	public DNA(Animal animal, double size, double fur, double maxSpeed, double viewrange,
+			double viewangle, double maxEnergy, double stunnedTime, double runningTime,
+			double startSearchingFood, double babyWhenEnergy) {
 		this.animal = animal;
 		
 		values = new HashMap<String, Double>();
@@ -77,11 +79,12 @@ public class DNA {
 	public void variate(double radiation) {
 		for(Entry <String, Double>e: values.entrySet()) {
 			double val = values.get(e.getKey());
-			val += (radiation + 1) * ((1 - 2 *animal.getLevel().getRandom().nextDouble()) * specifications.get(e.getKey())[2]);
+			val += (radiation) * ((1 - 2 *animal.getLevel().getRandom().nextDouble()) * specifications.get(e.getKey())[2]);
 			values.put(e.getKey(), val);
 		}
 		validate();
 	}
+	
 	private void validate(){
 		for(Entry <String, Double> e: values.entrySet()){
 			if(e.getValue()<specifications.get(e.getKey())[0]) {
@@ -96,6 +99,7 @@ public class DNA {
 	public double get(String key){
 		return values.get(key);
 	}
+	
 //	public void set(String key, Double value){
 //		if(values.put(key, value)==null) throw new RuntimeException("Not a valid key");
 //	}
@@ -103,6 +107,15 @@ public class DNA {
 	public HashMap<String, Double> getValues() {
 		return values;
 	}
+	
+	public Animal getAnimal() {
+		return animal;
+	}
+	
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
+	}
+	
 	public String getNiceText(){
 		String text="";
 		for(Entry<String, Double> e: values.entrySet()) {

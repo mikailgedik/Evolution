@@ -399,9 +399,9 @@ public abstract class Level {
 			for(GameObject o:objects) {
 				//sqrt weggelassen, weil keine Rolle
 				double abstand=Math.pow(x - o.getX(),2)+Math.pow(y - o.getY(),2);
-				if(minabstand==-1|abstand<minabstand){
+				if(o instanceof Animal && (minabstand==-1 || abstand<minabstand)){
 					minabstand=abstand;
-					selected=o;
+					selected = o;
 				}
 			}
 			
@@ -486,7 +486,7 @@ public abstract class Level {
 	public void babyFrom(Animal parent) {
 		Animal baby = new Animal(this, parent.getX(), parent.getY());
 		DNA dna = parent.getDNA().clone();
-		dna.variate(0);
+		dna.variate(1);
 		baby.setDNA(dna);
 		
 		double totenergy = parent.getCalculatedState().getEnergy();

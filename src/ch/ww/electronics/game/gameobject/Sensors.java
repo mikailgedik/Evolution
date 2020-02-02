@@ -21,6 +21,4 @@ public class Sensors{
 		animals.sort((a1, a2) -> {return (int) Math.signum(animal.distanceTo(a1) - animal.distanceTo(a2));});
 		return(animals);
 	}
-	
-	
 }

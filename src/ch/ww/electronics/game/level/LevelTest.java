@@ -2,6 +2,7 @@ package ch.ww.electronics.game.level;
 
 import ch.ww.electronics.game.Game;
 import ch.ww.electronics.game.gameobject.Animal;
+import ch.ww.electronics.game.gameobject.DNA;
 import ch.ww.electronics.game.gameobject.Food;
 import ch.ww.electronics.game.gameobject.GameObject;
 
@@ -13,7 +14,12 @@ public class LevelTest extends Level {
 
 	@Override
 	public void onStart() {
-		new Animal(this, getRandom().nextDouble() * getLevelWidth(),  getRandom().nextDouble() * getLevelHeight());
+		DNA dna = new DNA(null, 1, 0, .1, 10, 1, 1000, .1, .1, .5, .8);
+		new Animal(this, getRandom().nextDouble() * getLevelWidth(),  getRandom().nextDouble() * getLevelHeight(), dna);
+		
+		for(int i = 0; i < 200; i++) {
+			new Food(this, getRandom().nextDouble() * this.getLevelHeight(), getRandom().nextDouble() * this.getLevelWidth());
+		}
 	}
 
 	@Override
@@ -42,10 +48,9 @@ public class LevelTest extends Level {
 			}
 		}
 		if(animals == 0) {
-			System.out.println("Dead");
 		}
 		
-		if(food < 300) {
+		if(food < 0) {
 			if(getRandom().nextDouble() < 0.5) {
 				new Food(this, getRandom().nextDouble() * this.getLevelHeight(), getRandom().nextDouble() * this.getLevelWidth());
 			}

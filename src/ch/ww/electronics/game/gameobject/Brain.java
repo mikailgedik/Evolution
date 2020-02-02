@@ -5,6 +5,7 @@ import java.util.Random;
 
 import ch.ww.electronics.game.gameobject.State.Status;
 import ch.ww.electronics.util.MutableVector2D;
+import ch.ww.electronics.util.Vector2D;
 
 public class Brain {
 	private final Animal animal;
@@ -59,8 +60,14 @@ public class Brain {
 	}
 
 	private void idle(ArrayList<Animal> nearby) {
-		if (this.dna.get(DNA.BABY_WHEN_ENERGY) * dna.get(DNA.MAX_ENERGY) < this.calculState.getEnergy()) {
+		double energy = this.calculState.getEnergy();
+		double maxenergy = dna.get(DNA.MAX_ENERGY);
+		double babye = dna.get(DNA.BABY_WHEN_ENERGY);
+		double foode = dna.get(DNA.START_SEARCHING_FOOD);
+
+		if (babye * maxenergy < energy) {
 			this.animal.getLevel().babyFrom(this.animal);
+			System.out.println("BABY");
 		} else if (this.dna.get(DNA.START_SEARCHING_FOOD) * dna.get(DNA.MAX_ENERGY) > this.calculState.getEnergy()) {
 			calculState.setStatus(Status.SEARCHING_FOOD);
 		} else if (r.nextDouble() < 0.05) {
@@ -71,6 +78,7 @@ public class Brain {
 	private void chasing(ArrayList<Animal> nearby) {
 		if (!nearby.contains(this.calculState.getTarget())) {
 			this.calculState.setTarget(null);
+			this.calculState.setStatus(Status.SEARCHING_FOOD);
 		} else {
 			Animal t = this.calculState.getTarget();
 			if (t.isTouching(this.animal)) {
@@ -100,7 +108,6 @@ public class Brain {
 	private void run(ArrayList<Animal> nearby) {
 		if (r.nextDouble() < dna.get(DNA.RUNNING_TIME)) {
 			this.calculState.setStatus(Status.IDLE);
-			System.out.println("Return");
 		} else if (r.nextDouble() < 0.05 || this.calculState.getMotion().getLength() < 0.9 * dna.get(DNA.MAX_SPEED)) {
 			setMotionToRandomDirection(dna.get(DNA.MAX_SPEED));
 		}
@@ -109,7 +116,7 @@ public class Brain {
 	private void stunned(ArrayList<Animal> nearby) {
 		if (r.nextDouble() < dna.get(DNA.STUNNED_TIME)) {
 			this.calculState.setStatus(Status.IDLE);
-			System.out.println("Return");
+			this.calculState.setMotion(new Vector2D(0, 0));
 		}
 	}
 

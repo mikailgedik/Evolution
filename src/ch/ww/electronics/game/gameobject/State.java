@@ -32,12 +32,15 @@ public class State {
 	/** The animal that is being pursued by this animal*/
 	private Animal target;
 	
+	private int age;
+	
 	public State(double energy, Status status, Animal animal) {
 		this.motion = new MutableVector2D(0, 0);
 		this.isDead = false;
 		this.status = status;
 		this.animal = animal;
 		this.target = null;
+		this.age = 0;
 		this.setEnergy(energy);
 	}
 	
@@ -48,8 +51,22 @@ public class State {
 		this.isDead = other.isDead;
 		this.target = other.target;
 		this.animal = other.animal;
+		this.age    = other.age;
 	}
-
+	
+	public State getDelta(State other) {
+		State ret = new State(energy, status, animal);
+		ret.updateFrom(this);
+		ret.energy -=other.energy;
+		ret.motion = new Vector2D(this.motion.getX() - other.motion.getX(), this.motion.getY() - other.motion.getY());
+		ret.status = other.status == this.status ? other.status : null;
+		ret.isDead = other.isDead && this.isDead;
+		ret.target = other.target == this.target ? other.target : null;
+		ret.animal = other.animal == this.animal ? other.animal : null;
+		ret.age -= other.age;
+		return ret;
+	}
+	
 	public Vector2D getMotion() {
 		return motion;
 	}
@@ -98,5 +115,17 @@ public class State {
 
 	public void addEnergy(double energy) {
 		this.setEnergy(this.getEnergy() + energy);
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	public void incrementAge() {
+		setAge(getAge() + 1);
 	}
 }
