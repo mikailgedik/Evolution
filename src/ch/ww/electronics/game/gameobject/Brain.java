@@ -60,14 +60,8 @@ public class Brain {
 	}
 
 	private void idle(ArrayList<Animal> nearby) {
-		double energy = this.calculState.getEnergy();
-		double maxenergy = dna.get(DNA.MAX_ENERGY);
-		double babye = dna.get(DNA.BABY_WHEN_ENERGY);
-		double foode = dna.get(DNA.START_SEARCHING_FOOD);
-
-		if (babye * maxenergy < energy) {
+		if (dna.get(DNA.BABY_WHEN_ENERGY) * dna.get(DNA.MAX_ENERGY) < this.calculState.getEnergy()) {
 			this.animal.getLevel().babyFrom(this.animal);
-			System.out.println("BABY");
 		} else if (this.dna.get(DNA.START_SEARCHING_FOOD) * dna.get(DNA.MAX_ENERGY) > this.calculState.getEnergy()) {
 			calculState.setStatus(Status.SEARCHING_FOOD);
 		} else if (r.nextDouble() < 0.05) {

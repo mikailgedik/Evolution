@@ -64,7 +64,7 @@ public abstract class Level {
 		viewX = getLevelWidth() / 2;
 		viewY = getLevelHeight() / 2; 
 		
-		this.zoom = 1;
+		this.zoom = 1.5;
 	}
 
 	public BackgroundTile[] getBackgroundTiles() {
