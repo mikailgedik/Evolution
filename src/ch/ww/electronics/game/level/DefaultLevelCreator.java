@@ -1,11 +1,9 @@
 package ch.ww.electronics.game.level;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import ch.ww.electronics.level.backgroundtile.BackgroundTile;
 import ch.ww.electronics.level.backgroundtile.BackgroundTileDirt;
-import ch.ww.electronics.util.CoordinatesCreator;
 
 public class DefaultLevelCreator implements LevelCreator {
 	private final Random random;
@@ -44,31 +42,24 @@ public class DefaultLevelCreator implements LevelCreator {
 	}
 
 	private void createHeatMap() {
-		final int CONCENTRAITION_POINTS = 2;
-		final int factor = 10;
+		//TODO There are cold spots generating in the center of hot concentration points
+		//TODO IndexOutOfBoundsException when factor is wrong
+		final int CONCENTRAITION_POINTS = 10;
+		final int factor = 2;
 		int amount = level.getLevelWidth() * level.getLevelHeight() / (CONCENTRAITION_POINTS * factor);
 		int[][] heatpoint = new int[amount][2];
 		double[] temperature = new double[amount];
-		/*
-		for(int i = 0; i < amount; i++) {
-			heatpoint[i] = new int[] {(int) (random.nextDouble() * level.getLevelWidth()), (int) (random.nextDouble() * level.getLevelHeight())};
-			temperature[i] = random.nextDouble();
-		}
-		*/
-		heatpoint[0] = new int[] {0,0};
-		heatpoint[1] = new int[] {199,199};
 		
-		temperature[0] = 0;
-		temperature[1] = 1;
+		int conpointRadius = (level.getLevelWidth() + level.getLevelHeight()) / (CONCENTRAITION_POINTS * CONCENTRAITION_POINTS);
 		
 		for(int i = 0; i < CONCENTRAITION_POINTS; i++) {
-			double t = random.nextDouble() * 0.9 + 0.1;
+			double t = 0.1 + 0.9 * (i / (CONCENTRAITION_POINTS - 1.0));
 			int[] pos = new int[] {(int) (random.nextDouble() * level.getLevelWidth()), (int) (random.nextDouble() * level.getLevelHeight())};
 			
 			for(int y = i * CONCENTRAITION_POINTS * factor; y < (i + 1) * CONCENTRAITION_POINTS * factor; y++) {
-				heatpoint[i] = new int[] {(int) (pos[0] + random.nextDouble() * level.getLevelWidth() / CONCENTRAITION_POINTS - (level.getLevelWidth() / CONCENTRAITION_POINTS / 2)),
-						(int) (pos[1] + random.nextDouble() * level.getLevelHeight() / CONCENTRAITION_POINTS - (level.getLevelWidth() / CONCENTRAITION_POINTS / 2))};
-				temperature[i] = t + (1 - 2 * random.nextDouble()) * 0.1;
+				heatpoint[y] = new int[] {(int) (pos[0] + (1 - 2 * random.nextDouble()) *  conpointRadius),
+				(int) (pos[1] + (1 - 2 * random.nextDouble()) *  conpointRadius)};
+				temperature[y] = t * (1 + 0.1 * (1 - 2 * random.nextDouble()));
 			}
 		}
 		
