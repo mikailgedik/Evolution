@@ -20,8 +20,8 @@ public class Game implements EventExecuter {
 	private GameCanvas gameCanvas;
 	private GameLoader loader;
 	private Statistic statistic;
-	/*
-	 * Priority of rendering/ticking: <br> Menu<br>OldInventory<br>Level
+	/**
+	 * Priority of rendering/ticking: <br> Menu<br>Inventory<br>Level
 	 */
 	private Menu menu;
 	private Level level;
